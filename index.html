@@ -1394,6 +1394,93 @@ body.app-mode .prd-panel-wrap .prd-panel { position: sticky; top: 0; }
 .avatar.alt { background: var(--info); }
 .avatar.green { background: var(--success); }
 .avatar.amber { background: var(--warning); }
+
+/* ===== UI 优化：对齐 sample-bank-app 的轻盈 SaaS 风格 ===== */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.2722 0.0494 286.0078);
+  --card: oklch(0.9885 0.0054 274.9676);
+  --card-foreground: oklch(0.2722 0.0494 286.0078);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2722 0.0494 286.0078);
+  --primary: oklch(0.5554 0.2460 273.0245);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.2722 0.0494 286.0078);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.9769 0.0109 274.8971);
+  --muted-foreground: oklch(0.42 0.02 280);
+  --accent: oklch(0.9221 0.0381 280.7675);
+  --accent-foreground: oklch(0.4805 0.2921 264.2112);
+  --border: oklch(0.9224 0.0184 258.3541);
+  --input: oklch(0.9809 0.0025 228.7836);
+  --ring: oklch(0.6081 0.2114 266.2130);
+  --sidebar: hsl(228 100% 98.04%);
+  --sidebar-foreground: hsl(244.44 27.84% 19.02%);
+  --sidebar-primary: hsl(237.30 100% 65.10%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(234.19 100% 93.92%);
+  --sidebar-accent-foreground: hsl(228.85 99.22% 50%);
+  --sidebar-border: hsl(216 43.48% 90.98%);
+  --sidebar-ring: hsl(225 100% 63.92%);
+  --info: var(--primary);
+  --info-foreground: var(--primary-foreground);
+  --info-muted: hsl(234.19 100% 96.47%);
+  --info-border: hsl(234.19 100% 88%);
+  --radius-chip: 6px;
+  --radius-sm: 10px;
+  --radius-btn: 10px;
+  --radius-panel: 14px;
+  --radius-card: 16px;
+  --radius-full: 9999px;
+  --font-sans: "Google Sans Flex", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+body { background: var(--background); font-size: 13px; }
+.app-main { padding: 22px 26px 28px; }
+.page-head { margin-bottom: 18px; }
+.page-title { font-size: 22px; font-weight: 700; letter-spacing: -0.03em; }
+.page-sub { font-size: 12px; margin-top: 4px; }
+.grid { gap: 14px; }
+.kpi-grid { gap: 14px; }
+.panel { padding: 16px 18px; border-color: color-mix(in oklch, var(--border) 72%, transparent); border-radius: var(--radius-card); box-shadow: 0 1px 2px rgba(16,24,40,.03), 0 10px 28px rgba(16,24,40,.04); }
+.panel.flat { background: color-mix(in oklch, var(--muted) 62%, transparent); box-shadow: none; }
+.panel-h { margin-bottom: 11px; }
+.panel-t { font-size: 13px; }
+.panel-s { font-size: 10.5px; }
+.kpi { padding: 14px 16px; border-color: color-mix(in oklch, var(--border) 72%, transparent); border-radius: var(--radius-card); box-shadow: 0 1px 2px rgba(16,24,40,.03), 0 10px 28px rgba(16,24,40,.035); }
+.kpi .l { font-size: 11px; }
+.kpi .v { font-size: 23px; }
+.kpi .d { font-size: 10px; }
+
+.tbl { font-size: 11.5px; }
+.tbl th { padding: 10px 10px; background: color-mix(in oklch, var(--muted) 72%, transparent); font-size: 10.5px; }
+.tbl td { padding: 10px 10px; }
+.tbl tbody tr:hover { background: color-mix(in oklch, var(--accent) 48%, transparent); }
+.tag { font-size: 10.5px; line-height: 19px; padding: 1px 9px; }
+.btn { border-radius: var(--radius-full); font-weight: 600; }
+.btn-primary { padding: 9px 18px; background: linear-gradient(135deg, oklch(0.61 0.22 273), var(--primary)); box-shadow: 0 8px 20px color-mix(in oklch, var(--primary) 26%, transparent); }
+.btn-primary:hover { box-shadow: 0 10px 26px color-mix(in oklch, var(--primary) 34%, transparent); }
+.btn-secondary { padding: 8px 16px; background: var(--background); }
+.btn-sm { padding: 6px 12px; }
+.btn-ghost { border-radius: var(--radius-full); }
+.input, .form-input, .form-combobox { border-radius: 10px; padding: 9px 12px; }
+.search-box { border-radius: var(--radius-full); padding: 8px 12px; }
+.select-mini { border-radius: var(--radius-full); padding: 6px 11px; background: var(--background); }
+
+.app-sidebar { background: var(--sidebar); }
+.sidebar-item { border-radius: 10px; margin: 1px 8px; padding: 8px 10px; }
+.sidebar-item.active { background: var(--sidebar-accent); color: var(--sidebar-accent-foreground); }
+.sidebar-sub { margin: 1px 8px 4px; }
+.sidebar-sub-item { padding: 6px 10px 6px 22px; margin: 0; }
+.sidebar-section-header { color: color-mix(in oklch, var(--text-3) 88%, transparent); }
+.win-chrome-bar { height: 44px; }
+.macos-body { grid-template-rows: 44px 1fr; }
+.crumb { font-size: 11.5px; }
+.win-chrome-actions .badge-success { background: var(--muted); color: var(--text-2); border-color: var(--border); font-weight: 500; }
+.tabs { border-bottom-color: var(--border); }
+.tab { font-size: 11.5px; padding: 9px 14px; }
+.tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+.login-left { background: linear-gradient(145deg, oklch(0.32 0.16 278), oklch(0.50 0.22 273) 58%, oklch(0.62 0.18 285)); }
 </style>
 </head>
 <body class="app-mode">
@@ -1591,6 +1678,36 @@ body.app-mode .prd-panel-wrap .prd-panel { position: sticky; top: 0; }
                 <tr><td class="mono strong">CD2024-011</td><td class="strong">某小分子药物 II 期临床研究</td><td>恒瑞医药</td><td>01</td><td class="num">36</td><td class="num">512</td><td><span class="tag">V2.0</span></td><td><span class="tag gray"><i class="dot gray"></i>已结题</span></td><td><button class="btn btn-ghost btn-sm" data-toast="项目已结题，档案已归档">查看</button></td></tr>
               </tbody>
             </table>
+          </div>
+
+          <div class="grid g3" style="margin-top:14px;">
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="file-search"></i>方案解析与变更</div><span class="tag blue">AI 解析</span></div>
+              <div class="info-rows">
+                <div class="info-row"><span class="k">方案文档</span><span class="v">CD2026-001 方案 V3.0.pdf</span></div>
+                <div class="info-row"><span class="k">流程节点</span><span class="v">36 个（随访 8 / 采样 12 / 处理 16）</span></div>
+                <div class="info-row"><span class="k">最近变更</span><span class="v">V2.0 → V3.0：新增 V4 尿液样本</span></div>
+                <div class="info-row"><span class="k">影响</span><span class="v"><span class="tag amber">3 个流程节点需更新</span></span></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="workflow"></i>SOP 结构化</div><span class="tag green">已生成</span></div>
+              <div class="info-rows">
+                <div class="info-row"><span class="k">SOP 文档</span><span class="v">SOP-SMP-007 V3.3</span></div>
+                <div class="info-row"><span class="k">转化为</span><span class="v">标准化表单 + 12 个操作步骤</span></div>
+                <div class="info-row"><span class="k">受试者编号</span><span class="v">PRJ 前缀 + 4 位流水号</span></div>
+                <div class="info-row"><span class="k">关联表单</span><span class="v">5 个（采集 / 转运 / 离心 / 分装 / 入库）</span></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="shield-check"></i>伦理审查与合规状态</div><span class="tag green">正常</span></div>
+              <div class="info-rows">
+                <div class="info-row"><span class="k">伦理审查</span><span class="v"><span class="tag green">已批准</span> 意见 V1.0 · 2026-08-02</span></div>
+                <div class="info-row"><span class="k">跟踪审查</span><span class="v">每 12 个月（随风险调整）</span></div>
+                <div class="info-row"><span class="k">记录保存</span><span class="v">试验药物批准上市后 5 年</span></div>
+                <div class="info-row"><span class="k">剩余生物样本</span><span class="v">知情同意 v2.1 已明确保存/共享范围</span></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -3788,7 +3905,8 @@ document.querySelectorAll('.win-chrome-bar[data-crumb]').forEach(function(el) {
       return i === arr.length - 1 ? '<b>' + p + '</b>' : '<span>' + p + '</span><i data-lucide="chevron-right" style="width:10px;height:10px;"></i>';
     }).join('') +
     '</div><div class="win-chrome-drag"></div><div class="win-chrome-actions">' +
-    '<span class="badge badge-success" style="font-size:10px;"><i data-lucide="shield-check" style="width:10px;height:10px;"></i>审计追踪已启用</span>' +
+    '<span class="badge badge-default" style="font-size:10px;"><i data-lucide="shield-check" style="width:10px;height:10px;"></i>审计追踪</span>' +
+    '<div class="win-credits"><i data-lucide="package"></i><span>在库 12,846 管</span></div>' +
     '<button class="win-chrome-btn" title="帮助" data-toast="帮助中心：GCP 合规操作指引"><i data-lucide="help-circle" class="win-chrome-icon"></i></button>' +
     '<div class="win-avatar-chip"><span class="win-avatar">王</span><span style="font-size:10px;color:var(--text-2);">王磊 · 样本管理员</span></div>' +
     '<button class="win-chrome-btn" title="菜单"><i data-lucide="menu" class="win-chrome-icon"></i></button></div>';
