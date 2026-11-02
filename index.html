@@ -1742,8 +1742,8 @@ body { background: var(--background); font-size: 13px; }
               <div class="page-sub">华康生物 · 中心 01 · 主要研究者 陈建国 · 入组 12 / 计划 60 例</div>
             </div>
             <div class="toolbar">
-              <button class="btn btn-secondary btn-sm" data-toast="已下载方案 V3.0 全文"><i data-lucide="file-text" style="width:12px;height:12px;"></i>方案原文</button>
-              <button class="btn btn-secondary btn-sm" data-toast="已打开方案比对"><i data-lucide="git-compare" style="width:12px;height:12px;"></i>版本比对</button>
+              <button class="btn btn-secondary btn-sm" data-modal="modal-protocol-doc"><i data-lucide="file-text" style="width:12px;height:12px;"></i>方案原文</button>
+              <button class="btn btn-secondary btn-sm" data-modal="modal-protocol-diff"><i data-lucide="git-compare" style="width:12px;height:12px;"></i>版本比对</button>
               <button class="btn btn-primary btn-sm" data-toast="变更影响分析已生成，涉及 4 份 SOP"><i data-lucide="sparkles" style="width:12px;height:12px;"></i>AI 变更分析</button>
             </div>
           </div>
@@ -3600,6 +3600,82 @@ body { background: var(--background); font-size: 13px; }
   </div>
 </div>
 
+<!-- ===== 方案文档弹窗 ===== -->
+<div class="demo-modal" id="modal-protocol-doc">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">方案原文</div>
+    <div class="panel flat" style="padding:9px;margin-bottom:10px;">
+      <div class="info-rows">
+        <div class="info-row"><span class="k">方案编号</span><span class="v mono">CD2026-001-V3.0</span></div>
+        <div class="info-row"><span class="k">版本 / 生效日期</span><span class="v">V3.0 · 2026-10-20</span></div>
+        <div class="info-row"><span class="k">文档页数</span><span class="v">86 页 · PDF</span></div>
+        <div class="info-row"><span class="k">伦理批件</span><span class="v" style="color:var(--success);">2026-ET-018 · 已批准</span></div>
+      </div>
+    </div>
+    <div style="border:1px solid var(--border);border-radius:12px;background:var(--background);max-height:300px;overflow-y:auto;">
+      <div style="padding:14px 16px;border-bottom:1px solid var(--border);text-align:center;">
+        <div style="font-size:15px;font-weight:700;">CD2026-001 临床研究方案</div>
+        <div class="tiny muted" style="margin-top:2px;">注射用重组抗 PD-1 人源化单克隆抗体 III 期临床研究 · V3.0</div>
+      </div>
+      <div style="padding:12px 16px;font-size:10px;line-height:1.8;color:var(--text-2);">
+        <div style="display:flex;justify-content:space-between;"><span>1. 研究背景与目的</span><span class="mono">P.8</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>2. 研究设计与终点</span><span class="mono">P.16</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>3. 受试者选择与退出</span><span class="mono">P.24</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>4. 研究流程与访视</span><span class="mono">P.32</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>5. 样本采集与处理</span><span class="mono">P.48</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>6. 安全性评价与报告</span><span class="mono">P.62</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>7. 统计分析计划</span><span class="mono">P.74</span></div>
+        <div style="display:flex;justify-content:space-between;"><span>8. 附录与参考文献</span><span class="mono">P.82</span></div>
+      </div>
+    </div>
+    <div class="tiny muted" style="margin-top:6px;">方案原文仅供授权人员查阅，下载行为将记入导出记录。</div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-toast="方案 PDF 已开始下载，已记入导出记录"><i data-lucide="download" style="width:12px;height:12px;"></i>下载 PDF</button>
+      <button class="btn btn-primary btn-sm" data-close>关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-protocol-diff">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">方案版本比对</div>
+    <div class="toolbar" style="margin-bottom:10px;">
+      <span class="tag">V2.0 · 2026-06-12</span>
+      <i data-lucide="arrow-right" style="width:12px;height:12px;color:var(--text-3);"></i>
+      <span class="tag blue">V3.0 · 2026-10-20</span>
+      <span class="grow"></span>
+      <span class="tag amber">3 处影响样本流程</span>
+    </div>
+    <div class="diff">
+      <div class="diff-col"><div class="diff-h">方案 V2.0</div><div class="diff-b">
+        V4 第 2 周期<br>
+        采集：PK 6 点、ADA<br>
+        样本类型：血清、血浆<br>
+        离心：<span class="del">3000 rpm / 10 min</span><br>
+        储存：-80℃
+      </div></div>
+      <div class="diff-col"><div class="diff-h">方案 V3.0</div><div class="diff-b">
+        V4 第 2 周期<br>
+        采集：PK <span class="add">8 点</span>、ADA、<span class="add">细胞因子</span><br>
+        样本类型：血清、血浆、<span class="add">尿液</span><br>
+        离心：<span class="add">3000 rpm / 15 min</span><br>
+        储存：-80℃
+      </div></div>
+    </div>
+    <div class="grid g3" style="margin-top:10px;gap:8px;">
+      <div class="panel flat" style="padding:8px 10px;"><div class="panel-s">影响流程节点</div><div class="strong" style="font-size:13px;">3 个</div></div>
+      <div class="panel flat" style="padding:8px 10px;"><div class="panel-s">影响表单</div><div class="strong" style="font-size:13px;">6 个</div></div>
+      <div class="panel flat" style="padding:8px 10px;"><div class="panel-s">需培训人员</div><div class="strong" style="font-size:13px;">2 人</div></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="已生成 3 项方案变更任务，待责任人确认">生成变更任务</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 移动端弹窗 ===== -->
 <div class="demo-modal" id="modal-mobile-receive">
   <div class="form-dialog">
@@ -3959,8 +4035,8 @@ body { background: var(--background); font-size: 13px; }
 var NAV = [
   { group: '工作台', items: [{ id: 'home', label: '工作台', icon: 'layout-dashboard' }] },
   { group: '业务管理', items: [
-    { id: 'project', label: '项目管理', icon: 'folder-kanban', badge: '3' },
-    { id: 'collect', label: '样本采集', icon: 'test-tube', badge: '6' },
+    { id: 'project', label: '项目管理', icon: 'folder-kanban' },
+    { id: 'collect', label: '样本采集', icon: 'test-tube' },
     { id: 'transport', label: '样本转运', icon: 'truck' },
     { id: 'process', label: '样本处理', icon: 'flask-conical' },
     { id: 'patho', label: '病理切片', icon: 'microscope' },
