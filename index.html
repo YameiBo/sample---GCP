@@ -1244,6 +1244,14 @@ body.app-mode { padding: 0; }
 .p-value { font-size: 11px; font-weight: 600; margin-top: 1px; }
 .p-btn { width: 100%; background: var(--primary); color: var(--primary-foreground); border: none; border-radius: 8px; padding: 9px; font-size: 11px; font-weight: 600; }
 .p-btn.ghost { background: var(--background); color: var(--primary); border: 1px solid var(--primary); }
+.p-btn { transition: transform .12s ease, box-shadow .12s ease; }
+.p-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px color-mix(in oklch, var(--primary) 24%, transparent); }
+.p-btn:active { transform: scale(.985); }
+.p-btn.is-done { background: var(--success); color: var(--success-foreground); box-shadow: none; }
+.p-btn.ghost:hover { background: var(--muted); box-shadow: none; }
+.phone { transition: transform .18s ease, box-shadow .18s ease; }
+.phone:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,.16); }
+.sign-pad { border: 1px dashed var(--border-2); border-radius: 10px; height: 68px; display: flex; align-items: center; justify-content: center; background: color-mix(in oklch, var(--muted) 55%, transparent); }
 .p-scan { height: 120px; border: 1.5px dashed var(--primary); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: color-mix(in oklch, var(--primary) 5%, transparent); }
 .p-scan i { width: 34px; height: 34px; color: var(--primary); }
 .p-scan span { font-size: 9px; color: var(--primary); }
@@ -1512,7 +1520,7 @@ body { background: var(--background); font-size: 13px; }
                 <div class="sub">使用机构账号登录，所有操作将记入审计追踪</div>
                 <div class="form-group">
                   <label class="form-label">账号</label>
-                  <input class="form-input" value="wanglei@hospital-demo.cn" />
+                  <input class="form-input" value="zhangsan@hospital-demo.cn" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">密码</label>
@@ -1546,7 +1554,7 @@ body { background: var(--background); font-size: 13px; }
         <div class="app-main">
           <div class="page-head">
             <div>
-              <div class="page-title">早上好，王磊</div>
+              <div class="page-title">早上好，张三</div>
               <div class="page-sub">华东某三甲医院 · 药物临床试验机构 · 中心 01 · 2026-10-28 周三</div>
             </div>
             <div class="toolbar">
@@ -2049,8 +2057,8 @@ body { background: var(--background); font-size: 13px; }
                 </div>
                 <div class="split-line"></div>
                 <div style="display:flex;align-items:center;gap:8px;">
-                  <span class="avatar alt">王</span>
-                  <div style="flex:1;"><div style="font-size:10px;font-weight:600;">王磊 · 样本管理员（接收方）</div><div class="tiny muted">待接收确认</div></div>
+                  <span class="avatar alt">张</span>
+                  <div style="flex:1;"><div style="font-size:10px;font-weight:600;">张三 · 样本管理员（接收方）</div><div class="tiny muted">待接收确认</div></div>
                   <span class="tag amber">待签</span>
                 </div>
               </div>
@@ -2226,7 +2234,7 @@ body { background: var(--background); font-size: 13px; }
                     <div class="info-row"><span class="k">借出医院</span><span class="v">华东某三甲医院</span></div>
                     <div class="info-row"><span class="k">接收医院</span><span class="v">省肿瘤医院病理科</span></div>
                     <div class="info-row"><span class="k">交接内容</span><span class="v">切片 8 张 · 蜡块 2 块</span></div>
-                    <div class="info-row"><span class="k">交接双方</span><span class="v">王磊 / 刘洋</span></div>
+                    <div class="info-row"><span class="k">交接双方</span><span class="v">张三 / 刘洋</span></div>
                     <div class="info-row"><span class="k">交接时间</span><span class="v mono">2026-10-24 14:10</span></div>
                     <div class="info-row"><span class="k">样本状态</span><span class="v">完好 · 包装完整</span></div>
                     <div class="info-row"><span class="k">应归还</span><span class="v mono">2026-10-29</span></div>
@@ -2315,7 +2323,7 @@ body { background: var(--background); font-size: 13px; }
                 <div class="info-row"><span class="k">样本类型</span><span class="v">血清 · 1.5 mL</span></div>
                 <div class="info-row"><span class="k">冻存条件</span><span class="v">-80℃ 冰箱 · 02 号</span></div>
                 <div class="info-row"><span class="k">分配库位</span><span class="v mono">B-02-03-04</span></div>
-                <div class="info-row"><span class="k">操作人</span><span class="v">王磊 · 样本管理员</span></div>
+                <div class="info-row"><span class="k">操作人</span><span class="v">张三 · 样本管理员</span></div>
                 <div class="info-row"><span class="k">入库时间</span><span class="v mono">2026-10-28 10:00:36</span></div>
               </div>
               <div class="form-row-2" style="margin-bottom:7px;">
@@ -2346,9 +2354,9 @@ body { background: var(--background); font-size: 13px; }
               <table class="tbl compact">
                 <thead><tr><th>时间</th><th>操作人</th><th>时长</th><th>事由</th><th>状态</th></tr></thead>
                 <tbody>
-                  <tr><td class="mono">10-28 10:00</td><td>王磊</td><td>1 min 12 s</td><td>样本入库</td><td><span class="tag green">正常</span></td></tr>
+                  <tr><td class="mono">10-28 10:00</td><td>张三</td><td>1 min 12 s</td><td>样本入库</td><td><span class="tag green">正常</span></td></tr>
                   <tr><td class="mono">10-28 09:42</td><td>陈晓</td><td>0 min 48 s</td><td>取出离心样本</td><td><span class="tag green">正常</span></td></tr>
-                  <tr><td class="mono">10-28 08:15</td><td>王磊</td><td>2 min 05 s</td><td>库位整理</td><td><span class="tag green">正常</span></td></tr>
+                  <tr><td class="mono">10-28 08:15</td><td>张三</td><td>2 min 05 s</td><td>库位整理</td><td><span class="tag green">正常</span></td></tr>
                   <tr><td class="mono">10-27 17:30</td><td>李敏</td><td>0 min 36 s</td><td>样本核对</td><td><span class="tag green">正常</span></td></tr>
                 </tbody>
               </table>
@@ -2398,11 +2406,11 @@ body { background: var(--background); font-size: 13px; }
               <div class="panel-h"><div class="panel-t"><i data-lucide="git-commit-horizontal"></i>监管链时间轴（Chain of Custody）</div><span class="tag green">6 个已完成 · 1 个待执行</span></div>
               <div class="timeline">
                 <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 08:32:10</div><div class="tl-title">样本采集</div><div class="tl-desc">采血室 3 号窗口 · 5 mL 促凝管 · 采集顺利</div><div class="tl-meta"><span class="tag">操作人 李敏 · CRC</span><span class="tag green"><i data-lucide="pen-line" style="width:9px;height:9px;"></i>电子签名</span><span class="tag">FORM-C-012</span></div></div>
-                <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 08:40:12</div><div class="tl-title">转运发出</div><div class="tl-desc">采血室 → 样本库 · 冷链转运箱 · 冰袋 · 2–8℃</div><div class="tl-meta"><span class="tag">发出 李敏</span><span class="tag">接收 王磊</span><span class="tag">TR-1028-003</span></div></div>
+                <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 08:40:12</div><div class="tl-title">转运发出</div><div class="tl-desc">采血室 → 样本库 · 冷链转运箱 · 冰袋 · 2–8℃</div><div class="tl-meta"><span class="tag">发出 李敏</span><span class="tag">接收 张三</span><span class="tag">TR-1028-003</span></div></div>
                 <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 09:02:28</div><div class="tl-title">样本接收 · 双人交接</div><div class="tl-desc">包装完整，温度 4.2℃，样本状态正常</div><div class="tl-meta"><span class="tag green"><i data-lucide="pen-line" style="width:9px;height:9px;"></i>双方电子签名</span><span class="tag">FORM-T-003</span></div></div>
                 <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 09:05:12</div><div class="tl-title">离心处理</div><div class="tl-desc">DEV-CEN-03 · 3000 rpm · 10 min · 4℃ · 设备数据自动采集</div><div class="tl-meta"><span class="tag">操作人 陈晓</span><span class="tag">FORM-P-006</span></div></div>
                 <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 09:18:40</div><div class="tl-title">分装</div><div class="tl-desc">母管 → 3 支子管（A: PK / B: ADA / C: 备份）</div><div class="tl-meta"><span class="tag">操作人 陈晓</span><span class="tag">A/B/C 子管</span></div></div>
-                <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 10:00:36</div><div class="tl-title">入库冻存</div><div class="tl-desc">-80℃ 冰箱 02 · 库位 B-02-03-04 · 程序降温</div><div class="tl-meta"><span class="tag">操作人 王磊</span><span class="tag">FORM-S-002</span><span class="tag green"><i data-lucide="pen-line" style="width:9px;height:9px;"></i>电子签名</span></div></div>
+                <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 10:00:36</div><div class="tl-title">入库冻存</div><div class="tl-desc">-80℃ 冰箱 02 · 库位 B-02-03-04 · 程序降温</div><div class="tl-meta"><span class="tag">操作人 张三</span><span class="tag">FORM-S-002</span><span class="tag green"><i data-lucide="pen-line" style="width:9px;height:9px;"></i>电子签名</span></div></div>
                 <div class="tl-item"><span class="tl-dot warn"></span><div class="tl-time">计划 2026-10-30 09:00</div><div class="tl-title">出库检测（待执行）</div><div class="tl-desc">拟出库至中心实验室进行 PK 检测，需 PI 授权</div><div class="tl-meta"><span class="tag amber">待审批</span><span class="tag">用途：PK 检测</span></div></div>
               </div>
             </div>
@@ -2439,10 +2447,10 @@ body { background: var(--background); font-size: 13px; }
             <table class="tbl compact">
               <thead><tr><th>时间</th><th>操作人</th><th>角色</th><th>操作</th><th>修改前</th><th>修改后</th><th>理由</th><th>IP / 终端</th></tr></thead>
               <tbody>
-                <tr><td class="mono">10-28 10:00:36</td><td>王磊</td><td>样本管理员</td><td>入库冻存</td><td class="muted">—</td><td>B-02-03-04</td><td>正常入库</td><td class="mono">10.20.3.18 / PC-03</td></tr>
+                <tr><td class="mono">10-28 10:00:36</td><td>张三</td><td>样本管理员</td><td>入库冻存</td><td class="muted">—</td><td>B-02-03-04</td><td>正常入库</td><td class="mono">10.20.3.18 / PC-03</td></tr>
                 <tr><td class="mono">10-28 09:18:40</td><td>陈晓</td><td>实验室技术员</td><td>分装</td><td class="muted">母管 1 支</td><td>子管 3 支</td><td>按 SOP-SMP-007</td><td class="mono">10.20.3.22 / PC-07</td></tr>
                 <tr><td class="mono">10-28 09:05:12</td><td>陈晓</td><td>实验室技术员</td><td>离心</td><td class="muted">—</td><td>3000 rpm / 10 min</td><td>设备自动采集</td><td class="mono">DEV-CEN-03</td></tr>
-                <tr><td class="mono">10-28 09:02:28</td><td>王磊</td><td>样本管理员</td><td>接收交接</td><td class="muted">运输中</td><td>已接收</td><td>包装完整，温度正常</td><td class="mono">10.20.3.18 / PC-03</td></tr>
+                <tr><td class="mono">10-28 09:02:28</td><td>张三</td><td>样本管理员</td><td>接收交接</td><td class="muted">运输中</td><td>已接收</td><td>包装完整，温度正常</td><td class="mono">10.20.3.18 / PC-03</td></tr>
                 <tr><td class="mono">10-28 08:40:12</td><td>李敏</td><td>CRC</td><td>转运发出</td><td class="muted">待转运</td><td>运输中</td><td>正常转运</td><td class="mono">10.20.4.11 / PAD-02</td></tr>
                 <tr><td class="mono">10-28 08:32:10</td><td>李敏</td><td>CRC</td><td>采集登记</td><td class="muted">—</td><td>已采集 5 mL</td><td>V3 访视采集</td><td class="mono">10.20.4.11 / PAD-02</td></tr>
               </tbody>
@@ -2506,11 +2514,11 @@ body { background: var(--background); font-size: 13px; }
               <table class="tbl" id="auditTable">
                 <thead><tr><th>时间</th><th>用户</th><th>角色</th><th>操作</th><th>对象</th><th>修改前</th><th>修改后</th><th>理由</th><th>IP / 终端</th></tr></thead>
                 <tbody>
-                  <tr data-drawer="drawer-audit"><td class="mono">10-28 10:12:08</td><td class="strong">王磊</td><td>样本管理员</td><td><span class="tag amber">修改</span></td><td class="mono">CD2026-001-01-S007-V3-SER-01-A</td><td class="muted">B-02-03-05</td><td>B-02-03-04</td><td>库位复核后调整</td><td class="mono">10.20.3.18 / PC-03</td></tr>
-                  <tr data-drawer="drawer-audit"><td class="mono">10-28 10:00:36</td><td>王磊</td><td>样本管理员</td><td><span class="tag green">新增</span></td><td class="mono">CD2026-001-01-S007-V3-SER-01-A</td><td class="muted">—</td><td>已入库</td><td>正常入库</td><td class="mono">10.20.3.18 / PC-03</td></tr>
+                  <tr data-drawer="drawer-audit"><td class="mono">10-28 10:12:08</td><td class="strong">张三</td><td>样本管理员</td><td><span class="tag amber">修改</span></td><td class="mono">CD2026-001-01-S007-V3-SER-01-A</td><td class="muted">B-02-03-05</td><td>B-02-03-04</td><td>库位复核后调整</td><td class="mono">10.20.3.18 / PC-03</td></tr>
+                  <tr data-drawer="drawer-audit"><td class="mono">10-28 10:00:36</td><td>张三</td><td>样本管理员</td><td><span class="tag green">新增</span></td><td class="mono">CD2026-001-01-S007-V3-SER-01-A</td><td class="muted">—</td><td>已入库</td><td>正常入库</td><td class="mono">10.20.3.18 / PC-03</td></tr>
                   <tr data-drawer="drawer-audit"><td class="mono">10-28 09:42:15</td><td>陈晓</td><td>实验室技术员</td><td><span class="tag blue">出库</span></td><td class="mono">CD2026-001-01-S006-V4-PLA-02</td><td class="muted">在库</td><td>检测中</td><td>V4 PK 检测</td><td class="mono">10.20.3.22 / PC-07</td></tr>
                   <tr data-drawer="drawer-audit"><td class="mono">10-28 09:18:40</td><td>陈晓</td><td>实验室技术员</td><td><span class="tag green">新增</span></td><td class="mono">SER-01-A/B/C</td><td class="muted">—</td><td>3 支子管</td><td>按 SOP-SMP-007 分装</td><td class="mono">10.20.3.22 / PC-07</td></tr>
-                  <tr data-drawer="drawer-audit"><td class="mono">10-28 09:02:28</td><td>王磊</td><td>样本管理员</td><td><span class="tag blue">签名</span></td><td class="mono">TR-1028-003</td><td class="muted">待接收</td><td>已接收</td><td>双人交接确认</td><td class="mono">10.20.3.18 / PC-03</td></tr>
+                  <tr data-drawer="drawer-audit"><td class="mono">10-28 09:02:28</td><td>张三</td><td>样本管理员</td><td><span class="tag blue">签名</span></td><td class="mono">TR-1028-003</td><td class="muted">待接收</td><td>已接收</td><td>双人交接确认</td><td class="mono">10.20.3.18 / PC-03</td></tr>
                   <tr data-drawer="drawer-audit"><td class="mono">10-28 08:40:12</td><td>李敏</td><td>CRC</td><td><span class="tag green">新增</span></td><td class="mono">TR-1028-003</td><td class="muted">—</td><td>运输中</td><td>样本转运</td><td class="mono">10.20.4.11 / PAD-02</td></tr>
                   <tr data-drawer="drawer-audit"><td class="mono">10-28 08:32:10</td><td>李敏</td><td>CRC</td><td><span class="tag green">新增</span></td><td class="mono">CD2026-001-01-S007-V3-SER-01</td><td class="muted">—</td><td>已采集</td><td>V3 访视采集</td><td class="mono">10.20.4.11 / PAD-02</td></tr>
                 </tbody>
@@ -2521,7 +2529,7 @@ body { background: var(--background); font-size: 13px; }
               <table class="tbl">
                 <thead><tr><th>登录时间</th><th>用户</th><th>角色</th><th>方式</th><th>IP</th><th>结果</th></tr></thead>
                 <tbody>
-                  <tr><td class="mono">10-28 08:02:14</td><td>王磊</td><td>样本管理员</td><td>账号密码 + 短信</td><td class="mono">10.20.3.18</td><td><span class="tag green">成功</span></td></tr>
+                  <tr><td class="mono">10-28 08:02:14</td><td>张三</td><td>样本管理员</td><td>账号密码 + 短信</td><td class="mono">10.20.3.18</td><td><span class="tag green">成功</span></td></tr>
                   <tr><td class="mono">10-28 07:58:40</td><td>李敏</td><td>CRC</td><td>机构 SSO</td><td class="mono">10.20.4.11</td><td><span class="tag green">成功</span></td></tr>
                   <tr><td class="mono">10-28 07:55:02</td><td>陈晓</td><td>实验室技术员</td><td>机构 SSO</td><td class="mono">10.20.3.22</td><td><span class="tag green">成功</span></td></tr>
                   <tr><td class="mono">10-28 07:40:33</td><td>未知账号</td><td>—</td><td>账号密码</td><td class="mono">10.20.9.77</td><td><span class="tag red">失败 · 密码错误</span></td></tr>
@@ -2531,7 +2539,7 @@ body { background: var(--background); font-size: 13px; }
 
             <div class="tab-pane" data-pane="change">
               <div class="diff" style="margin-bottom:9px;">
-                <div class="diff-col"><div class="diff-h">修改前 · 10-28 10:10:22</div><div class="diff-b">样本编号：CD2026-001-01-S007-V3-SER-01-A<br>库位：<span class="del">B-02-03-04</span><br>操作人：王磊</div></div>
+                <div class="diff-col"><div class="diff-h">修改前 · 10-28 10:10:22</div><div class="diff-b">样本编号：CD2026-001-01-S007-V3-SER-01-A<br>库位：<span class="del">B-02-03-04</span><br>操作人：张三</div></div>
                 <div class="diff-col"><div class="diff-h">修改后 · 10-28 10:12:08</div><div class="diff-b">样本编号：CD2026-001-01-S007-V3-SER-01-A<br>库位：<span class="add">B-02-03-05</span><br>理由：库位调整</div></div>
               </div>
               <div class="panel flat" style="font-size:10px;color:var(--text-2);">修改必须填写理由；系统保留初始值与所有后续修改，原始记录不被覆盖。对应 GCP 2026 第二十九条与 E6(R3) 4.2.4。</div>
@@ -2541,8 +2549,8 @@ body { background: var(--background); font-size: 13px; }
               <table class="tbl">
                 <thead><tr><th>导出时间</th><th>用户</th><th>导出内容</th><th>范围</th><th>审批人</th><th>文件</th></tr></thead>
                 <tbody>
-                  <tr><td class="mono">10-28 09:30:12</td><td>王磊</td><td>样本清单</td><td>CD2026-001 · 386 管</td><td>陈建国 · PI</td><td><span class="tag blue">sample-list.csv</span></td></tr>
-                  <tr><td class="mono">10-27 16:20:45</td><td>陈晓</td><td>温度记录</td><td>DEV-FRZ-02 · 近 7 日</td><td>王磊</td><td><span class="tag blue">temp-log.csv</span></td></tr>
+                  <tr><td class="mono">10-28 09:30:12</td><td>张三</td><td>样本清单</td><td>CD2026-001 · 386 管</td><td>陈建国 · PI</td><td><span class="tag blue">sample-list.csv</span></td></tr>
+                  <tr><td class="mono">10-27 16:20:45</td><td>陈晓</td><td>温度记录</td><td>DEV-FRZ-02 · 近 7 日</td><td>张三</td><td><span class="tag blue">temp-log.csv</span></td></tr>
                   <tr><td class="mono">10-27 11:05:08</td><td>李敏</td><td>采集工单</td><td>2026-10-27 · 14 单</td><td>—</td><td><span class="tag blue">orders.csv</span></td></tr>
                 </tbody>
               </table>
@@ -2653,7 +2661,7 @@ body { background: var(--background); font-size: 13px; }
             </div>
             <div class="toolbar">
               <span class="tag green"><i class="dot green"></i>已绑定 6 台现场设备</span>
-              <button class="btn btn-secondary btn-sm" data-toast="已生成移动端体验二维码"><i data-lucide="qr-code" style="width:12px;height:12px;"></i>体验二维码</button>
+              <button class="btn btn-secondary btn-sm" data-modal="modal-mobile-qr"><i data-lucide="qr-code" style="width:12px;height:12px;"></i>体验二维码</button>
             </div>
           </div>
 
@@ -2672,10 +2680,10 @@ body { background: var(--background); font-size: 13px; }
                   <div class="p-card">
                     <div class="p-label">交接信息</div>
                     <div class="p-row"><span>发出方</span><b>李敏 · CRC</b></div>
-                    <div class="p-row"><span>接收方</span><b>王磊</b></div>
+                    <div class="p-row"><span>接收方</span><b>张三</b></div>
                     <div class="p-row"><span>冷链温度</span><b style="color:var(--success)">4.2℃</b></div>
                   </div>
-                  <button class="p-btn" data-toast="移动端：交接已确认并签名">确认接收并签名</button>
+                  <button class="p-btn" id="mBtnReceive" data-modal="modal-mobile-receive">确认接收并签名</button>
                 </div>
               </div>
             </div>
@@ -2702,8 +2710,8 @@ body { background: var(--background); font-size: 13px; }
                     <div class="p-row"><span>采血量确认</span><b>5 mL</b></div>
                     <div class="p-row"><span>样本状态</span><b>正常</b></div>
                   </div>
-                  <button class="p-btn" data-toast="移动端：采集登记已提交">提交采集登记</button>
-                  <button class="p-btn ghost" data-toast="移动端：已调用摄像头补拍照片">补拍照片</button>
+                  <button class="p-btn" id="mBtnCollect" data-modal="modal-mobile-collect">提交采集登记</button>
+                  <button class="p-btn ghost" id="mBtnPhoto" data-modal="modal-mobile-photo">补拍照片</button>
                 </div>
               </div>
             </div>
@@ -2723,12 +2731,12 @@ body { background: var(--background); font-size: 13px; }
                   <div class="p-card">
                     <div class="p-label">交接签署</div>
                     <div style="border:1px dashed var(--border-2);border-radius:8px;height:54px;display:flex;align-items:center;justify-content:center;margin-top:4px;">
-                      <span style="font-family:var(--font-mono);font-size:10px;color:var(--primary);">王磊（手写签名）</span>
+                      <span style="font-family:var(--font-mono);font-size:10px;color:var(--primary);">张三（手写签名）</span>
                     </div>
                     <div class="p-row" style="margin-top:5px;"><span>签署时间</span><b class="mono" style="font-size:8px;">10-28 09:02:28</b></div>
                   </div>
-                  <button class="p-btn" data-toast="移动端：已提交交接确认">提交交接</button>
-                  <button class="p-btn ghost" data-toast="移动端：已标记温度异常待复核">标记异常</button>
+                  <button class="p-btn" id="mBtnTransfer" data-modal="modal-mobile-transfer">提交交接</button>
+                  <button class="p-btn ghost" id="mBtnAbnormal" data-modal="modal-mobile-abnormal">标记异常</button>
                 </div>
               </div>
             </div>
@@ -3315,7 +3323,7 @@ body { background: var(--background); font-size: 13px; }
               <table class="tbl">
                 <thead><tr><th>姓名</th><th>账号</th><th>角色</th><th>所属组织</th><th>数据范围</th><th>最近登录</th><th>状态</th><th>操作</th></tr></thead>
                 <tbody>
-                  <tr><td class="strong">王磊</td><td class="mono">wanglei</td><td><span class="tag blue">样本管理员</span></td><td>样本库</td><td>中心 01</td><td class="mono">今天 08:02</td><td><span class="tag green">正常</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开用户权限详情">编辑</button></td></tr>
+                  <tr><td class="strong">张三</td><td class="mono">zhangsan</td><td><span class="tag blue">样本管理员</span></td><td>样本库</td><td>中心 01</td><td class="mono">今天 08:02</td><td><span class="tag green">正常</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开用户权限详情">编辑</button></td></tr>
                   <tr><td class="strong">李敏</td><td class="mono">limin</td><td><span class="tag">CRC</span></td><td>肿瘤科</td><td>本人负责受试者</td><td class="mono">今天 07:58</td><td><span class="tag green">正常</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开用户权限详情">编辑</button></td></tr>
                   <tr><td class="strong">陈晓</td><td class="mono">chenxiao</td><td><span class="tag">实验室技术员</span></td><td>中心实验室</td><td>中心 01</td><td class="mono">今天 07:55</td><td><span class="tag green">正常</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开用户权限详情">编辑</button></td></tr>
                   <tr><td class="strong">陈建国</td><td class="mono">chenjg</td><td><span class="tag">主要研究者</span></td><td>肿瘤科</td><td>中心 01 · 全部受试者</td><td class="mono">昨天 17:20</td><td><span class="tag green">正常</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开用户权限详情">编辑</button></td></tr>
@@ -3463,13 +3471,13 @@ body { background: var(--background); font-size: 13px; }
         <div class="info-row"><span class="k">固定方式</span><span class="v">10% 中性缓冲福尔马林</span></div>
         <div class="info-row"><span class="k">当前库位</span><span class="v mono">B-05-02-11</span></div>
         <div class="info-row"><span class="k">登记时间</span><span class="v mono">2026-10-20 11:20</span></div>
-        <div class="info-row"><span class="k">登记人</span><span class="v">王磊 · 样本管理员</span></div>
+        <div class="info-row"><span class="k">登记人</span><span class="v">张三 · 样本管理员</span></div>
       </div>
     </div>
     <div class="panel-s" style="margin:12px 0 6px;">借出归还记录</div>
     <div class="timeline">
       <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-22 09:15</div><div class="tl-title">借出 · 病理科 张敏</div><div class="tl-desc">用途：HE 染色与免疫组化</div></div>
-      <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-23 16:40</div><div class="tl-title">归还 · 状态完好</div><div class="tl-desc">接收人：王磊 · 数量核对一致</div></div>
+      <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-23 16:40</div><div class="tl-title">归还 · 状态完好</div><div class="tl-desc">接收人：张三 · 数量核对一致</div></div>
       <div class="tl-item"><span class="tl-dot"></span><div class="tl-time">2026-10-28 10:00</div><div class="tl-title">库位核对</div><div class="tl-desc">B-05-02-11 · 在库</div></div>
     </div>
     <div style="display:flex;gap:6px;margin-top:14px;">
@@ -3487,12 +3495,12 @@ body { background: var(--background); font-size: 13px; }
   <div class="demo-drawer__body">
     <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
       <span class="tag amber">修改</span>
-      <span class="mono" style="font-size:9px;color:var(--text-3);">10-28 10:12:08 · 王磊</span>
+      <span class="mono" style="font-size:9px;color:var(--text-3);">10-28 10:12:08 · 张三</span>
     </div>
     <div class="panel-s" style="margin-bottom:5px;">修改对象</div>
     <div class="panel flat mono" style="font-size:9px;padding:8px;">CD2026-001-01-S007-V3-SER-01-A</div>
     <div class="diff" style="margin-top:10px;">
-      <div class="diff-col"><div class="diff-h">修改前</div><div class="diff-b">库位：<span class="del">B-02-03-05</span><br>状态：在库<br>操作人：王磊</div></div>
+      <div class="diff-col"><div class="diff-h">修改前</div><div class="diff-b">库位：<span class="del">B-02-03-05</span><br>状态：在库<br>操作人：张三</div></div>
       <div class="diff-col"><div class="diff-h">修改后</div><div class="diff-b">库位：<span class="add">B-02-03-04</span><br>状态：在库<br>理由：库位复核后调整</div></div>
     </div>
     <div class="panel flat" style="margin-top:10px;">
@@ -3524,7 +3532,7 @@ body { background: var(--background); font-size: 13px; }
     </div>
     <div class="panel-s" style="margin:12px 0 5px;">审批链路</div>
     <div class="timeline">
-      <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 10:05</div><div class="tl-title">样本管理员发起</div><div class="tl-desc">王磊 · 依据知情同意 v2.1 第 8.3 条</div></div>
+      <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 10:05</div><div class="tl-title">样本管理员发起</div><div class="tl-desc">张三 · 依据知情同意 v2.1 第 8.3 条</div></div>
       <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">2026-10-28 10:20</div><div class="tl-title">PI 审核</div><div class="tl-desc">陈建国 · 同意继续保存至期限</div></div>
       <div class="tl-item"><span class="tl-dot"></span><div class="tl-time">待 QA 复核</div><div class="tl-title">QA 合规复核</div><div class="tl-desc">核对知情同意范围与保存条件</div></div>
     </div>
@@ -3558,7 +3566,7 @@ body { background: var(--background); font-size: 13px; }
     <div class="form-group" style="margin-bottom:9px;"><label class="form-label">分配库位</label><input class="form-input mono" value="B-02-03-04" /></div>
     <div class="form-row-2" style="margin-bottom:9px;">
       <div class="form-group"><label class="form-label">冻存方式</label><input class="form-input" value="程序降温" /></div>
-      <div class="form-group"><label class="form-label">操作人</label><input class="form-input" value="王磊" /></div>
+      <div class="form-group"><label class="form-label">操作人</label><input class="form-input" value="张三" /></div>
     </div>
     <div class="panel flat" style="font-size:9px;color:var(--text-2);line-height:1.6;">库位分配后自动锁定；同一库位不可重复占用。入库动作将生成监管链节点并写入审计追踪。</div>
     <button class="btn btn-primary btn-sm" style="width:100%;margin-top:12px;" data-toast="入库完成，库位 B-02-03-04 已锁定"><i data-lucide="check" style="width:12px;height:12px;"></i>确认入库</button>
@@ -3578,7 +3586,7 @@ body { background: var(--background); font-size: 13px; }
     </div>
     <div class="panel" style="margin-top:10px;">
       <div class="info-rows">
-        <div class="info-row"><span class="k">签名人</span><span class="v">王磊 · 样本管理员</span></div>
+        <div class="info-row"><span class="k">签名人</span><span class="v">张三 · 样本管理员</span></div>
         <div class="info-row"><span class="k">签名场景</span><span class="v">转运交接接收</span></div>
         <div class="info-row"><span class="k">签名含义</span><span class="v">确认样本数量、状态与温度</span></div>
         <div class="info-row"><span class="k">验证方式</span><span class="v">密码 + 短信验证码</span></div>
@@ -3586,9 +3594,134 @@ body { background: var(--background); font-size: 13px; }
     </div>
     <div class="form-group" style="margin-top:10px;"><label class="form-label">短信验证码</label><input class="form-input" placeholder="请输入 6 位验证码" value="••••••" /></div>
     <div style="border:1px dashed var(--border-2);border-radius:var(--radius-panel);height:64px;display:flex;align-items:center;justify-content:center;margin-top:9px;">
-      <span style="font-family:var(--font-mono);font-size:11px;color:var(--primary);">王磊（手写签名）</span>
+      <span style="font-family:var(--font-mono);font-size:11px;color:var(--primary);">张三（手写签名）</span>
     </div>
     <button class="btn btn-primary btn-sm" style="width:100%;margin-top:12px;" data-toast="签名成功，监管链节点已锁定"><i data-lucide="badge-check" style="width:12px;height:12px;"></i>确认并签名</button>
+  </div>
+</div>
+
+<!-- ===== 移动端弹窗 ===== -->
+<div class="demo-modal" id="modal-mobile-receive">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">样本接收确认</div>
+    <div class="panel flat" style="padding:9px;margin-bottom:10px;">
+      <div class="info-rows">
+        <div class="info-row"><span class="k">样本编号</span><span class="v mono" style="font-size:9px;">CD2026-001-01-S007-V3-SER-01</span></div>
+        <div class="info-row"><span class="k">样本数量</span><span class="v">6 管 · 血清</span></div>
+        <div class="info-row"><span class="k">冷链温度</span><span class="v" style="color:var(--success);">4.2℃ · 正常</span></div>
+        <div class="info-row"><span class="k">发出方</span><span class="v">李敏 · CRC</span></div>
+        <div class="info-row"><span class="k">接收方</span><span class="v">张三 · 样本管理员</span></div>
+      </div>
+    </div>
+    <div class="form-label">接收人签名</div>
+    <div class="sign-pad"><span style="font-family:var(--font-mono);font-size:11px;color:var(--primary);">张三（手写签名）</span></div>
+    <div class="tiny muted" style="margin-top:5px;">签名后将生成监管链节点，并写入审计追踪。</div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="样本已接收，监管链节点已签名" data-done-target="mBtnReceive" data-done-text="已接收">确认接收并签名</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-mobile-collect">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">提交采集登记</div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">受试者</label><input class="form-input" value="S007 · 张**" /></div>
+      <div class="form-group"><label class="form-label">访视</label><input class="form-input" value="V3 第 1 周期" /></div>
+    </div>
+    <div class="form-group"><label class="form-label">采集类型</label><input class="form-input" value="PK 6 点 · 血清 5 mL" /></div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">实际采集时间</label><input class="form-input" value="2026-10-28 08:32" /></div>
+      <div class="form-group"><label class="form-label">采血量</label><input class="form-input" value="5 mL" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">样本状态</label><input class="form-input" value="正常" /></div>
+      <div class="form-group"><label class="form-label">条码打印</label><input class="form-input" value="已打印" /></div>
+    </div>
+    <div class="form-group"><label class="form-label">备注</label><input class="form-input" placeholder="如溶血、采血困难等" /></div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="采集登记已提交，已生成监管链节点" data-done-target="mBtnCollect" data-done-text="已提交">提交登记</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-mobile-photo">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">补拍照片</div>
+    <div class="upload-box" data-file-trigger="mobilePhotoFile" style="cursor:pointer;">
+      <i data-lucide="camera"></i>
+      <div class="t">点击拍照或上传照片</div>
+      <div class="d">用于记录样本外观、包装或异常情况</div>
+    </div>
+    <input type="file" id="mobilePhotoFile" accept="image/*" style="display:none;" />
+    <div class="modal-file-row" style="margin-top:10px;">
+      <i data-lucide="image"></i>
+      <span id="mobilePhotoName" style="flex:1;color:var(--text-2);">尚未选择照片</span>
+      <span class="tag" id="mobilePhotoState">待上传</span>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="照片已上传并关联至采集记录">使用照片</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-mobile-transfer">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">转运交接提交</div>
+    <div class="panel flat" style="padding:9px;margin-bottom:10px;">
+      <div class="info-rows">
+        <div class="info-row"><span class="k">转运单</span><span class="v mono">TR-1028-003</span></div>
+        <div class="info-row"><span class="k">路线</span><span class="v">采血室 → 样本库</span></div>
+        <div class="info-row"><span class="k">样本数量</span><span class="v">6 管</span></div>
+        <div class="info-row"><span class="k">最高温度</span><span class="v" style="color:var(--warning);">7.8℃ · 待复核</span></div>
+        <div class="info-row"><span class="k">接收方</span><span class="v">张三 · 样本管理员</span></div>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">接收备注</label><input class="form-input" placeholder="样本状态、包装完整性等" /></div>
+    <div class="form-label">交接签名</div>
+    <div class="sign-pad"><span style="font-family:var(--font-mono);font-size:11px;color:var(--primary);">张三（手写签名）</span></div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="转运交接已提交，监管链节点已锁定" data-done-target="mBtnTransfer" data-done-text="已提交">提交交接</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-mobile-abnormal">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">标记异常</div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">异常类型</label><input class="form-input" value="温度异常" /></div>
+      <div class="form-group"><label class="form-label">严重程度</label><input class="form-input" value="中" /></div>
+    </div>
+    <div class="form-group"><label class="form-label">异常说明</label><input class="form-input" value="转运温度短时 7.8℃，未超过 8℃ 上限" /></div>
+    <div class="form-group"><label class="form-label">处理建议</label><input class="form-input" value="通知 PI 复核样本可用性" /></div>
+    <label style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text-2);margin-top:6px;"><input type="checkbox" checked /> 同步通知项目 PI 与申办者</label>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="异常已上报，已通知 PI 与申办者" data-done-target="mBtnAbnormal" data-done-text="已上报">提交异常</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-mobile-qr">
+  <div class="form-dialog" style="text-align:center;">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">移动端体验二维码</div>
+    <div class="qr-placeholder" style="margin:6px auto 12px;"><i data-lucide="qr-code" style="width:64px;height:64px;color:var(--text-2);"></i></div>
+    <div class="tiny muted">使用手机扫码进入移动端演示</div>
+    <div class="mono" style="font-size:9px;color:var(--text-3);margin-top:3px;">https://YameiBo.github.io/sample---GCP/</div>
+    <div class="form-actions" style="justify-content:center;">
+      <button class="btn btn-primary btn-sm" data-close>关闭</button>
+    </div>
   </div>
 </div>
 
@@ -3755,7 +3888,7 @@ body { background: var(--background); font-size: 13px; }
       <div class="form-group"><label class="form-label">蜡块数量</label><input class="form-input" value="2 块" /></div>
     </div>
     <div class="form-row-2">
-      <div class="form-group"><label class="form-label">交接人</label><input class="form-input" value="王磊 / 刘洋" /></div>
+      <div class="form-group"><label class="form-label">交接人</label><input class="form-input" value="张三 / 刘洋" /></div>
       <div class="form-group"><label class="form-label">应归还日期</label><input class="form-input" value="2026-11-05" /></div>
     </div>
     <div class="form-group"><label class="form-label">样本状态</label><input class="form-input" value="完好 · 包装完整" /></div>
@@ -3908,7 +4041,7 @@ document.querySelectorAll('.win-chrome-bar[data-crumb]').forEach(function(el) {
     '<span class="badge badge-default" style="font-size:10px;"><i data-lucide="shield-check" style="width:10px;height:10px;"></i>审计追踪</span>' +
     '<div class="win-credits"><i data-lucide="package"></i><span>在库 12,846 管</span></div>' +
     '<button class="win-chrome-btn" title="帮助" data-toast="帮助中心：GCP 合规操作指引"><i data-lucide="help-circle" class="win-chrome-icon"></i></button>' +
-    '<div class="win-avatar-chip"><span class="win-avatar">王</span><span style="font-size:10px;color:var(--text-2);">王磊 · 样本管理员</span></div>' +
+    '<div class="win-avatar-chip"><span class="win-avatar">张</span><span style="font-size:10px;color:var(--text-2);">张三 · 样本管理员</span></div>' +
     '<button class="win-chrome-btn" title="菜单"><i data-lucide="menu" class="win-chrome-icon"></i></button></div>';
 });
 
@@ -3970,7 +4103,19 @@ document.querySelectorAll('.demo-modal').forEach(function(m){
 });
 document.addEventListener('click', function(e){
   var sub = e.target.closest('[data-submit]');
-  if (sub) { toast(sub.getAttribute('data-submit')); closeModal(); }
+  if (sub) {
+    toast(sub.getAttribute('data-submit'));
+    var doneTarget = sub.getAttribute('data-done-target');
+    if (doneTarget) {
+      var btn = document.getElementById(doneTarget);
+      if (btn) {
+        btn.textContent = sub.getAttribute('data-done-text') || '已完成';
+        btn.classList.add('is-done');
+        btn.disabled = true;
+      }
+    }
+    closeModal();
+  }
   var sim = e.target.closest('[data-scan-sim]');
   if (sim) {
     var inp = document.getElementById('scanInput');
@@ -4010,6 +4155,20 @@ if (sopFile) {
         toast('SOP 解析完成，已抽取 6 个流程节点');
       }
     }, 120);
+  });
+}
+var mobilePhotoFile = document.getElementById('mobilePhotoFile');
+if (mobilePhotoFile) {
+  mobilePhotoFile.addEventListener('change', function() {
+    var f = mobilePhotoFile.files && mobilePhotoFile.files[0];
+    if (!f) return;
+    var nameEl = document.getElementById('mobilePhotoName');
+    var stateEl = document.getElementById('mobilePhotoState');
+    nameEl.textContent = f.name;
+    nameEl.style.color = 'var(--foreground)';
+    stateEl.textContent = '已选择';
+    stateEl.className = 'tag green';
+    toast('照片已选择，可提交关联');
   });
 }
 
