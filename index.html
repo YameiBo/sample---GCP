@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>样本库与GCP工作站 · Demo v0.1</title>
+<title>样本库与GCP工作站 · Demo v0.2</title>
 <link rel="icon" href="data:," />
 
 <!-- @proto-gen:theme:start -->
@@ -1249,8 +1249,20 @@ body.app-mode { padding: 0; }
 .p-btn:active { transform: scale(.985); }
 .p-btn.is-done { background: var(--success); color: var(--success-foreground); box-shadow: none; }
 .p-btn.ghost:hover { background: var(--muted); box-shadow: none; }
+.mp-step { display: none; }
+.mp-step.active { display: block; }
+.mp-dots { display: flex; justify-content: center; gap: 5px; padding: 7px 0 0; background: var(--muted); }
+.mp-dot { width: 16px; height: 16px; border-radius: 50%; background: color-mix(in oklch, var(--text-3) 18%, transparent); color: var(--text-3); font-size: 8px; display: flex; align-items: center; justify-content: center; }
+.mp-dot.active { background: var(--primary); color: var(--primary-foreground); font-weight: 700; }
 .phone { transition: transform .18s ease, box-shadow .18s ease; }
 .phone:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,.16); }
+.voice-mic { width: 92px; height: 92px; border-radius: 50%; margin: 0 auto; background: linear-gradient(135deg, oklch(0.62 0.22 273), var(--primary)); color: var(--primary-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 14px 34px color-mix(in oklch, var(--primary) 32%, transparent); transition: transform .15s, box-shadow .15s; }
+.voice-mic:hover { transform: scale(1.04); box-shadow: 0 18px 42px color-mix(in oklch, var(--primary) 40%, transparent); }
+.voice-wave { display: flex; align-items: center; gap: 3px; height: 34px; }
+.voice-wave i { display: block; width: 3px; border-radius: 2px; background: var(--primary); opacity: .65; animation: voicePulse 1.1s ease-in-out infinite; }
+.voice-wave i:nth-child(2n) { animation-delay: .15s; }
+.voice-wave i:nth-child(3n) { animation-delay: .3s; }
+@keyframes voicePulse { 0%,100% { transform: scaleY(.65); opacity: .45; } 50% { transform: scaleY(1.15); opacity: .9; } }
 .sign-pad { border: 1px dashed var(--border-2); border-radius: 10px; height: 68px; display: flex; align-items: center; justify-content: center; background: color-mix(in oklch, var(--muted) 55%, transparent); }
 .p-scan { height: 120px; border: 1.5px dashed var(--primary); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: color-mix(in oklch, var(--primary) 5%, transparent); }
 .p-scan i { width: 34px; height: 34px; color: var(--primary); }
@@ -1530,7 +1542,7 @@ body { background: var(--background); font-size: 13px; }
                   <label style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-2);"><input type="checkbox" checked /> 记住账号</label>
                   <span style="font-size:10px;color:var(--primary);text-align:right;">忘记密码</span>
                 </div>
-                <button class="btn btn-primary" style="width:100%;" data-toast="登录成功，正在进入工作台" data-goto="section-home">登录</button>
+                <button class="btn btn-primary" style="width:100%;" data-toast="登录成功，正在进入项目情况" data-goto="section-project">登录</button>
                 <button class="btn btn-secondary" style="width:100%;margin-top:8px;" data-toast="已跳转机构 SSO 单点登录"><i data-lucide="shield-check" style="width:12px;height:12px;"></i>机构 SSO 登录</button>
                 <div class="login-tip"><i data-lucide="lock-keyhole"></i>登录即代表同意《系统使用与数据安全承诺》</div>
                 <div class="split-line"></div>
@@ -1630,7 +1642,7 @@ body { background: var(--background); font-size: 13px; }
                 <button class="btn btn-secondary btn-sm" data-goto="section-transport" style="justify-content:flex-start;"><i data-lucide="truck" style="width:12px;height:12px;"></i>转运交接</button>
                 <button class="btn btn-secondary btn-sm" data-goto="section-process" style="justify-content:flex-start;"><i data-lucide="flask-conical" style="width:12px;height:12px;"></i>处理任务</button>
                 <button class="btn btn-secondary btn-sm" data-goto="section-trace" style="justify-content:flex-start;"><i data-lucide="git-commit-horizontal" style="width:12px;height:12px;"></i>样本追溯</button>
-                <button class="btn btn-secondary btn-sm" data-goto="section-ai-qa" style="justify-content:flex-start;"><i data-lucide="sparkles" style="width:12px;height:12px;"></i>问 SOP</button>
+                <button class="btn btn-secondary btn-sm" data-goto="section-ai-search" style="justify-content:flex-start;"><i data-lucide="sparkles" style="width:12px;height:12px;"></i>问 SOP</button>
                 <button class="btn btn-secondary btn-sm" data-goto="section-audit" style="justify-content:flex-start;"><i data-lucide="scroll-text" style="width:12px;height:12px;"></i>审计日志</button>
               </div>
             </div>
@@ -1647,29 +1659,30 @@ body { background: var(--background); font-size: 13px; }
     <div class="macos-window">
       <div class="macos-body">
         <div class="app-sidebar" data-active="project"></div>
-        <div class="win-chrome-bar" data-crumb="业务管理 / 项目管理"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 项目管理 / 项目情况"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
-              <div class="page-title">项目管理</div>
-              <div class="page-sub">临床试验项目登记、方案解析与样本管理配置</div>
+              <div class="page-title">项目情况</div>
+              <div class="page-sub">CTMS 同步项目基础信息，点击项目进入方案、样本与变更管理</div>
             </div>
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-toast="已导出项目清单（Excel）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出</button>
+              <button class="btn btn-secondary btn-sm" data-toast="已从 CTMS 同步 5 个项目，更新 12 个字段"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>从 CTMS 同步</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-new-project"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建项目</button>
             </div>
           </div>
 
-          <div class="kpi-grid" style="margin-bottom:12px;">
-            <div class="kpi"><div class="l"><i data-lucide="folder-kanban"></i>在研项目</div><div class="v">3</div><div class="d">覆盖 2 个研究中心</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="users"></i>在组受试者</div><div class="v">86<small>例</small></div><div class="d up">本周新增 4 例</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="test-tube"></i>在研项目样本</div><div class="v">2,408<small>管</small></div><div class="d">涉及 6 类样本</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="file-diff"></i>待处理方案变更</div><div class="v">1<small>项</small></div><div class="d warn">CD2026-001 V3.0</div></div>
+          <div class="panel" style="display:flex;align-items:center;gap:10px;padding:9px 14px;margin-bottom:14px;">
+            <span class="tag green"><i class="dot green"></i>CTMS 已连接</span>
+            <span class="tiny muted">最近同步 2026-11-03 08:30 · 成功 5 / 5 个项目</span>
+            <span class="grow"></span>
+            <span class="tag blue">同步字段：项目号 / 方案号 / PI / CRA / CRC / 入组状态 / 访视点</span>
           </div>
 
           <div class="panel">
             <div class="filters">
-              <div class="search-box"><i data-lucide="search"></i><input placeholder="搜索项目编号 / 名称 / 申办者" data-filter="#projectTable" /></div>
+              <div class="search-box"><i data-lucide="search"></i><input placeholder="搜索项目编号 / 名称 / 方案号" data-filter="#projectTable" /></div>
               <span class="select-mini"><i data-lucide="circle-dot"></i>全部状态</span>
               <span class="select-mini"><i data-lucide="building-2"></i>全部中心</span>
               <span class="select-mini"><i data-lucide="calendar"></i>2026 年</span>
@@ -1677,44 +1690,34 @@ body { background: var(--background); font-size: 13px; }
               <span class="tiny muted">共 5 个项目</span>
             </div>
             <table class="tbl" id="projectTable">
-              <thead><tr><th>项目编号</th><th>项目名称</th><th>申办者</th><th>中心</th><th class="num">受试者</th><th class="num">样本（管）</th><th>方案版本</th><th>状态</th><th>操作</th></tr></thead>
+              <thead><tr><th>项目编号</th><th>项目名称</th><th>方案号</th><th>PI</th><th>CRA / CRC</th><th class="num">入组</th><th class="num">样本（管）</th><th>状态</th><th>CTMS 同步</th><th>操作</th></tr></thead>
               <tbody>
-                <tr><td class="mono strong">CD2026-001</td><td class="strong">注射用重组抗 PD-1 人源化单克隆抗体 III 期临床研究</td><td>华康生物</td><td>01</td><td class="num">12</td><td class="num">386</td><td><span class="tag blue">V3.0</span></td><td><span class="tag green"><i class="dot green"></i>进行中</span> <span class="tag amber">变更待确认</span></td><td><button class="btn btn-ghost btn-sm" data-goto="section-project-detail">查看</button></td></tr>
-                <tr><td class="mono strong">CD2026-002</td><td class="strong">注射用 ADC 药物 II 期临床研究</td><td>瑞明医药</td><td>01 / 02</td><td class="num">28</td><td class="num">742</td><td><span class="tag blue">V1.2</span></td><td><span class="tag green"><i class="dot green"></i>进行中</span></td><td><button class="btn btn-ghost btn-sm" data-toast="打开 CD2026-002 项目详情">查看</button></td></tr>
-                <tr><td class="mono strong">CD2025-018</td><td class="strong">某 GLP-1 受体激动剂 III 期临床研究</td><td>东辰制药</td><td>01</td><td class="num">46</td><td class="num">1,280</td><td><span class="tag blue">V2.1</span></td><td><span class="tag green"><i class="dot green"></i>进行中</span></td><td><button class="btn btn-ghost btn-sm" data-toast="打开 CD2025-018 项目详情">查看</button></td></tr>
-                <tr><td class="mono strong">CD2025-006</td><td class="strong">某重组疫苗 I 期临床研究</td><td>康泰生物</td><td>01</td><td class="num">20</td><td class="num">168</td><td><span class="tag">V1.0</span></td><td><span class="tag gray"><i class="dot gray"></i>已完成</span></td><td><button class="btn btn-ghost btn-sm" data-toast="项目已完成，进入只读视图">查看</button></td></tr>
-                <tr><td class="mono strong">CD2024-011</td><td class="strong">某小分子药物 II 期临床研究</td><td>恒瑞医药</td><td>01</td><td class="num">36</td><td class="num">512</td><td><span class="tag">V2.0</span></td><td><span class="tag gray"><i class="dot gray"></i>已结题</span></td><td><button class="btn btn-ghost btn-sm" data-toast="项目已结题，档案已归档">查看</button></td></tr>
+                <tr><td class="mono strong">CD2026-001</td><td class="strong">注射用重组抗 PD-1 人源化单克隆抗体 III 期临床研究</td><td class="mono">CD2026-001-V3.0</td><td>陈建国</td><td>赵磊 / 李敏</td><td class="num">12 / 60</td><td class="num">386</td><td><span class="tag green"><i class="dot green"></i>进行中</span> <span class="tag amber">变更待确认</span></td><td class="mono">今天 08:30</td><td><button class="btn btn-ghost btn-sm" data-goto="section-project-detail">查看</button></td></tr>
+                <tr><td class="mono strong">CD2026-002</td><td class="strong">注射用 ADC 药物 II 期临床研究</td><td class="mono">CD2026-002-V1.2</td><td>王强</td><td>孙倩 / 周洁</td><td class="num">28 / 40</td><td class="num">742</td><td><span class="tag green"><i class="dot green"></i>进行中</span></td><td class="mono">今天 08:31</td><td><button class="btn btn-ghost btn-sm" data-toast="打开 CD2026-002 项目详情">查看</button></td></tr>
+                <tr><td class="mono strong">CD2025-018</td><td class="strong">某 GLP-1 受体激动剂 III 期临床研究</td><td class="mono">CD2025-018-V2.1</td><td>李娜</td><td>刘洋 / 赵倩</td><td class="num">46 / 50</td><td class="num">1,280</td><td><span class="tag green"><i class="dot green"></i>进行中</span></td><td class="mono">今天 08:32</td><td><button class="btn btn-ghost btn-sm" data-toast="打开 CD2025-018 项目详情">查看</button></td></tr>
+                <tr><td class="mono strong">CD2025-006</td><td class="strong">某重组疫苗 I 期临床研究</td><td class="mono">CD2025-006-V1.0</td><td>张伟</td><td>王芳 / 李敏</td><td class="num">20 / 20</td><td class="num">168</td><td><span class="tag gray"><i class="dot gray"></i>已完成</span></td><td class="mono">昨天 18:10</td><td><button class="btn btn-ghost btn-sm" data-toast="项目已完成，进入只读视图">查看</button></td></tr>
+                <tr><td class="mono strong">CD2024-011</td><td class="strong">某小分子药物 II 期临床研究</td><td class="mono">CD2024-011-V2.0</td><td>王强</td><td>孙倩 / 周洁</td><td class="num">36 / 36</td><td class="num">512</td><td><span class="tag gray"><i class="dot gray"></i>已结题</span></td><td class="mono">10-28 16:40</td><td><button class="btn btn-ghost btn-sm" data-toast="项目已结题，档案已归档">查看</button></td></tr>
               </tbody>
             </table>
           </div>
 
-          <div class="grid g3" style="margin-top:14px;">
+          <div class="grid g21" style="margin-top:14px;">
             <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="file-search"></i>方案解析与变更</div><span class="tag blue">AI 解析</span></div>
-              <div class="info-rows">
-                <div class="info-row"><span class="k">方案文档</span><span class="v">CD2026-001 方案 V3.0.pdf</span></div>
-                <div class="info-row"><span class="k">流程节点</span><span class="v">36 个（随访 8 / 采样 12 / 处理 16）</span></div>
-                <div class="info-row"><span class="k">最近变更</span><span class="v">V2.0 → V3.0：新增 V4 尿液样本</span></div>
-                <div class="info-row"><span class="k">影响</span><span class="v"><span class="tag amber">3 个流程节点需更新</span></span></div>
-              </div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="history"></i>最近同步日志</div><span class="tag green">全部成功</span></div>
+              <table class="tbl compact">
+                <thead><tr><th>时间</th><th>同步类型</th><th>更新项目</th><th>结果</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">11-03 08:30</td><td>定时同步</td><td>5 个项目</td><td><span class="tag green">成功</span></td></tr>
+                  <tr><td class="mono">11-02 18:10</td><td>定时同步</td><td>无字段变化</td><td><span class="tag green">成功</span></td></tr>
+                  <tr><td class="mono">11-01 09:05</td><td>方案变更推送</td><td>CD2026-001</td><td><span class="tag amber">部分成功</span></td></tr>
+                </tbody>
+              </table>
             </div>
             <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="workflow"></i>SOP 结构化</div><span class="tag green">已生成</span></div>
-              <div class="info-rows">
-                <div class="info-row"><span class="k">SOP 文档</span><span class="v">SOP-SMP-007 V3.3</span></div>
-                <div class="info-row"><span class="k">转化为</span><span class="v">标准化表单 + 12 个操作步骤</span></div>
-                <div class="info-row"><span class="k">受试者编号</span><span class="v">PRJ 前缀 + 4 位流水号</span></div>
-                <div class="info-row"><span class="k">关联表单</span><span class="v">5 个（采集 / 转运 / 离心 / 分装 / 入库）</span></div>
-              </div>
-            </div>
-            <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="shield-check"></i>伦理审查与合规状态</div><span class="tag green">正常</span></div>
-              <div class="info-rows">
-                <div class="info-row"><span class="k">伦理审查</span><span class="v"><span class="tag green">已批准</span> 意见 V1.0 · 2026-08-02</span></div>
-                <div class="info-row"><span class="k">跟踪审查</span><span class="v">每 12 个月（随风险调整）</span></div>
-                <div class="info-row"><span class="k">记录保存</span><span class="v">试验药物批准上市后 5 年</span></div>
-                <div class="info-row"><span class="k">剩余生物样本</span><span class="v">知情同意 v2.1 已明确保存/共享范围</span></div>
-              </div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="list-checks"></i>待处理事项</div><span class="tag amber">3 项</span></div>
+              <div class="issue" style="padding:7px 0;"><div class="ic amber"><i data-lucide="git-compare"></i></div><div class="body"><div class="t">CD2026-001 方案变更待确认</div><div class="d">V3.0 新增 V4 尿液样本与 PK 采血点。</div></div></div>
+              <div class="issue" style="padding:7px 0;"><div class="ic blue"><i data-lucide="file-text"></i></div><div class="body"><div class="t">2 个项目资料待补充</div><div class="d">CD2026-002 / CD2025-018 访视点待人工确认。</div></div></div>
+              <div class="issue" style="padding:7px 0;border-bottom:none;"><div class="ic green"><i data-lucide="check"></i></div><div class="body"><div class="t">其余项目同步正常</div><div class="d">基础信息与入组状态均为最新。</div></div></div>
             </div>
           </div>
         </div>
@@ -1744,7 +1747,7 @@ body { background: var(--background); font-size: 13px; }
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-modal="modal-protocol-doc"><i data-lucide="file-text" style="width:12px;height:12px;"></i>方案原文</button>
               <button class="btn btn-secondary btn-sm" data-modal="modal-protocol-diff"><i data-lucide="git-compare" style="width:12px;height:12px;"></i>版本比对</button>
-              <button class="btn btn-primary btn-sm" data-goto="section-change-analysis"><i data-lucide="sparkles" style="width:12px;height:12px;"></i>AI 变更分析</button>
+              <button class="btn btn-primary btn-sm" data-goto="section-project-change"><i data-lucide="sparkles" style="width:12px;height:12px;"></i>AI 变更分析</button>
             </div>
           </div>
 
@@ -1761,6 +1764,7 @@ body { background: var(--background); font-size: 13px; }
               <div class="tab" data-tab="diff">方案比对</div>
               <div class="tab" data-tab="impact">变更影响</div>
               <div class="tab" data-tab="sop">SOP 结构化</div>
+              <div class="tab" data-tab="ctms">CTMS 同步</div>
             </div>
 
             <div class="tab-pane active" data-pane="parse">
@@ -1853,6 +1857,35 @@ body { background: var(--background); font-size: 13px; }
                 </tbody>
               </table>
             </div>
+
+            <div class="tab-pane" data-pane="ctms">
+              <div class="panel flat" style="display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:10px;">
+                <span class="tag green"><i class="dot green"></i>CTMS 已连接</span>
+                <span class="tiny muted">最近同步 2026-11-03 08:30 · 成功 5 / 5</span>
+                <span class="grow"></span>
+                <button class="btn btn-secondary btn-sm" data-toast="已重新同步 CD2026-001，更新 8 个字段"><i data-lucide="refresh-cw" style="width:11px;height:11px;"></i>立即同步</button>
+              </div>
+              <div class="panel-s" style="margin-bottom:5px;">字段映射</div>
+              <table class="tbl compact">
+                <thead><tr><th>CTMS 字段</th><th>本地字段</th><th>示例值</th><th>最近更新</th><th>状态</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">project_code</td><td>项目号</td><td class="mono">CD2026-001</td><td class="mono">11-03 08:30</td><td><span class="tag green">已同步</span></td></tr>
+                  <tr><td class="mono">protocol_no</td><td>方案号</td><td class="mono">CD2026-001-V3.0</td><td class="mono">11-03 08:30</td><td><span class="tag green">已同步</span></td></tr>
+                  <tr><td class="mono">total_subjects</td><td>总例数</td><td class="mono">60</td><td class="mono">11-03 08:30</td><td><span class="tag green">已同步</span></td></tr>
+                  <tr><td class="mono">pi_name / cra / crc</td><td>PI / CRA / CRC</td><td>陈建国 / 赵磊 / 李敏</td><td class="mono">11-03 08:30</td><td><span class="tag green">已同步</span></td></tr>
+                  <tr><td class="mono">visit_points</td><td>访视点</td><td>V1–V6 + EOT + 随访</td><td class="mono">11-03 08:30</td><td><span class="tag green">已同步</span></td></tr>
+                </tbody>
+              </table>
+              <div class="panel-s" style="margin:10px 0 5px;">同步日志</div>
+              <table class="tbl compact">
+                <thead><tr><th>时间</th><th>同步类型</th><th>结果</th><th>说明</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">11-03 08:30</td><td>定时同步</td><td><span class="tag green">成功</span></td><td>更新项目基础信息与访视点</td></tr>
+                  <tr><td class="mono">11-02 18:10</td><td>定时同步</td><td><span class="tag green">成功</span></td><td>无字段变化</td></tr>
+                  <tr><td class="mono">11-01 09:05</td><td>方案变更推送</td><td><span class="tag amber">部分成功</span></td><td>方案号已更新，访视点待人工确认</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div class="grid g3" style="margin-top:12px;">
@@ -1891,12 +1924,12 @@ body { background: var(--background); font-size: 13px; }
 </div>
 
 <!-- ===== AI 变更分析 ===== -->
-<div id="section-change-analysis" class="proto-stack">
+<div id="section-project-change" class="proto-stack">
   <div class="proto-with-prd">
     <div class="macos-window">
       <div class="macos-body">
         <div class="app-sidebar" data-active="project"></div>
-        <div class="win-chrome-bar" data-crumb="项目管理 / CD2026-001 / AI 变更分析"></div>
+        <div class="win-chrome-bar" data-crumb="项目管理 / CD2026-001 / 方案变更"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
@@ -1906,13 +1939,22 @@ body { background: var(--background); font-size: 13px; }
                 <span class="tag blue">方案 V2.0 → V3.0</span>
                 <span class="tag">AI 置信度 96.4%</span>
               </div>
-              <div class="page-title">AI 变更分析</div>
-              <div class="page-sub">CD2026-001 · 2026-10-20 生成 · 分析范围：方案、SOP、表单、培训矩阵</div>
+              <div class="page-title">方案变更</div>
+              <div class="page-sub">CD2026-001 · 当前版本 V3.0 · 变更影响由 AI 辅助分析</div>
             </div>
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-toast="变更分析报告已导出（PDF）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出报告</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-change-tasks"><i data-lucide="list-plus" style="width:12px;height:12px;"></i>生成变更任务</button>
             </div>
+          </div>
+
+          <div class="panel" style="display:flex;align-items:center;gap:8px;padding:9px 14px;margin-bottom:14px;">
+            <span class="tiny muted">变更记录</span>
+            <span class="tag blue">V3.0 · 2026-10-20 · 当前</span>
+            <span class="tag">V2.0 · 2026-06-12 · 已归档</span>
+            <span class="tag">V1.0 · 2026-03-01 · 已归档</span>
+            <span class="grow"></span>
+            <button class="btn btn-secondary btn-sm" data-toast="已打开完整变更历史"><i data-lucide="history" style="width:11px;height:11px;"></i>变更历史</button>
           </div>
 
           <div class="kpi-grid" style="margin-bottom:14px;">
@@ -2005,12 +2047,12 @@ body { background: var(--background); font-size: 13px; }
     <div class="macos-window">
       <div class="macos-body">
         <div class="app-sidebar" data-active="collect"></div>
-        <div class="win-chrome-bar" data-crumb="业务管理 / 样本采集"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 样本采集 / 采集工单"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
-              <div class="page-title">样本采集</div>
-              <div class="page-sub">预约工单、采集登记、采集时间与人员记录</div>
+              <div class="page-title">采集工单</div>
+              <div class="page-sub">工单申请、移动端采集回传与复核确认</div>
             </div>
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-modal="modal-scan"><i data-lucide="scan-line" style="width:12px;height:12px;"></i>扫码登记</button>
@@ -2079,8 +2121,63 @@ body { background: var(--background); font-size: 13px; }
               <div class="form-group" style="margin-bottom:9px;"><label class="form-label">备注</label><input class="form-input" placeholder="如溶血、采血困难等" /></div>
               <div style="display:flex;gap:6px;">
                 <button class="btn btn-secondary btn-sm" style="flex:1;" data-toast="已打印样本标签"><i data-lucide="printer" style="width:12px;height:12px;"></i>打印标签</button>
-                <button class="btn btn-primary btn-sm" style="flex:1;" data-toast="采集登记已提交，已生成监管链节点"><i data-lucide="check" style="width:12px;height:12px;"></i>确认采样</button>
+                <button class="btn btn-primary btn-sm" id="collectReviewBtn" style="flex:1;" data-modal="modal-collect-review"><i data-lucide="badge-check" style="width:12px;height:12px;"></i>复核确认</button>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="section-collect-stats" class="proto-stack">
+  <div class="proto-with-prd">
+    <div class="macos-window">
+      <div class="macos-body">
+        <div class="app-sidebar" data-active="collect-stats"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 样本采集 / 采集统计"></div>
+        <div class="app-main">
+          <div class="page-head">
+            <div><div class="page-title">采集统计</div><div class="page-sub">按项目、样本类型与采集及时率统计</div></div>
+            <div class="toolbar"><button class="btn btn-primary btn-sm" data-toast="采集统计报表已导出"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
+          </div>
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="clipboard-list"></i>今日工单</div><div class="v">14<small>单</small></div><div class="d">已完成 9</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="test-tube"></i>今日采集</div><div class="v">28<small>管</small></div><div class="d up">按时率 96.4%</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="clock"></i>超时未采</div><div class="v">1<small>单</small></div><div class="d warn">S009 V2 超窗 2h</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="user-check"></i>采集人员</div><div class="v">6<small>人</small></div><div class="d">均已授权</div></div>
+          </div>
+          <div class="grid g2" style="margin-bottom:14px;">
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="activity"></i>近 7 日采集量</div><div class="panel-s">单位：管</div></div>
+              <div class="bar-chart" style="height:100px;">
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:42%"></div></div><div class="bar-label">10-28</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:55%"></div></div><div class="bar-label">10-29</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:38%"></div></div><div class="bar-label">10-30</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:66%"></div></div><div class="bar-label">10-31</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:48%"></div></div><div class="bar-label">11-01</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:74%"></div></div><div class="bar-label">11-02</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:62%"></div></div><div class="bar-label">11-03</div></div>
+              </div>
+            </div>
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="pie-chart"></i>样本类型分布</div><div class="panel-s">本月 386 管</div></div>
+              <div class="donut-wrap"><div class="donut" style="width:82px;height:82px;"><div class="donut-c"><b>386</b><span>本月采集</span></div></div>
+                <div class="legend" style="flex:1;"><span><i class="dot blue"></i>血清<b>38%</b></span><span><i class="dot" style="background:oklch(0.72 0.12 285)"></i>血浆<b>23%</b></span><span><i class="dot green"></i>全血<b>17%</b></span><span><i class="dot amber"></i>尿液<b>11%</b></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid g21">
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="table-2"></i>项目采集统计</div><span class="tag blue">按项目</span></div>
+              <table class="tbl compact"><thead><tr><th>项目</th><th class="num">工单</th><th class="num">采集管数</th><th>完成率</th><th>状态</th></tr></thead><tbody>
+                <tr><td class="strong">CD2026-001</td><td class="num">42</td><td class="num">386</td><td class="mono">92%</td><td><span class="tag green">正常</span></td></tr>
+                <tr><td class="strong">CD2026-002</td><td class="num">68</td><td class="num">742</td><td class="mono">88%</td><td><span class="tag green">正常</span></td></tr>
+                <tr><td class="strong">CD2025-018</td><td class="num">96</td><td class="num">1,280</td><td class="mono">95%</td><td><span class="tag green">正常</span></td></tr>
+                <tr><td class="strong">CD2025-006</td><td class="num">20</td><td class="num">168</td><td class="mono">100%</td><td><span class="tag gray">已完成</span></td></tr>
+              </tbody></table>
+            </div>
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="triangle-alert"></i>异常与超时</div><span class="tag amber">1 项</span></div>
+              <div class="issue"><div class="ic amber"><i data-lucide="clock"></i></div><div class="body"><div class="t">S009 V2 超时未采</div><div class="d">预约 08:00，超窗 2 小时，已通知 CRC 赵倩。</div></div></div>
+              <div class="issue"><div class="ic green"><i data-lucide="check"></i></div><div class="body"><div class="t">昨日超时工单已闭环</div><div class="d">S003 V1 已补采并通过复核。</div></div></div>
             </div>
           </div>
         </div>
@@ -2095,12 +2192,12 @@ body { background: var(--background); font-size: 13px; }
     <div class="macos-window">
       <div class="macos-body">
         <div class="app-sidebar" data-active="transport"></div>
-        <div class="win-chrome-bar" data-crumb="业务管理 / 样本转运"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 样本转运 / 转运工单"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
-              <div class="page-title">样本转运</div>
-              <div class="page-sub">转运信息、冷链温度、双方交接与状态跟踪</div>
+              <div class="page-title">转运工单</div>
+              <div class="page-sub">转运工单、冷链温度与双方交接</div>
             </div>
             <div class="toolbar">
               <span class="tag">数据时点 2026-10-28 09:00</span>
@@ -2184,18 +2281,75 @@ body { background: var(--background); font-size: 13px; }
   </div>
 </div>
 
+<div id="section-transport-stats" class="proto-stack">
+  <div class="proto-with-prd">
+    <div class="macos-window">
+      <div class="macos-body">
+        <div class="app-sidebar" data-active="transport-stats"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 样本转运 / 转运统计"></div>
+        <div class="app-main">
+          <div class="page-head">
+            <div><div class="page-title">转运统计</div><div class="page-sub">转运量、时效、温度异常与交接完成率</div></div>
+            <div class="toolbar"><button class="btn btn-primary btn-sm" data-toast="转运统计报表已导出"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
+          </div>
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="truck"></i>今日转运单</div><div class="v">5<small>单</small></div><div class="d">已交接 3</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="package-check"></i>在途</div><div class="v">1<small>单</small></div><div class="d">TR-1028-003</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="thermometer"></i>温度异常</div><div class="v">1<small>项</small></div><div class="d warn">最高 7.8℃</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="timer"></i>准时送达率</div><div class="v">96<small>%</small></div><div class="d up">较上月 +1.2%</div></div>
+          </div>
+          <div class="grid g2" style="margin-bottom:14px;">
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="activity"></i>近 7 日转运量</div><div class="panel-s">单位：单</div></div>
+              <div class="bar-chart" style="height:100px;">
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:38%"></div></div><div class="bar-label">10-28</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:52%"></div></div><div class="bar-label">10-29</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:44%"></div></div><div class="bar-label">10-30</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:68%"></div></div><div class="bar-label">10-31</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:56%"></div></div><div class="bar-label">11-01</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:72%"></div></div><div class="bar-label">11-02</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:60%"></div></div><div class="bar-label">11-03</div></div>
+              </div>
+            </div>
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="gauge"></i>时效达成率</div><div class="panel-s">本月</div></div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>2–8℃ 温控达标</span><span class="mono">98%</span></div><div class="progress ok"><i style="width:98%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>4 小时内送达</span><span class="mono">96%</span></div><div class="progress"><i style="width:96%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>双人交接签名</span><span class="mono">100%</span></div><div class="progress ok"><i style="width:100%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>包装完整率</span><span class="mono">99%</span></div><div class="progress ok"><i style="width:99%"></i></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid g21">
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="table-2"></i>项目转运统计</div><span class="tag blue">按项目</span></div>
+              <table class="tbl compact"><thead><tr><th>项目</th><th class="num">转运单</th><th class="num">样本管</th><th>准时率</th><th>状态</th></tr></thead><tbody>
+                <tr><td class="strong">CD2026-001</td><td class="num">18</td><td class="num">386</td><td class="mono">96%</td><td><span class="tag green">正常</span></td></tr>
+                <tr><td class="strong">CD2026-002</td><td class="num">24</td><td class="num">742</td><td class="mono">94%</td><td><span class="tag green">正常</span></td></tr>
+                <tr><td class="strong">CD2025-018</td><td class="num">32</td><td class="num">1,280</td><td class="mono">97%</td><td><span class="tag green">正常</span></td></tr>
+              </tbody></table>
+            </div>
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="triangle-alert"></i>温度异常</div><span class="tag amber">1 项</span></div>
+              <div class="issue"><div class="ic amber"><i data-lucide="thermometer"></i></div><div class="body"><div class="t">TR-1028-003 最高 7.8℃</div><div class="d">未超过 8℃ 上限，系统已标记待 PI 复核。</div></div></div>
+              <div class="issue"><div class="ic green"><i data-lucide="check"></i></div><div class="body"><div class="t">其余 4 单温度正常</div><div class="d">全程 2–8℃，交接签名完整。</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 样本处理 ===== -->
 <div id="section-process" class="proto-stack">
   <div class="proto-with-prd">
     <div class="macos-window">
       <div class="macos-body">
         <div class="app-sidebar" data-active="process"></div>
-        <div class="win-chrome-bar" data-crumb="业务管理 / 样本处理"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 样本处理 / 处理工单"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
-              <div class="page-title">样本处理</div>
-              <div class="page-sub">离心、静置、分装过程记录与设备数据自动采集</div>
+              <div class="page-title">处理工单</div>
+              <div class="page-sub">处理工单、离心分装与设备数据留痕</div>
             </div>
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-toast="已打开设备参数模板"><i data-lucide="sliders-horizontal" style="width:12px;height:12px;"></i>参数模板</button>
@@ -2262,7 +2416,63 @@ body { background: var(--background); font-size: 13px; }
                 <div class="panel flat" style="flex:1;padding:9px;text-align:center;"><i data-lucide="video" style="width:16px;height:16px;color:var(--text-3);"></i><div class="tiny muted" style="margin-top:3px;">分装视频</div></div>
                 <div class="panel flat" style="flex:1;padding:9px;text-align:center;"><i data-lucide="file-check-2" style="width:16px;height:16px;color:var(--success);"></i><div class="tiny muted" style="margin-top:3px;">设备报告</div></div>
               </div>
-              <button class="btn btn-primary btn-sm" style="width:100%;margin-top:9px;" data-toast="处理记录已提交，等待入库"><i data-lucide="check" style="width:12px;height:12px;"></i>完成处理并提交</button>
+              <button class="btn btn-primary btn-sm" id="processReviewBtn" style="width:100%;margin-top:9px;" data-modal="modal-process-review"><i data-lucide="badge-check" style="width:12px;height:12px;"></i>复核确认</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="section-process-stats" class="proto-stack">
+  <div class="proto-with-prd">
+    <div class="macos-window">
+      <div class="macos-body">
+        <div class="app-sidebar" data-active="process-stats"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 样本处理 / 处理统计"></div>
+        <div class="app-main">
+          <div class="page-head">
+            <div><div class="page-title">处理统计</div><div class="page-sub">处理任务量、设备利用率、平均处理时长与中止情况</div></div>
+            <div class="toolbar"><button class="btn btn-primary btn-sm" data-toast="处理统计报表已导出"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
+          </div>
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="flask-conical"></i>今日任务</div><div class="v">5<small>个</small></div><div class="d">已完成 3</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="clock"></i>平均处理时长</div><div class="v">18<small>min</small></div><div class="d up">较上周 -2 min</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="activity"></i>设备在线</div><div class="v">3<small>台</small></div><div class="d">运行中 1</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="circle-x"></i>已中止</div><div class="v">1<small>个</small></div><div class="d warn">样本量不足</div></div>
+          </div>
+          <div class="grid g2" style="margin-bottom:14px;">
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="activity"></i>近 7 日处理量</div><div class="panel-s">单位：任务</div></div>
+              <div class="bar-chart" style="height:100px;">
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:40%"></div></div><div class="bar-label">10-28</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:58%"></div></div><div class="bar-label">10-29</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:46%"></div></div><div class="bar-label">10-30</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:70%"></div></div><div class="bar-label">10-31</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:52%"></div></div><div class="bar-label">11-01</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:78%"></div></div><div class="bar-label">11-02</div></div>
+                <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:64%"></div></div><div class="bar-label">11-03</div></div>
+              </div>
+            </div>
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="cpu"></i>设备利用率</div><div class="panel-s">本月</div></div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>DEV-CEN-03 离心机</span><span class="mono">72%</span></div><div class="progress"><i style="width:72%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>DEV-CEN-01 离心机</span><span class="mono">45%</span></div><div class="progress"><i style="width:45%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>BENCH-02 分装台</span><span class="mono">38%</span></div><div class="progress"><i style="width:38%"></i></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid g21">
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="table-2"></i>项目处理统计</div><span class="tag blue">按项目</span></div>
+              <table class="tbl compact"><thead><tr><th>项目</th><th class="num">任务</th><th class="num">处理管数</th><th>完成率</th><th>状态</th></tr></thead><tbody>
+                <tr><td class="strong">CD2026-001</td><td class="num">28</td><td class="num">386</td><td class="mono">96%</td><td><span class="tag green">正常</span></td></tr>
+                <tr><td class="strong">CD2026-002</td><td class="num">42</td><td class="num">742</td><td class="mono">94%</td><td><span class="tag green">正常</span></td></tr>
+                <tr><td class="strong">CD2025-018</td><td class="num">66</td><td class="num">1,280</td><td class="mono">97%</td><td><span class="tag green">正常</span></td></tr>
+              </tbody></table>
+            </div>
+            <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="triangle-alert"></i>处理异常</div><span class="tag red">1 项</span></div>
+              <div class="issue"><div class="ic red"><i data-lucide="circle-x"></i></div><div class="body"><div class="t">PR-1028-003 已中止</div><div class="d">S004 V2 尿液样本量不足，已通知 CRC 重新采集。</div></div></div>
+              <div class="issue"><div class="ic green"><i data-lucide="check"></i></div><div class="body"><div class="t">其余任务处理正常</div><div class="d">离心、分装与设备数据均完整。</div></div></div>
             </div>
           </div>
         </div>
@@ -2672,62 +2882,64 @@ body { background: var(--background); font-size: 13px; }
 </div>
 
 <!-- ===== 数据统计 ===== -->
-<div id="section-stats" class="proto-stack">
+<div id="section-project-stats" class="proto-stack">
   <div class="proto-with-prd">
     <div class="macos-window">
       <div class="macos-body">
-        <div class="app-sidebar" data-active="stats"></div>
-        <div class="win-chrome-bar" data-crumb="质量与合规 / 数据统计"></div>
+        <div class="app-sidebar" data-active="project-stats"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 项目管理 / 项目统计"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
-              <div class="page-title">数据统计与查询</div>
-              <div class="page-sub">样本查询、状态分析、报表导出 · 统计范围：3 个在研项目</div>
+              <div class="page-title">项目统计</div>
+              <div class="page-sub">在研、已完成、已结题项目与入组、样本量统计</div>
             </div>
             <div class="toolbar">
-              <button class="btn btn-secondary btn-sm" data-toast="已切换至 2026 年 10 月"><i data-lucide="calendar-days" style="width:12px;height:12px;"></i>2026 年 10 月</button>
-              <button class="btn btn-primary btn-sm" data-toast="已生成统计报表并加入导出队列"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button>
+              <button class="btn btn-secondary btn-sm" data-toast="已切换至 2026 年 11 月"><i data-lucide="calendar-days" style="width:12px;height:12px;"></i>2026 年 11 月</button>
+              <button class="btn btn-primary btn-sm" data-toast="项目统计报表已生成并加入导出队列"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button>
             </div>
           </div>
 
-          <div class="kpi-grid" style="margin-bottom:12px;">
-            <div class="kpi"><div class="l"><i data-lucide="test-tube"></i>累计采集</div><div class="v">2,408<small>管</small></div><div class="d up">同比 +18.6%</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="archive"></i>在库样本</div><div class="v">2,196<small>管</small></div><div class="d">使用率 91.2%</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="log-out"></i>已出库</div><div class="v">186<small>管</small></div><div class="d">检测 168 · 销毁 18</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="circle-check"></i>样本合格率</div><div class="v">98.7<small>%</small></div><div class="d up">较上月 +0.4%</div></div>
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="folder-kanban"></i>在研项目</div><div class="v">3<small>个</small></div><div class="d">覆盖 2 个中心</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="circle-check"></i>已完成</div><div class="v">1<small>个</small></div><div class="d">待归档</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="archive"></i>已结题</div><div class="v">1<small>个</small></div><div class="d">档案已归档</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="users"></i>在组受试者</div><div class="v">86<small>例</small></div><div class="d up">本周新增 4 例</div></div>
           </div>
 
-          <div class="grid g2" style="margin-bottom:12px;">
+          <div class="grid g2" style="margin-bottom:14px;">
             <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="pie-chart"></i>样本类型分布</div><div class="panel-s">累计 2,408 管</div></div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="users"></i>项目入组进度</div><div class="panel-s">已入组 / 计划</div></div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>CD2026-001 · PD-1 III 期</span><span class="mono">12 / 60</span></div><div class="progress"><i style="width:20%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>CD2026-002 · ADC II 期</span><span class="mono">28 / 40</span></div><div class="progress"><i style="width:70%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>CD2025-018 · GLP-1 III 期</span><span class="mono">46 / 50</span></div><div class="progress"><i style="width:92%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>CD2025-006 · 疫苗 I 期</span><span class="mono">20 / 20</span></div><div class="progress ok"><i style="width:100%"></i></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>CD2024-011 · 小分子 II 期</span><span class="mono">36 / 36</span></div><div class="progress ok"><i style="width:100%"></i></div></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="pie-chart"></i>项目状态分布</div><div class="panel-s">共 5 个项目</div></div>
               <div class="donut-wrap">
-                <div class="donut" style="background:conic-gradient(var(--primary) 0 38%, oklch(0.68 0.12 195) 38% 61%, oklch(0.62 0.13 160) 61% 78%, oklch(0.72 0.13 75) 78% 89%, oklch(0.62 0.05 250) 89% 100%);"><div class="donut-c"><b>2,408</b><span>累计采集</span></div></div>
+                <div class="donut" style="background:conic-gradient(var(--primary) 0 60%, var(--success) 60% 80%, var(--text-3) 80% 100%);"><div class="donut-c"><b>5</b><span>项目总数</span></div></div>
                 <div class="legend" style="flex:1;">
-                  <span><i class="dot" style="background:var(--primary)"></i>血清<b>38%</b></span>
-                  <span><i class="dot" style="background:oklch(0.68 0.12 195)"></i>血浆<b>23%</b></span>
-                  <span><i class="dot" style="background:oklch(0.62 0.13 160)"></i>全血<b>17%</b></span>
-                  <span><i class="dot" style="background:oklch(0.72 0.13 75)"></i>尿液<b>11%</b></span>
-                  <span><i class="dot" style="background:oklch(0.62 0.05 250)"></i>组织/其他<b>11%</b></span>
+                  <span><i class="dot blue"></i>进行中<b>3</b></span>
+                  <span><i class="dot green"></i>已完成<b>1</b></span>
+                  <span><i class="dot gray"></i>已结题<b>1</b></span>
                 </div>
               </div>
-            </div>
-            <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="bar-chart-3"></i>月度采集与入库</div><div class="panel-s">近 6 个月</div></div>
-              <div class="bar-chart" style="height:112px;">
-                <div class="bar-col"><div class="bar-stack"><div class="bar" style="height:42%"></div><div class="bar alt" style="height:28%"></div></div><div class="bar-label">05</div></div>
-                <div class="bar-col"><div class="bar-stack"><div class="bar" style="height:55%"></div><div class="bar alt" style="height:38%"></div></div><div class="bar-label">06</div></div>
-                <div class="bar-col"><div class="bar-stack"><div class="bar" style="height:48%"></div><div class="bar alt" style="height:33%"></div></div><div class="bar-label">07</div></div>
-                <div class="bar-col"><div class="bar-stack"><div class="bar" style="height:68%"></div><div class="bar alt" style="height:46%"></div></div><div class="bar-label">08</div></div>
-                <div class="bar-col"><div class="bar-stack"><div class="bar" style="height:76%"></div><div class="bar alt" style="height:52%"></div></div><div class="bar-label">09</div></div>
-                <div class="bar-col"><div class="bar-stack"><div class="bar" style="height:92%"></div><div class="bar alt" style="height:64%"></div></div><div class="bar-label">10</div></div>
+              <div class="split-line"></div>
+              <div class="info-rows">
+                <div class="info-row"><span class="k">平均入组完成率</span><span class="v">76.4%</span></div>
+                <div class="info-row"><span class="k">本月新增受试者</span><span class="v">4 例</span></div>
+                <div class="info-row"><span class="k">方案变更待处理</span><span class="v" style="color:var(--warning);">1 项</span></div>
               </div>
-              <div class="storage-legend"><span><i class="dot blue"></i>采集</span><span><i class="dot green"></i>入库</span><span style="margin-left:auto;">10 月：采集 486 · 入库 342</span></div>
             </div>
           </div>
 
           <div class="grid g21">
             <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="folder-kanban"></i>项目样本量</div><div class="panel-s">按在库样本降序</div></div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="bar-chart-3"></i>项目样本量</div><div class="panel-s">按在库样本降序</div></div>
               <div style="display:flex;flex-direction:column;gap:8px;">
                 <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>CD2025-018 · GLP-1 III 期</span><span class="mono">1,280</span></div><div class="progress"><i style="width:92%"></i></div></div>
                 <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px;"><span>CD2026-002 · ADC II 期</span><span class="mono">742</span></div><div class="progress"><i style="width:58%"></i></div></div>
@@ -2737,14 +2949,15 @@ body { background: var(--background); font-size: 13px; }
               </div>
             </div>
             <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="file-down"></i>常用报表</div><span class="tag blue">可导出</span></div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="table-2"></i>项目统计清单</div><span class="tag blue">可导出</span></div>
               <table class="tbl compact">
-                <thead><tr><th>报表</th><th>周期</th><th>状态</th></tr></thead>
+                <thead><tr><th>项目</th><th class="num">入组</th><th class="num">样本</th><th>完成率</th><th>状态</th></tr></thead>
                 <tbody>
-                  <tr><td>样本库存月报</td><td>按月</td><td><button class="btn btn-ghost btn-sm" data-toast="生成中：样本库存月报">生成</button></td></tr>
-                  <tr><td>采集及时率报表</td><td>按周</td><td><button class="btn btn-ghost btn-sm" data-toast="生成中：采集及时率报表">生成</button></td></tr>
-                  <tr><td>温度异常汇总</td><td>按日</td><td><button class="btn btn-ghost btn-sm" data-toast="生成中：温度异常汇总">生成</button></td></tr>
-                  <tr><td>样本销毁清单</td><td>按项目</td><td><button class="btn btn-ghost btn-sm" data-toast="生成中：样本销毁清单">生成</button></td></tr>
+                  <tr><td class="strong">CD2026-001</td><td class="num">12 / 60</td><td class="num">386</td><td class="mono">20%</td><td><span class="tag green">进行中</span></td></tr>
+                  <tr><td class="strong">CD2026-002</td><td class="num">28 / 40</td><td class="num">742</td><td class="mono">70%</td><td><span class="tag green">进行中</span></td></tr>
+                  <tr><td class="strong">CD2025-018</td><td class="num">46 / 50</td><td class="num">1,280</td><td class="mono">92%</td><td><span class="tag green">进行中</span></td></tr>
+                  <tr><td class="strong">CD2025-006</td><td class="num">20 / 20</td><td class="num">168</td><td class="mono">100%</td><td><span class="tag gray">已完成</span></td></tr>
+                  <tr><td class="strong">CD2024-011</td><td class="num">36 / 36</td><td class="num">512</td><td class="mono">100%</td><td><span class="tag gray">已结题</span></td></tr>
                 </tbody>
               </table>
             </div>
@@ -2761,12 +2974,12 @@ body { background: var(--background); font-size: 13px; }
     <div class="macos-window">
       <div class="macos-body">
         <div class="app-sidebar" data-active="mobile"></div>
-        <div class="win-chrome-bar" data-crumb="应用与设置 / 移动端应用"></div>
+        <div class="win-chrome-bar" data-crumb="应用与设置 / 移动端小程序"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
-              <div class="page-title">移动端应用</div>
-              <div class="page-sub">现场扫码、采集登记与转运交接 · 小程序 / H5</div>
+              <div class="page-title">移动端小程序</div>
+              <div class="page-sub">医院内网 · 公众号入口 · 工号登录 · 前端只采集不改数据</div>
             </div>
             <div class="toolbar">
               <span class="tag green"><i class="dot green"></i>已绑定 6 台现场设备</span>
@@ -2774,87 +2987,128 @@ body { background: var(--background); font-size: 13px; }
             </div>
           </div>
 
-          <div style="display:flex;gap:22px;justify-content:center;align-items:flex-start;padding:8px 0 4px;">
-            <div class="phone">
-              <div class="phone-screen">
-                <div class="p-status"><span>09:41</span><span>5G ▮▮▮ 86%</span></div>
-                <div class="p-head"><b>样本接收</b><div>扫码核对 · 双人交接</div></div>
-                <div class="p-body">
-                  <div class="p-scan"><i data-lucide="scan-line"></i><span>对准样本条码扫描</span></div>
-                  <div class="p-card">
-                    <div class="p-label">最近扫描</div>
-                    <div class="p-value mono" style="font-size:9px;">CD2026-001-01-S007-V3-SER-01</div>
-                    <div style="display:flex;gap:4px;margin-top:5px;"><span class="tag green">血清</span><span class="tag blue">V3</span><span class="tag">6 管</span></div>
+          <div class="grid g21">
+            <div class="panel" style="display:flex;justify-content:center;padding:18px;">
+              <div class="phone" style="width:300px;">
+                <div class="phone-screen" style="min-height:560px;">
+                  <div class="p-status"><span>09:41</span><span>医院内网 ▮▮▮</span></div>
+                  <div class="p-head"><b>样本采集</b><div>江苏省肿瘤医院 · 小程序</div></div>
+                  <div class="mp-dots">
+                    <span class="mp-dot active" data-mp-dot="1">1</span><span class="mp-dot" data-mp-dot="2">2</span><span class="mp-dot" data-mp-dot="3">3</span><span class="mp-dot" data-mp-dot="4">4</span><span class="mp-dot" data-mp-dot="5">5</span>
                   </div>
-                  <div class="p-card">
-                    <div class="p-label">交接信息</div>
-                    <div class="p-row"><span>发出方</span><b>李敏 · CRC</b></div>
-                    <div class="p-row"><span>接收方</span><b>张三</b></div>
-                    <div class="p-row"><span>冷链温度</span><b style="color:var(--success)">4.2℃</b></div>
-                  </div>
-                  <button class="p-btn" id="mBtnReceive" data-modal="modal-mobile-receive">确认接收并签名</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="phone">
-              <div class="phone-screen">
-                <div class="p-status"><span>09:41</span><span>5G ▮▮▮ 86%</span></div>
-                <div class="p-head"><b>采集登记</b><div>受试者 S007 · V3 访视</div></div>
-                <div class="p-body">
-                  <div class="p-card">
-                    <div class="p-label">受试者</div>
-                    <div class="p-value">S007 · 张**</div>
-                    <div class="p-label" style="margin-top:5px;">项目 / 访视</div>
-                    <div style="font-size:9px;">CD2026-001 · V3 第 1 周期</div>
-                  </div>
-                  <div class="p-card">
-                    <div class="p-label">采集类型</div>
-                    <div class="p-value">PK 6 点 · 血清 5 mL</div>
-                    <div class="p-label" style="margin-top:5px;">实际采集时间</div>
-                    <div class="p-value mono" style="font-size:9px;">2026-10-28 08:32</div>
-                  </div>
-                  <div class="p-card">
-                    <div class="p-row"><span>条码已打印</span><b style="color:var(--success)">是</b></div>
-                    <div class="p-row"><span>采血量确认</span><b>5 mL</b></div>
-                    <div class="p-row"><span>样本状态</span><b>正常</b></div>
-                  </div>
-                  <button class="p-btn" id="mBtnCollect" data-modal="modal-mobile-collect">提交采集登记</button>
-                  <button class="p-btn ghost" id="mBtnPhoto" data-modal="modal-mobile-photo">补拍照片</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="phone">
-              <div class="phone-screen">
-                <div class="p-status"><span>09:41</span><span>5G ▮▮▮ 86%</span></div>
-                <div class="p-head"><b>转运交接</b><div>TR-1028-003 · 运输中</div></div>
-                <div class="p-body">
-                  <div class="p-card">
-                    <div class="p-label">转运单</div>
-                    <div class="p-value mono" style="font-size:10px;">TR-1028-003</div>
-                    <div class="p-label" style="margin-top:5px;">路线</div>
-                    <div style="font-size:9px;">采血室 → 样本库</div>
-                    <div style="display:flex;gap:4px;margin-top:5px;"><span class="tag green">6 管</span><span class="tag amber">最高 7.8℃</span></div>
-                  </div>
-                  <div class="p-card">
-                    <div class="p-label">交接签署</div>
-                    <div style="border:1px dashed var(--border-2);border-radius:8px;height:54px;display:flex;align-items:center;justify-content:center;margin-top:4px;">
-                      <span style="font-family:var(--font-mono);font-size:10px;color:var(--primary);">张三（手写签名）</span>
+                  <div class="p-body">
+                    <div class="mp-step active" data-mp="1">
+                      <div class="p-card" style="text-align:center;padding:16px 10px;">
+                        <div class="avatar" style="width:44px;height:44px;font-size:16px;margin:0 auto 8px;">张</div>
+                        <div class="p-value">张三 · 样本管理员</div>
+                        <div class="p-label" style="margin-top:2px;">江苏省肿瘤医院 · 内网</div>
+                      </div>
+                      <div class="p-card"><div class="p-label">工号</div><div class="p-value mono">S-0137</div></div>
+                      <div class="p-card"><div class="p-label">访问网络</div><div class="p-value" style="color:var(--success);">医院内网 · 已认证</div></div>
+                      <button class="p-btn" data-mp-step="2">进入小程序</button>
+                      <div class="tiny muted" style="text-align:center;">仅限医院内网访问，前端只采集不改数据</div>
                     </div>
-                    <div class="p-row" style="margin-top:5px;"><span>签署时间</span><b class="mono" style="font-size:8px;">10-28 09:02:28</b></div>
+
+                    <div class="mp-step" data-mp="2">
+                      <div style="display:flex;justify-content:space-between;align-items:center;"><span class="p-label">今日任务</span><span class="tag amber">3 条</span></div>
+                      <div class="p-card" data-mp-step="3" style="cursor:pointer;">
+                        <div style="display:flex;justify-content:space-between;"><b style="font-size:10px;">S007 · V3 血清</b><span class="tag amber">待采集</span></div>
+                        <div class="p-label">CD2026-001 · 预约 08:30</div>
+                      </div>
+                      <div class="p-card">
+                        <div style="display:flex;justify-content:space-between;"><b style="font-size:10px;">S008 · V2 全血</b><span class="tag">已确认</span></div>
+                        <div class="p-label">CD2026-001 · 预约 09:00</div>
+                      </div>
+                      <div class="p-card">
+                        <div style="display:flex;justify-content:space-between;"><b style="font-size:10px;">S009 · V2 血浆</b><span class="tag red">超时</span></div>
+                        <div class="p-label">CD2026-001 · 预约 08:00</div>
+                      </div>
+                      <button class="p-btn ghost" data-mp-step="1">退出登录</button>
+                    </div>
+
+                    <div class="mp-step" data-mp="3">
+                      <div class="p-scan"><i data-lucide="scan-line"></i><span>对准样本条码扫描</span></div>
+                      <div class="p-card">
+                        <div class="p-label">识别结果</div>
+                        <div class="p-value mono" style="font-size:9px;">CD2026-001-01-S007-V3-SER-01</div>
+                        <div class="p-row" style="margin-top:4px;"><span>样本类型</span><b>血清 · 5 mL</b></div>
+                        <div class="p-row"><span>访视</span><b>V3 第 1 周期</b></div>
+                      </div>
+                      <button class="p-btn" data-mp-step="4">确认样本</button>
+                      <button class="p-btn ghost" data-mp-step="2">返回任务</button>
+                    </div>
+
+                    <div class="mp-step" data-mp="4">
+                      <div class="p-card">
+                        <div class="p-label">实际采集时间</div><div class="p-value mono" style="font-size:9px;">2026-11-03 08:32</div>
+                        <div class="p-label" style="margin-top:5px;">采血量</div><div class="p-value">5 mL</div>
+                        <div class="p-label" style="margin-top:5px;">样本状态</div><div class="p-value" style="color:var(--success);">正常</div>
+                      </div>
+                      <div class="p-card">
+                        <div class="p-row"><span>条码已打印</span><b style="color:var(--success);">是</b></div>
+                        <div class="p-row"><span>照片留痕</span><b>2 张</b></div>
+                      </div>
+                      <button class="p-btn ghost" data-toast="已调用摄像头拍照留痕">拍照留痕</button>
+                      <button class="p-btn" data-mp-step="5">保存并提交</button>
+                    </div>
+
+                    <div class="mp-step" data-mp="5">
+                      <div style="text-align:center;padding:14px 0 6px;">
+                        <i data-lucide="check-circle-2" style="width:42px;height:42px;color:var(--success);"></i>
+                        <div class="p-value" style="margin-top:5px;">提交成功</div>
+                        <div class="p-label">数据已通过网闸回传内网</div>
+                      </div>
+                      <div class="p-card">
+                        <div class="p-row"><span>工单号</span><b class="mono">CO-1028-007</b></div>
+                        <div class="p-row"><span>回传状态</span><b style="color:var(--success);">已到达</b></div>
+                        <div class="p-row"><span>后台复核</span><b style="color:var(--warning);">待复核</b></div>
+                      </div>
+                      <button class="p-btn" data-mp-step="2">返回任务列表</button>
+                    </div>
                   </div>
-                  <button class="p-btn" id="mBtnTransfer" data-modal="modal-mobile-transfer">提交交接</button>
-                  <button class="p-btn ghost" id="mBtnAbnormal" data-modal="modal-mobile-abnormal">标记异常</button>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="grid g3" style="margin-top:14px;">
-            <div class="panel flat"><div class="panel-t"><i data-lucide="scan-line"></i>扫码即操作</div><div class="tiny muted" style="margin-top:3px;">扫描样本条码直接进入接收、采集或交接流程，减少手工录入。</div></div>
-            <div class="panel flat"><div class="panel-t"><i data-lucide="wifi-off"></i>弱网可用</div><div class="tiny muted" style="margin-top:3px;">现场网络不稳定时本地暂存，恢复后自动同步并保留操作时间戳。</div></div>
-            <div class="panel flat"><div class="panel-t"><i data-lucide="pen-line"></i>移动签名</div><div class="tiny muted" style="margin-top:3px;">交接双方在移动端完成电子签名，签名与监管链节点绑定。</div></div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div class="panel">
+                <div class="panel-h"><div class="panel-t"><i data-lucide="monitor-smartphone"></i>后台工单</div><span class="tag amber" id="mpBackendStatus">等待提交</span></div>
+                <div id="mpBackendPending">
+                  <div class="info-rows">
+                    <div class="info-row"><span class="k">工单号</span><span class="v mono">CO-1028-007</span></div>
+                    <div class="info-row"><span class="k">受试者 / 访视</span><span class="v">S007 · V3</span></div>
+                    <div class="info-row"><span class="k">采集类型</span><span class="v">PK 6 点 · 血清</span></div>
+                    <div class="info-row"><span class="k">状态</span><span class="v">移动端采集中</span></div>
+                  </div>
+                  <div class="panel flat" style="margin-top:9px;padding:8px;font-size:9px;color:var(--text-2);">小程序提交后，数据经网闸回传并自动写入该工单。</div>
+                </div>
+                <div id="mpBackendReceived" style="display:none;">
+                  <div class="info-rows">
+                    <div class="info-row"><span class="k">工单号</span><span class="v mono">CO-1028-007</span></div>
+                    <div class="info-row"><span class="k">采集时间</span><span class="v mono">11-03 08:32</span></div>
+                    <div class="info-row"><span class="k">采血量</span><span class="v">5 mL</span></div>
+                    <div class="info-row"><span class="k">照片</span><span class="v">2 张</span></div>
+                    <div class="info-row"><span class="k">网闸回传</span><span class="v" style="color:var(--success);">成功</span></div>
+                    <div class="info-row"><span class="k">后台状态</span><span class="v" style="color:var(--warning);">待复核</span></div>
+                  </div>
+                  <button class="btn btn-primary btn-sm" style="width:100%;margin-top:9px;" data-modal="modal-collect-review">进入后台复核</button>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-h"><div class="panel-t"><i data-lucide="network"></i>接入方式</div></div>
+                <div class="info-rows">
+                  <div class="info-row"><span class="k">入口</span><span class="v">医院公众号 → 小程序</span></div>
+                  <div class="info-row"><span class="k">登录</span><span class="v">工号 + 内网认证</span></div>
+                  <div class="info-row"><span class="k">数据回传</span><span class="v">外网小程序 → 网闸 → 内网管理端</span></div>
+                  <div class="info-row"><span class="k">权限</span><span class="v">仅采集提交，不可修改</span></div>
+                </div>
+              </div>
+              <div class="grid g3" style="gap:8px;">
+                <div class="panel flat" style="padding:9px;"><div class="panel-t"><i data-lucide="scan-line"></i>扫码即操作</div><div class="tiny muted" style="margin-top:2px;">减少手工录入</div></div>
+                <div class="panel flat" style="padding:9px;"><div class="panel-t"><i data-lucide="wifi-off"></i>弱网可用</div><div class="tiny muted" style="margin-top:2px;">本地暂存后同步</div></div>
+                <div class="panel flat" style="padding:9px;"><div class="panel-t"><i data-lucide="network"></i>网闸回传</div><div class="tiny muted" style="margin-top:2px;">内外网安全交互</div></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2867,8 +3121,8 @@ body { background: var(--background); font-size: 13px; }
   <div class="proto-with-prd">
     <div class="macos-window">
       <div class="macos-body">
-        <div class="app-sidebar" data-active="ai-kb"></div>
-        <div class="win-chrome-bar" data-crumb="文档智能体 / 知识库"></div>
+        <div class="app-sidebar" data-active="ai-search"></div>
+        <div class="win-chrome-bar" data-crumb="智能体 / 知识库（后台）"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
@@ -2937,7 +3191,7 @@ body { background: var(--background); font-size: 13px; }
                   <div><div style="display:flex;justify-content:space-between;font-size:9px;margin-bottom:2px;"><span>一致性</span><span class="mono">78%</span></div><div class="progress warn"><i style="width:78%"></i></div></div>
                   <div><div style="display:flex;justify-content:space-between;font-size:9px;margin-bottom:2px;"><span>可追溯性</span><span class="mono">88%</span></div><div class="progress"><i style="width:88%"></i></div></div>
                 </div>
-                <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:9px;" data-toast="已打开知识库巡检报告" data-goto="section-ai-inspect"><i data-lucide="scan-search" style="width:12px;height:12px;"></i>查看巡检报告</button>
+                <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:9px;" data-goto="section-ai-search"><i data-lucide="arrow-left" style="width:12px;height:12px;"></i>返回智能体</button>
               </div>
             </div>
           </div>
@@ -2948,78 +3202,58 @@ body { background: var(--background); font-size: 13px; }
 </div>
 
 <!-- ===== AI 智能问答 ===== -->
-<div id="section-ai-qa" class="proto-stack">
+<div id="section-ai-search" class="proto-stack">
   <div class="proto-with-prd">
     <div class="macos-window">
       <div class="macos-body">
-        <div class="app-sidebar" data-active="ai-qa"></div>
-        <div class="win-chrome-bar" data-crumb="文档智能体 / AI 智能问答"></div>
+        <div class="app-sidebar" data-active="ai-search"></div>
+        <div class="win-chrome-bar" data-crumb="智能体 / 项目样本检索"></div>
         <div class="app-main">
           <div class="page-head">
-            <div>
-              <div class="page-title">AI 智能问答</div>
-              <div class="page-sub">基于样本库 SOP、体系文件与 GCP 法规的可溯源问答</div>
-            </div>
-            <div class="toolbar">
-              <span class="tag blue">知识库 128 份文档</span>
-              <span class="tag">1,842 个知识片段</span>
-              <button class="btn btn-secondary btn-sm" data-goto="section-ai-kb"><i data-lucide="database" style="width:12px;height:12px;"></i>知识库</button>
-            </div>
+            <div><div class="page-title">项目样本检索</div><div class="page-sub">按项目检索在库、出库、采集与留存样本</div></div>
+            <div class="toolbar"><button class="btn btn-secondary btn-sm" data-goto="section-ai-kb"><i data-lucide="database" style="width:12px;height:12px;"></i>知识库</button><button class="btn btn-secondary btn-sm" data-goto="section-ai-voice"><i data-lucide="mic" style="width:12px;height:12px;"></i>语音检索</button></div>
           </div>
-
+          <div class="panel" style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:14px;">
+            <i data-lucide="search" style="width:15px;height:15px;color:var(--text-3);"></i>
+            <input class="form-input" style="border:none;background:transparent;padding:2px 4px;flex:1;" value="CD2026-001" />
+            <button class="btn btn-primary btn-sm" data-toast="已检索 CD2026-001 的样本数据">检索</button>
+          </div>
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="archive"></i>在库样本</div><div class="v">386<small>管</small></div><div class="d">6 类样本</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="log-out"></i>已出库</div><div class="v">42<small>管</small></div><div class="d">检测 36 · 销毁 6</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="test-tube"></i>累计采集</div><div class="v">428<small>管</small></div><div class="d">计划 2,400 管</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="bookmark"></i>留存样本</div><div class="v">12<small>管</small></div><div class="d">至 2031-12-31</div></div>
+          </div>
           <div class="grid g21">
-            <div class="panel" style="display:flex;flex-direction:column;min-height:610px;">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="message-square-text"></i>对话</div><span class="tag green">引用可溯源</span></div>
-              <div class="chat-list" style="flex:1;overflow-y:auto;padding:2px 1px 8px;">
-                <div class="chat-q">V4 访视新增的尿液样本，离心和分装要求是什么？</div>
-                <div class="chat-a">
-                  根据方案 V3.0 与 SOP-SMP-007 V3.3（拟于 11-01 生效），V4 访视新增的尿液样本要求如下：<br>
-                  <b>1. 采集</b>：采集晨尿中段，容量 ≥ 10 mL，使用无菌尿杯。<br>
-                  <b>2. 离心</b>：3000 rpm，15 min，4℃；离心后取上清。<br>
-                  <b>3. 分装</b>：上清分装 3 管，每管 1.5 mL，分别用于 PK、生化与备份。<br>
-                  <b>4. 储存</b>：-80℃ 冻存，库位按 B-02 区域规则分配。<br>
-                  注意：该变更为 V3.0 新增；当前仍执行 V3.2 的 10 min / 1.0 mL，V3.3 生效后切换为 15 min / 1.5 mL。执行前需确认伦理批件与培训记录已更新。
-                  <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;"><span class="tag blue">[1] SOP-SMP-007 §5.3</span><span class="tag blue">[2] 方案 V3.0 §6.4</span><span class="tag">[3] GCP 2026 第三十七条</span></div>
-                </div>
-                <div class="chat-q">如果样本在转运过程中温度短时超过 8℃，该怎么处理？</div>
-                <div class="chat-a">
-                  按 SOP-SMP-003《样本转运管理》第 6.2 条：<br>
-                  <b>1.</b> 立即将转运箱置于 2–8℃ 环境，记录超温起止时间与最高温度；<br>
-                  <b>2.</b> 在系统内标记「温度异常待复核」，通知项目 PI 与申办者；<br>
-                  <b>3.</b> 评估超温时长与样本类型，必要时进行稳定性验证或重新采集；<br>
-                  <b>4.</b> 处理过程与结论记入监管链，保留原始温度曲线。<br>
-                  本次 TR-1028-003 最高 7.8℃，未超过上限，但仍建议由 PI 复核确认可用性。
-                  <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;"><span class="tag blue">[1] SOP-SMP-003 §6.2</span><span class="tag blue">[2] TR-1028-003 温度记录</span><span class="tag">[3] E6(R3) 3.16</span></div>
-                </div>
-              </div>
-              <div class="chat-input">
-                <i data-lucide="paperclip" style="width:13px;height:13px;color:var(--text-3);"></i>
-                <input placeholder="继续追问，例如：剩余样本销毁需要谁审批？" />
-                <button class="btn btn-primary btn-sm" data-toast="AI 正在检索知识库并生成回答…">发送</button>
-              </div>
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="folder-kanban"></i>CD2026-001 · PD-1 III 期</div><span class="tag green">进行中</span></div>
+              <table class="tbl compact">
+                <thead><tr><th>样本类型</th><th class="num">在库</th><th class="num">已出库</th><th class="num">合计</th><th>最近采集</th></tr></thead>
+                <tbody>
+                  <tr><td class="strong">血清</td><td class="num">186</td><td class="num">24</td><td class="num">210</td><td class="mono">11-03 08:32</td></tr>
+                  <tr><td class="strong">血浆</td><td class="num">96</td><td class="num">10</td><td class="num">106</td><td class="mono">11-03 08:35</td></tr>
+                  <tr><td class="strong">全血</td><td class="num">48</td><td class="num">4</td><td class="num">52</td><td class="mono">11-02 14:10</td></tr>
+                  <tr><td class="strong">尿液</td><td class="num">32</td><td class="num">2</td><td class="num">34</td><td class="mono">11-02 09:20</td></tr>
+                  <tr><td class="strong">组织 / 蜡块</td><td class="num">24</td><td class="num">2</td><td class="num">26</td><td class="mono">10-30 11:05</td></tr>
+                </tbody>
+              </table>
+              <div class="sect-note"><i data-lucide="shield-check"></i>检索结果仅显示当前用户有权访问的项目与样本。</div>
             </div>
-
             <div style="display:flex;flex-direction:column;gap:12px;">
-              <div class="panel">
-                <div class="panel-h"><div class="panel-t"><i data-lucide="file-check-2"></i>引用来源</div><span class="panel-s">点击查看原文</span></div>
-                <div style="display:flex;flex-direction:column;gap:7px;">
-                  <div class="source-card"><b>[1] SOP-SMP-007 样本离心与分装</b>版本 V3.3（拟于 2026-11-01 生效）· 第 5.3 条<br><span style="color:var(--primary);cursor:pointer;" data-toast="已打开引用原文">查看原文 →</span></div>
-                  <div class="source-card"><b>[2] CD2026-001 方案 V3.0</b>第 6.4 条 · 访视与样本采集要求<br><span style="color:var(--primary);cursor:pointer;" data-toast="已打开引用原文">查看原文 →</span></div>
-                  <div class="source-card"><b>[3] 药物临床试验质量管理规范（2026 修订）</b>第三十七条 · 生物样品管理<br><span style="color:var(--primary);cursor:pointer;" data-toast="已打开引用原文">查看原文 →</span></div>
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="info"></i>项目信息</div></div>
+                <div class="info-rows">
+                  <div class="info-row"><span class="k">方案号</span><span class="v mono">CD2026-001-V3.0</span></div>
+                  <div class="info-row"><span class="k">PI / CRA / CRC</span><span class="v">陈建国 / 赵磊 / 李敏</span></div>
+                  <div class="info-row"><span class="k">入组</span><span class="v">12 / 60 例</span></div>
+                  <div class="info-row"><span class="k">最近同步</span><span class="v mono">11-03 08:30</span></div>
                 </div>
               </div>
-              <div class="panel">
-                <div class="panel-h"><div class="panel-t"><i data-lucide="lightbulb"></i>建议追问</div></div>
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="sparkles"></i>常用问法</div></div>
                 <div style="display:flex;flex-direction:column;gap:5px;">
-                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;text-align:left;" data-toast="正在检索：知情同意版本如何关联样本？">知情同意版本如何关联剩余样本？</button>
-                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;text-align:left;" data-toast="正在检索：离心设备校准要求">离心设备需要哪些校准记录？</button>
-                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;text-align:left;" data-toast="正在检索：样本销毁审批流程">剩余样本销毁的审批流程？</button>
-                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;text-align:left;" data-toast="正在检索：稽查时需提供哪些记录">稽查时需准备哪些样本记录？</button>
+                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="CD2026-001 在库样本 386 管">在库样本有多少？</button>
+                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="CD2026-001 已出库 42 管">已出库样本有多少？</button>
+                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="本周采集 28 管，完成率 96.4%">本周采集情况？</button>
                 </div>
-              </div>
-              <div class="panel flat">
-                <div class="panel-t"><i data-lucide="shield-check"></i>回答边界</div>
-                <div class="tiny muted" style="margin-top:4px;line-height:1.6;">仅基于已上传且生效的体系文件回答；无法确定时提示人工确认，不编造条款。</div>
               </div>
             </div>
           </div>
@@ -3030,86 +3264,55 @@ body { background: var(--background); font-size: 13px; }
 </div>
 
 <!-- ===== AI 知识图谱 ===== -->
-<div id="section-ai-graph" class="proto-stack">
+<div id="section-ai-compliance" class="proto-stack">
   <div class="proto-with-prd">
     <div class="macos-window">
       <div class="macos-body">
-        <div class="app-sidebar" data-active="ai-graph"></div>
-        <div class="win-chrome-bar" data-crumb="文档智能体 / 知识图谱"></div>
+        <div class="app-sidebar" data-active="ai-compliance"></div>
+        <div class="win-chrome-bar" data-crumb="智能体 / SOP 合规校验"></div>
         <div class="app-main">
           <div class="page-head">
-            <div>
-              <div class="page-title">文档关系图谱</div>
-              <div class="page-sub">体系文件、SOP、表单、记录之间的引用与依赖关系</div>
-            </div>
-            <div class="toolbar">
-              <span class="tag">128 个文档节点</span>
-              <span class="tag">326 条引用关系</span>
-              <button class="btn btn-secondary btn-sm" data-toast="已切换到体系文件视图"><i data-lucide="layers" style="width:12px;height:12px;"></i>分层视图</button>
-            </div>
+            <div><div class="page-title">SOP 合规校验</div><div class="page-sub">基于方案与操作手册，检查录入数据与操作流程是否符合要求</div></div>
+            <div class="toolbar"><button class="btn btn-secondary btn-sm" data-goto="section-ai-kb"><i data-lucide="database" style="width:12px;height:12px;"></i>知识库</button><button class="btn btn-primary btn-sm" data-toast="已重新校验 CD2026-001 V3 访视，发现 3 项待确认"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>重新校验</button></div>
           </div>
-
+          <div class="panel" style="display:flex;align-items:center;gap:8px;padding:9px 14px;margin-bottom:14px;">
+            <span class="tiny muted">校验对象</span>
+            <span class="tag blue">CD2026-001</span>
+            <span class="tag">V3 第 1 周期</span>
+            <span class="tag">S007</span>
+            <span class="grow"></span>
+            <span class="tiny muted">知识库来源：SOP-SMP-007 V3.3 · 方案 V3.0</span>
+          </div>
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="gauge"></i>合规率</div><div class="v">92<small>%</small></div><div class="d up">48 项检查通过 44 项</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="list-checks"></i>检查项</div><div class="v">48<small>项</small></div><div class="d">覆盖采集/处理/储存</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="triangle-alert"></i>待确认</div><div class="v">3<small>项</small></div><div class="d warn">1 项高风险</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="history"></i>最近校验</div><div class="v" style="font-size:15px;">11-03 09:10</div><div class="d">自动触发</div></div>
+          </div>
           <div class="grid g21">
             <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="network"></i>样本管理体系文件图谱</div><div class="panel-s">实线为引用 · 虚线为依赖</div></div>
-              <div class="graph">
-                <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:1;">
-                  <line x1="50%" y1="50%" x2="20%" y2="18%" stroke="var(--border-2)" stroke-width="1" />
-                  <line x1="50%" y1="50%" x2="78%" y2="16%" stroke="var(--border-2)" stroke-width="1" />
-                  <line x1="50%" y1="50%" x2="15%" y2="55%" stroke="var(--border-2)" stroke-width="1" />
-                  <line x1="50%" y1="50%" x2="30%" y2="82%" stroke="var(--border-2)" stroke-width="1" />
-                  <line x1="50%" y1="50%" x2="70%" y2="82%" stroke="var(--border-2)" stroke-width="1" />
-                  <line x1="50%" y1="50%" x2="85%" y2="55%" stroke="var(--border-2)" stroke-width="1" />
-                  <line x1="50%" y1="50%" x2="50%" y2="20%" stroke="var(--border-2)" stroke-width="1" />
-                  <line x1="50%" y1="50%" x2="50%" y2="78%" stroke="var(--border-2)" stroke-width="1" />
-                  <line x1="20%" y1="18%" x2="15%" y2="55%" stroke="var(--border-2)" stroke-width="1" stroke-dasharray="3 3" />
-                  <line x1="30%" y1="82%" x2="70%" y2="82%" stroke="var(--warning)" stroke-width="1" stroke-dasharray="3 3" />
-                </svg>
-                <div class="gnode" style="left:50%;top:50%;" data-toast="已选择核心节点：SOP 体系总纲"><span class="b core"><i data-lucide="book-open"></i>SOP 体系总纲</span></div>
-                <div class="gnode" style="left:20%;top:18%;" data-toast="已选择节点：体系文件"><span class="b"><i data-lucide="folder"></i>体系文件</span></div>
-                <div class="gnode" style="left:78%;top:16%;" data-toast="已选择节点：质量手册"><span class="b"><i data-lucide="award"></i>质量手册</span></div>
-                <div class="gnode" style="left:15%;top:55%;" data-toast="已选择节点：样本管理 SOP"><span class="b"><i data-lucide="file-text"></i>样本管理 SOP</span></div>
-                <div class="gnode" style="left:30%;top:82%;" data-toast="已选择节点：采集 SOP"><span class="b"><i data-lucide="test-tube"></i>采集 SOP</span></div>
-                <div class="gnode" style="left:70%;top:82%;" data-toast="已选择节点：处理 SOP（待复核）"><span class="b warn"><i data-lucide="triangle-alert"></i>处理 SOP · 待复核</span></div>
-                <div class="gnode" style="left:85%;top:55%;" data-toast="已选择节点：储存 SOP"><span class="b"><i data-lucide="archive"></i>储存 SOP</span></div>
-                <div class="gnode" style="left:50%;top:20%;" data-toast="已选择节点：表单模板"><span class="b"><i data-lucide="clipboard-list"></i>表单模板</span></div>
-                <div class="gnode" style="left:50%;top:78%;" data-toast="已选择节点：记录"><span class="b"><i data-lucide="database"></i>记录</span></div>
-              </div>
-              <div class="storage-legend">
-                <span><i class="dot blue"></i>核心文档</span>
-                <span><i class="dot amber"></i>待复核文档</span>
-                <span style="margin-left:auto;">点击节点查看详情</span>
-              </div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="scan-search"></i>校验结果</div><span class="tag amber">3 项待确认</span></div>
+              <div class="issue"><div class="ic red"><i data-lucide="triangle-alert"></i></div><div class="body"><div class="t">离心时长与方案要求不一致 <span class="tag red">高</span></div><div class="d">录入为 3000 rpm / 10 min，方案 V3.0 要求 15 min；当前 SOP V3.2 仍为 10 min，V3.3 拟于 11-01 生效。</div><div class="a">建议：确认执行版本；V3.3 生效后按 15 min 执行并更新设备模板。</div></div></div>
+              <div class="issue"><div class="ic amber"><i data-lucide="test-tube"></i></div><div class="body"><div class="t">V4 尿液样本缺少分装记录 <span class="tag amber">中</span></div><div class="d">方案 V3.0 新增尿液样本，当前仅登记采集，未记录分装体积与子管号。</div><div class="a">建议：补录 FORM-P-007 分装记录，或确认本访视不涉及尿液样本。</div></div></div>
+              <div class="issue"><div class="ic amber"><i data-lucide="file-check-2"></i></div><div class="body"><div class="t">知情同意未覆盖尿液样本用途 <span class="tag amber">中</span></div><div class="d">ICF v2.1 已覆盖血清/血浆/全血，未明确尿液样本的保存与科研使用范围。</div><div class="a">建议：提交伦理确认，必要时更新 ICF 后再执行 V4 尿液采集。</div></div></div>
             </div>
-
             <div style="display:flex;flex-direction:column;gap:12px;">
-              <div class="panel">
-                <div class="panel-h"><div class="panel-t"><i data-lucide="file-text"></i>节点详情</div><span class="tag amber">待复核</span></div>
-                <div class="info-rows">
-                  <div class="info-row"><span class="k">文档名称</span><span class="v strong">SOP-SMP-007 样本离心与分装</span></div>
-                  <div class="info-row"><span class="k">当前版本</span><span class="v mono">V3.2</span></div>
-                  <div class="info-row"><span class="k">生效日期</span><span class="v mono">2026-10-18</span></div>
-                  <div class="info-row"><span class="k">责任部门</span><span class="v">样本库 / 质量部</span></div>
-                  <div class="info-row"><span class="k">被引用</span><span class="v">12 次</span></div>
-                  <div class="info-row"><span class="k">引用他人</span><span class="v">5 次</span></div>
-                  <div class="info-row"><span class="k">关联表单</span><span class="v">FORM-P-006</span></div>
-                  <div class="info-row"><span class="k">巡检状态</span><span class="v" style="color:var(--warning);">1 条循环引用待处理</span></div>
-                </div>
-                <button class="btn btn-primary btn-sm" style="width:100%;margin-top:9px;" data-toast="已打开 SOP-SMP-007 V3.2 全文">查看文档详情</button>
-              </div>
-              <div class="panel">
-                <div class="panel-h"><div class="panel-t"><i data-lucide="git-branch"></i>上游依赖</div></div>
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="book-open"></i>校验依据</div><span class="tag blue">可追溯</span></div>
                 <div style="display:flex;flex-direction:column;gap:5px;">
-                  <div class="file-chip"><i data-lucide="file-text"></i>SOP 体系总纲 V2.0</div>
-                  <div class="file-chip"><i data-lucide="file-text"></i>样本管理 SOP V4.1</div>
-                  <div class="file-chip"><i data-lucide="clipboard-list"></i>FORM-P-006 离心记录表</div>
-                </div>
-                <div class="panel-s" style="margin-top:9px;margin-bottom:4px;">下游引用</div>
-                <div style="display:flex;flex-direction:column;gap:5px;">
-                  <div class="file-chip"><i data-lucide="file-text"></i>SOP-SMP-009 分装与标识</div>
-                  <div class="file-chip"><i data-lucide="file-text"></i>SOP-QC-002 样本质量评估</div>
+                  <div class="file-chip" style="width:100%;"><i data-lucide="file-text"></i>方案 V3.0 §6.4 样本采集</div>
+                  <div class="file-chip" style="width:100%;"><i data-lucide="file-text"></i>SOP-SMP-007 V3.3 §5.3 离心</div>
+                  <div class="file-chip" style="width:100%;"><i data-lucide="file-text"></i>SOP-SMP-007 V3.3 §5.4 分装</div>
+                  <div class="file-chip" style="width:100%;"><i data-lucide="file-text"></i>知情同意 v2.1 §8.3</div>
                 </div>
               </div>
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="list-plus"></i>建议动作</div></div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="已生成 3 项整改任务">生成整改任务</button>
+                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="已通知 PI 与 QA 复核">通知 PI / QA</button>
+                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="校验报告已导出">导出校验报告</button>
+                </div>
+              </div>
+              <div class="panel flat"><div class="tiny muted" style="line-height:1.6;">AI 校验结果仅作为质量复核输入，最终结论由 PI / QA 确认。</div></div>
             </div>
           </div>
         </div>
@@ -3119,77 +3322,54 @@ body { background: var(--background); font-size: 13px; }
 </div>
 
 <!-- ===== AI 缺陷巡检 ===== -->
-<div id="section-ai-inspect" class="proto-stack">
+<div id="section-ai-voice" class="proto-stack">
   <div class="proto-with-prd">
     <div class="macos-window">
       <div class="macos-body">
-        <div class="app-sidebar" data-active="ai-inspect"></div>
-        <div class="win-chrome-bar" data-crumb="文档智能体 / 体系缺陷巡检"></div>
+        <div class="app-sidebar" data-active="ai-voice"></div>
+        <div class="win-chrome-bar" data-crumb="智能体 / 语音检索"></div>
         <div class="app-main">
           <div class="page-head">
-            <div>
-              <div class="page-title">体系缺陷巡检</div>
-              <div class="page-sub">自动识别断链、孤立文档、循环引用三类合规问题</div>
-            </div>
-            <div class="toolbar">
-              <span class="tag">最近巡检 2026-10-28 07:00</span>
-              <button class="btn btn-secondary btn-sm" data-toast="已导出整改清单（Excel）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出清单</button>
-              <button class="btn btn-primary btn-sm" data-toast="已重新巡检 128 份文档，发现 5 项问题"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>重新巡检</button>
-            </div>
+            <div><div class="page-title">语音检索</div><div class="page-sub">说出项目名或样本问题，自动转为检索条件</div></div>
+            <div class="toolbar"><button class="btn btn-secondary btn-sm" data-goto="section-ai-search"><i data-lucide="search" style="width:12px;height:12px;"></i>文本检索</button></div>
           </div>
-
-          <div class="kpi-grid" style="margin-bottom:12px;">
-            <div class="kpi"><div class="l"><i data-lucide="unlink"></i>断链</div><div class="v">2<small>项</small></div><div class="d warn">引用目标不存在</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="file-x"></i>孤立文档</div><div class="v">2<small>项</small></div><div class="d warn">无任何引用关系</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="refresh-ccw"></i>循环引用</div><div class="v">1<small>项</small></div><div class="d warn">A→B→A</div></div>
-            <div class="kpi"><div class="l"><i data-lucide="circle-check"></i>已整改</div><div class="v">8<small>项</small></div><div class="d up">本月闭环率 72%</div></div>
-          </div>
-
           <div class="grid g21">
-            <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="scan-search"></i>问题清单</div><div class="toolbar"><span class="tag red">高 2</span><span class="tag amber">中 2</span><span class="tag">低 1</span></div></div>
-              <div class="issue">
-                <div class="ic red"><i data-lucide="unlink"></i></div>
-                <div class="body"><div class="t">断链：SOP-SMP-012 引用了已废止的 FORM-P-003 <span class="tag red">高</span></div><div class="d">SOP-SMP-012《样本出库管理》第 4.2 条引用的表单已于 2026-09-01 废止，当前无有效替代表单。</div><div class="a">建议：替换为 FORM-P-006 V2.0，或修订 SOP 引用条款。</div></div>
+            <div class="panel" style="text-align:center;padding:26px 18px;">
+              <div class="voice-mic" data-toast="正在聆听，请说出项目名或问题"><i data-lucide="mic" style="width:34px;height:34px;"></i></div>
+              <div style="font-size:13px;font-weight:600;margin-top:10px;">点击麦克风开始说话</div>
+              <div class="tiny muted" style="margin-top:3px;">支持项目名、样本类型、在库/出库数量等问法</div>
+              <div class="voice-wave" style="justify-content:center;margin:14px 0;"><i style="height:12px"></i><i style="height:24px"></i><i style="height:18px"></i><i style="height:30px"></i><i style="height:16px"></i><i style="height:26px"></i><i style="height:12px"></i></div>
+              <div class="panel flat" style="padding:10px;text-align:left;font-size:11px;color:var(--text-2);">
+                <span class="tiny muted">识别结果</span><br>
+                “CD2026-001 目前在库样本有多少？”
               </div>
-              <div class="issue">
-                <div class="ic red"><i data-lucide="unlink"></i></div>
-                <div class="body"><div class="t">断链：质量手册引用了不存在的附件 7 <span class="tag red">高</span></div><div class="d">《样本库质量手册》V2.1 附录 A 引用“附件 7 样本稳定性验证报告”，知识库中未找到对应文件。</div><div class="a">建议：上传附件 7，或删除该引用并修订附录。</div></div>
+              <div style="display:flex;gap:6px;justify-content:center;margin-top:10px;">
+                <button class="btn btn-primary btn-sm" data-toast="已识别并检索：CD2026-001 在库样本">确认检索</button>
+                <button class="btn btn-secondary btn-sm" data-toast="已重新开始录音">重新录音</button>
               </div>
-              <div class="issue">
-                <div class="ic amber"><i data-lucide="file-x"></i></div>
-                <div class="body"><div class="t">孤立文档：SOP-SMP-015 无人引用 <span class="tag amber">中</span></div><div class="d">SOP-SMP-015《样本库应急演练》未被任何体系文件、表单或培训材料引用。</div><div class="a">建议：确认是否应纳入体系总纲，或标记为归档。</div></div>
-              </div>
-              <div class="issue">
-                <div class="ic amber"><i data-lucide="refresh-ccw"></i></div>
-                <div class="body"><div class="t">循环引用：SOP-SMP-007 ↔ SOP-SMP-009 <span class="tag amber">中</span></div><div class="d">两份 SOP 在分装与标识要求上互相引用，未指向唯一主责文件，评审时可能产生歧义。</div><div class="a">建议：以 SOP-SMP-007 为主责，SOP-SMP-009 改为单向引用。</div></div>
-              </div>
-              <div class="issue">
-                <div class="ic blue"><i data-lucide="file-x"></i></div>
-                <div class="body"><div class="t">孤立文档：培训材料 TR-SMP-003 <span class="tag">低</span></div><div class="d">培训材料未关联到培训矩阵与岗位授权记录。</div><div class="a">建议：关联培训矩阵 T-03。</div></div>
-              </div>
+              <div class="split-line" style="margin:16px 0 10px;"></div>
+              <div class="panel-s" style="margin-bottom:5px;">最近语音检索</div>
+              <table class="tbl compact">
+                <thead><tr><th>时间</th><th>识别内容</th><th>结果</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">11-03 09:12</td><td>CD2026-001 在库样本有多少？</td><td>386 管</td></tr>
+                  <tr><td class="mono">11-03 08:50</td><td>S007 的样本在哪个库位？</td><td class="mono">B-02-03-04</td></tr>
+                  <tr><td class="mono">11-02 16:20</td><td>本周采集了多少样本？</td><td>28 管</td></tr>
+                </tbody>
+              </table>
             </div>
-
             <div style="display:flex;flex-direction:column;gap:12px;">
-              <div class="panel">
-                <div class="panel-h"><div class="panel-t"><i data-lucide="gauge"></i>体系健康度</div><span class="tag green">86 分</span></div>
-                <div class="donut-wrap">
-                  <div class="donut" style="width:82px;height:82px;background:conic-gradient(var(--success) 0 86%, var(--muted) 86% 100%);"><div class="donut-c"><b>86</b><span>健康度</span></div></div>
-                  <div class="legend" style="flex:1;">
-                    <span>完整性<b style="color:var(--success)">92%</b></span>
-                    <span>一致性<b style="color:var(--warning)">78%</b></span>
-                    <span>可追溯性<b style="color:var(--success)">88%</b></span>
-                  </div>
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="sparkles"></i>检索结果</div><span class="tag green">已识别</span></div>
+                <div class="info-rows">
+                  <div class="info-row"><span class="k">项目</span><span class="v">CD2026-001 · PD-1 III 期</span></div>
+                  <div class="info-row"><span class="k">检索指标</span><span class="v">在库样本</span></div>
+                  <div class="info-row"><span class="k">结果</span><span class="v strong" style="font-size:16px;color:var(--primary);">386 管</span></div>
+                  <div class="info-row"><span class="k">样本类型</span><span class="v">血清 186 · 血浆 96 · 全血 48 · 尿液 32 · 组织 24</span></div>
                 </div>
+                <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:9px;" data-goto="section-ai-search">查看完整明细</button>
               </div>
-              <div class="panel">
-                <div class="panel-h"><div class="panel-t"><i data-lucide="list-checks"></i>整改任务</div><span class="tag amber">3 项待处理</span></div>
-                <div class="timeline">
-                  <div class="tl-item"><span class="tl-dot warn"></span><div class="tl-time">截止 10-30</div><div class="tl-title">替换 SOP-SMP-012 引用表单</div><div class="tl-desc">责任人：质量部 刘芳</div></div>
-                  <div class="tl-item"><span class="tl-dot"></span><div class="tl-time">截止 11-02</div><div class="tl-title">补充质量手册附件 7</div><div class="tl-desc">责任人：QA 周敏</div></div>
-                  <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">已完成 10-27</div><div class="tl-title">归档废弃表单 FORM-P-003</div><div class="tl-desc">责任人：文档管理员 刘芳</div></div>
-                </div>
-                <button class="btn btn-primary btn-sm" style="width:100%;margin-top:9px;" data-toast="已生成 6 项整改任务并通知责任人"><i data-lucide="list-plus" style="width:12px;height:12px;"></i>一键生成整改任务</button>
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="message-circle-question"></i>可以这样问</div></div>
+                <div class="tiny muted" style="line-height:1.9;">“CD2026-002 已出库多少管？”<br>“本周采集了多少样本？”<br>“S007 的样本在哪个库位？”<br>“哪些样本温度异常待复核？”</div>
               </div>
             </div>
           </div>
@@ -3533,7 +3713,7 @@ body { background: var(--background); font-size: 13px; }
             <div class="tab-pane" data-pane="csv">
               <div class="grid g4" style="margin-bottom:10px;">
                 <div class="panel flat"><div class="panel-t"><i data-lucide="circle-check"></i>验证状态</div><div class="kpi-value" style="font-size:16px;color:var(--success);">有效</div><div class="tiny muted">IQ / OQ / PQ 已完成</div></div>
-                <div class="panel flat"><div class="panel-t"><i data-lucide="file-badge"></i>系统版本</div><div class="kpi-value" style="font-size:16px;">v0.1 Demo</div><div class="tiny muted">生产版本 v3.2.1</div></div>
+                <div class="panel flat"><div class="panel-t"><i data-lucide="file-badge"></i>系统版本</div><div class="kpi-value" style="font-size:16px;">v0.2 Demo</div><div class="tiny muted">生产版本 v3.2.1</div></div>
                 <div class="panel flat"><div class="panel-t"><i data-lucide="calendar-check"></i>上次回顾</div><div class="kpi-value" style="font-size:16px;">2026-09-15</div><div class="tiny muted">下次 2027-03-15</div></div>
                 <div class="panel flat"><div class="panel-t"><i data-lucide="git-pull-request"></i>变更控制</div><div class="kpi-value" style="font-size:16px;">2 项</div><div class="tiny muted">均已评估</div></div>
               </div>
@@ -3819,118 +3999,59 @@ body { background: var(--background); font-size: 13px; }
   </div>
 </div>
 
+<div class="demo-modal" id="modal-collect-review">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">采集工单复核</div>
+    <div class="panel flat" style="padding:9px;margin-bottom:10px;">
+      <div class="info-rows">
+        <div class="info-row"><span class="k">工单号</span><span class="v mono">CO-1028-007</span></div>
+        <div class="info-row"><span class="k">受试者 / 访视</span><span class="v">S007 · V3 第 1 周期</span></div>
+        <div class="info-row"><span class="k">采集类型</span><span class="v">PK 6 点 · 血清 5 mL</span></div>
+        <div class="info-row"><span class="k">采集时间 / 人员</span><span class="v">10-28 08:32 · 李敏</span></div>
+      </div>
+    </div>
+    <div class="panel flat" style="padding:4px 10px;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 采集时间在方案窗口内</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 标签与样本编号一致</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 采血量符合方案要求</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 采集照片已上传</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;"><input type="checkbox" checked /> 样本状态正常，无溶血</label>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="采集工单已复核确认，数据已锁定" data-done-target="collectReviewBtn" data-done-text="已复核">复核通过</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-process-review">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">处理工单复核</div>
+    <div class="panel flat" style="padding:9px;margin-bottom:10px;">
+      <div class="info-rows">
+        <div class="info-row"><span class="k">任务号</span><span class="v mono">PR-1028-006</span></div>
+        <div class="info-row"><span class="k">样本</span><span class="v">S007 V3 血清 · 子管 A/B/C</span></div>
+        <div class="info-row"><span class="k">离心程序</span><span class="v">3000 rpm · 10 min · 4℃</span></div>
+        <div class="info-row"><span class="k">设备 / 操作人</span><span class="v">DEV-CEN-03 · 陈晓</span></div>
+      </div>
+    </div>
+    <div class="panel flat" style="padding:4px 10px;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 离心参数与 SOP 一致</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 分装管数与体积正确</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 设备运行数据已自动采集</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 离心前照片与分装视频完整</label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;"><input type="checkbox" checked /> 操作人已电子签名</label>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="处理工单已复核确认，等待入库" data-done-target="processReviewBtn" data-done-text="已复核">复核通过</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 移动端弹窗 ===== -->
-<div class="demo-modal" id="modal-mobile-receive">
-  <div class="form-dialog">
-    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
-    <div class="form-dialog-title">样本接收确认</div>
-    <div class="panel flat" style="padding:9px;margin-bottom:10px;">
-      <div class="info-rows">
-        <div class="info-row"><span class="k">样本编号</span><span class="v mono" style="font-size:9px;">CD2026-001-01-S007-V3-SER-01</span></div>
-        <div class="info-row"><span class="k">样本数量</span><span class="v">6 管 · 血清</span></div>
-        <div class="info-row"><span class="k">冷链温度</span><span class="v" style="color:var(--success);">4.2℃ · 正常</span></div>
-        <div class="info-row"><span class="k">发出方</span><span class="v">李敏 · CRC</span></div>
-        <div class="info-row"><span class="k">接收方</span><span class="v">张三 · 样本管理员</span></div>
-      </div>
-    </div>
-    <div class="form-label">接收人签名</div>
-    <div class="sign-pad"><span style="font-family:var(--font-mono);font-size:11px;color:var(--primary);">张三（手写签名）</span></div>
-    <div class="tiny muted" style="margin-top:5px;">签名后将生成监管链节点，并写入审计追踪。</div>
-    <div class="form-actions">
-      <button class="btn btn-ghost btn-sm" data-close>取消</button>
-      <button class="btn btn-primary btn-sm" data-submit="样本已接收，监管链节点已签名" data-done-target="mBtnReceive" data-done-text="已接收">确认接收并签名</button>
-    </div>
-  </div>
-</div>
-
-<div class="demo-modal" id="modal-mobile-collect">
-  <div class="form-dialog">
-    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
-    <div class="form-dialog-title">提交采集登记</div>
-    <div class="form-row-2">
-      <div class="form-group"><label class="form-label">受试者</label><input class="form-input" value="S007 · 张**" /></div>
-      <div class="form-group"><label class="form-label">访视</label><input class="form-input" value="V3 第 1 周期" /></div>
-    </div>
-    <div class="form-group"><label class="form-label">采集类型</label><input class="form-input" value="PK 6 点 · 血清 5 mL" /></div>
-    <div class="form-row-2">
-      <div class="form-group"><label class="form-label">实际采集时间</label><input class="form-input" value="2026-10-28 08:32" /></div>
-      <div class="form-group"><label class="form-label">采血量</label><input class="form-input" value="5 mL" /></div>
-    </div>
-    <div class="form-row-2">
-      <div class="form-group"><label class="form-label">样本状态</label><input class="form-input" value="正常" /></div>
-      <div class="form-group"><label class="form-label">条码打印</label><input class="form-input" value="已打印" /></div>
-    </div>
-    <div class="form-group"><label class="form-label">备注</label><input class="form-input" placeholder="如溶血、采血困难等" /></div>
-    <div class="form-actions">
-      <button class="btn btn-ghost btn-sm" data-close>取消</button>
-      <button class="btn btn-primary btn-sm" data-submit="采集登记已提交，已生成监管链节点" data-done-target="mBtnCollect" data-done-text="已提交">提交登记</button>
-    </div>
-  </div>
-</div>
-
-<div class="demo-modal" id="modal-mobile-photo">
-  <div class="form-dialog">
-    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
-    <div class="form-dialog-title">补拍照片</div>
-    <div class="upload-box" data-file-trigger="mobilePhotoFile" style="cursor:pointer;">
-      <i data-lucide="camera"></i>
-      <div class="t">点击拍照或上传照片</div>
-      <div class="d">用于记录样本外观、包装或异常情况</div>
-    </div>
-    <input type="file" id="mobilePhotoFile" accept="image/*" style="display:none;" />
-    <div class="modal-file-row" style="margin-top:10px;">
-      <i data-lucide="image"></i>
-      <span id="mobilePhotoName" style="flex:1;color:var(--text-2);">尚未选择照片</span>
-      <span class="tag" id="mobilePhotoState">待上传</span>
-    </div>
-    <div class="form-actions">
-      <button class="btn btn-ghost btn-sm" data-close>取消</button>
-      <button class="btn btn-primary btn-sm" data-submit="照片已上传并关联至采集记录">使用照片</button>
-    </div>
-  </div>
-</div>
-
-<div class="demo-modal" id="modal-mobile-transfer">
-  <div class="form-dialog">
-    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
-    <div class="form-dialog-title">转运交接提交</div>
-    <div class="panel flat" style="padding:9px;margin-bottom:10px;">
-      <div class="info-rows">
-        <div class="info-row"><span class="k">转运单</span><span class="v mono">TR-1028-003</span></div>
-        <div class="info-row"><span class="k">路线</span><span class="v">采血室 → 样本库</span></div>
-        <div class="info-row"><span class="k">样本数量</span><span class="v">6 管</span></div>
-        <div class="info-row"><span class="k">最高温度</span><span class="v" style="color:var(--warning);">7.8℃ · 待复核</span></div>
-        <div class="info-row"><span class="k">接收方</span><span class="v">张三 · 样本管理员</span></div>
-      </div>
-    </div>
-    <div class="form-group"><label class="form-label">接收备注</label><input class="form-input" placeholder="样本状态、包装完整性等" /></div>
-    <div class="form-label">交接签名</div>
-    <div class="sign-pad"><span style="font-family:var(--font-mono);font-size:11px;color:var(--primary);">张三（手写签名）</span></div>
-    <div class="form-actions">
-      <button class="btn btn-ghost btn-sm" data-close>取消</button>
-      <button class="btn btn-primary btn-sm" data-submit="转运交接已提交，监管链节点已锁定" data-done-target="mBtnTransfer" data-done-text="已提交">提交交接</button>
-    </div>
-  </div>
-</div>
-
-<div class="demo-modal" id="modal-mobile-abnormal">
-  <div class="form-dialog">
-    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
-    <div class="form-dialog-title">标记异常</div>
-    <div class="form-row-2">
-      <div class="form-group"><label class="form-label">异常类型</label><input class="form-input" value="温度异常" /></div>
-      <div class="form-group"><label class="form-label">严重程度</label><input class="form-input" value="中" /></div>
-    </div>
-    <div class="form-group"><label class="form-label">异常说明</label><input class="form-input" value="转运温度短时 7.8℃，未超过 8℃ 上限" /></div>
-    <div class="form-group"><label class="form-label">处理建议</label><input class="form-input" value="通知 PI 复核样本可用性" /></div>
-    <label style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text-2);margin-top:6px;"><input type="checkbox" checked /> 同步通知项目 PI 与申办者</label>
-    <div class="form-actions">
-      <button class="btn btn-ghost btn-sm" data-close>取消</button>
-      <button class="btn btn-primary btn-sm" data-submit="异常已上报，已通知 PI 与申办者" data-done-target="mBtnAbnormal" data-done-text="已上报">提交异常</button>
-    </div>
-  </div>
-</div>
-
 <div class="demo-modal" id="modal-mobile-qr">
   <div class="form-dialog" style="text-align:center;">
     <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
@@ -4176,42 +4297,51 @@ body { background: var(--background); font-size: 13px; }
 <script>
 /* ===== 产品内 sidebar 统一构建 ===== */
 var NAV = [
-  { group: '工作台', items: [{ id: 'home', label: '工作台', icon: 'layout-dashboard' }] },
   { group: '业务管理', items: [
-    { id: 'project', label: '项目管理', icon: 'folder-kanban' },
-    { id: 'collect', label: '样本采集', icon: 'test-tube' },
-    { id: 'transport', label: '样本转运', icon: 'truck' },
-    { id: 'process', label: '样本处理', icon: 'flask-conical' },
-    { id: 'patho', label: '病理切片', icon: 'microscope' },
+    { id: 'project', label: '项目管理', icon: 'folder-kanban', children: [
+      { id: 'project', label: '项目情况', icon: 'list' },
+      { id: 'project-stats', label: '项目统计', icon: 'bar-chart-3' },
+      { id: 'project-change', label: '方案变更', icon: 'git-compare' }
+    ]},
+    { id: 'collect', label: '样本采集', icon: 'test-tube', children: [
+      { id: 'collect', label: '采集工单', icon: 'clipboard-list' },
+      { id: 'collect-stats', label: '采集统计', icon: 'bar-chart-3' }
+    ]},
+    { id: 'transport', label: '样本转运', icon: 'truck', children: [
+      { id: 'transport', label: '转运工单', icon: 'clipboard-list' },
+      { id: 'transport-stats', label: '转运统计', icon: 'bar-chart-3' }
+    ]},
+    { id: 'process', label: '样本处理', icon: 'flask-conical', children: [
+      { id: 'process', label: '处理工单', icon: 'clipboard-list' },
+      { id: 'process-stats', label: '处理统计', icon: 'bar-chart-3' }
+    ]},
     { id: 'store', label: '样本储存', icon: 'archive' },
-    { id: 'trace', label: '样本追溯', icon: 'git-commit-horizontal' }
+    { id: 'trace', label: '样本追溯', icon: 'git-commit-horizontal' },
+    { id: 'patho', label: '病理切片', icon: 'microscope' }
   ]},
   { group: '质量与合规', items: [
-    { id: 'audit', label: '日志管理', icon: 'scroll-text' },
-    { id: 'stats', label: '数据统计', icon: 'bar-chart-3' }
+    { id: 'audit', label: '日志管理', icon: 'scroll-text' }
   ]},
   { group: '智能能力', items: [
-    { id: 'ai-qa', label: '文档智能体', icon: 'sparkles', badge: 'AI', children: [
-      { id: 'ai-qa', label: 'AI 智能问答', icon: 'message-square-text' },
-      { id: 'ai-kb', label: '知识库', icon: 'database' },
-      { id: 'ai-graph', label: '知识图谱', icon: 'network' },
-      { id: 'ai-inspect', label: '缺陷巡检', icon: 'scan-search' },
-      { id: 'ai-version', label: '版本推演', icon: 'git-compare' },
-      { id: 'ai-sop', label: 'SOP 智能解析', icon: 'file-search' }
+    { id: 'ai', label: '智能体', icon: 'sparkles', badge: 'AI', children: [
+      { id: 'ai-search', label: '项目样本检索', icon: 'search' },
+      { id: 'ai-compliance', label: 'SOP 合规校验', icon: 'shield-check' },
+      { id: 'ai-voice', label: '语音检索', icon: 'mic' }
     ]}
   ]},
   { group: '应用与设置', items: [
-    { id: 'mobile', label: '移动端应用', icon: 'smartphone' },
+    { id: 'mobile', label: '移动端小程序', icon: 'smartphone' },
     { id: 'settings', label: '系统设置', icon: 'settings-2' }
   ]}
 ];
 var SECTION_MAP = {
-  home: 'section-home', project: 'section-project', collect: 'section-collect',
-  transport: 'section-transport', process: 'section-process', patho: 'section-patho',
-  store: 'section-store', trace: 'section-trace', audit: 'section-audit',
-  stats: 'section-stats', mobile: 'section-mobile', 'ai-qa': 'section-ai-qa',
-  'ai-kb': 'section-ai-kb', 'ai-graph': 'section-ai-graph', 'ai-inspect': 'section-ai-inspect',
-  'ai-version': 'section-ai-version', 'ai-sop': 'section-ai-sop', settings: 'section-settings'
+  project: 'section-project', 'project-stats': 'section-project-stats', 'project-change': 'section-project-change',
+  collect: 'section-collect', 'collect-stats': 'section-collect-stats',
+  transport: 'section-transport', 'transport-stats': 'section-transport-stats',
+  process: 'section-process', 'process-stats': 'section-process-stats',
+  store: 'section-store', trace: 'section-trace', patho: 'section-patho', audit: 'section-audit',
+  ai: 'section-ai-search', 'ai-search': 'section-ai-search', 'ai-compliance': 'section-ai-compliance',
+  'ai-voice': 'section-ai-voice', mobile: 'section-mobile', settings: 'section-settings'
 };
 function buildSidebar(active) {
   var html = '<div style="padding:4px 14px 10px;display:flex;align-items:center;gap:8px;">' +
@@ -4408,7 +4538,14 @@ function showSection(id) {
   var el = document.getElementById(id);
   if (!el) return;
   el.classList.add('is-active');
-  var ACTIVE_FOR = { 'section-project-detail': 'section-project', 'section-change-analysis': 'section-project' };
+  var ACTIVE_FOR = {
+    'section-project-detail': 'section-project',
+    'section-project-change': 'section-project-change',
+    'section-home': 'section-project',
+    'section-ai-kb': 'section-ai-search',
+    'section-ai-version': 'section-ai-search',
+    'section-ai-sop': 'section-ai-search'
+  };
   var navTarget = ACTIVE_FOR[id] || id;
   var sb = el.querySelector('.app-sidebar');
   if (sb) {
@@ -4447,6 +4584,25 @@ function showSection(id) {
   });
   if (tocItems.length > 0) tocItems[0].classList.add('active');
 })();
+
+function mpGo(step) {
+  document.querySelectorAll('.mp-step').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-mp') === step); });
+  document.querySelectorAll('.mp-dot').forEach(function(d){ d.classList.toggle('active', d.getAttribute('data-mp-dot') === step); });
+  var pending = document.getElementById('mpBackendPending');
+  var received = document.getElementById('mpBackendReceived');
+  var status = document.getElementById('mpBackendStatus');
+  var done = (step === '5');
+  if (pending) pending.style.display = done ? 'none' : 'block';
+  if (received) received.style.display = done ? 'block' : 'none';
+  if (status) {
+    status.textContent = done ? '已回传' : '等待提交';
+    status.className = done ? 'tag green' : 'tag amber';
+  }
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest('[data-mp-step]');
+  if (b) mpGo(b.getAttribute('data-mp-step'));
+});
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
