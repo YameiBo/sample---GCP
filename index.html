@@ -1157,6 +1157,10 @@ body.app-mode { padding: 0; }
 
 .filters { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; flex-wrap: wrap; }
 .filters .search-box { min-width: 210px; }
+.version-select { border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-full); padding: 6px 10px; font-size: 11px; color: var(--foreground); font-family: var(--font-sans); cursor: pointer; }
+.version-select:hover { border-color: var(--primary); }
+.filter-select { border: none; outline: none; background: transparent; font-family: var(--font-sans); font-size: 11px; color: inherit; cursor: pointer; padding: 0; }
+.table-link { color: var(--primary) !important; font-weight: 600; }
 .select-mini { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-2); border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-btn); padding: 5px 9px; }
 .select-mini i { width: 12px; height: 12px; }
 
@@ -1682,21 +1686,21 @@ body { background: var(--background); font-size: 13px; }
 
           <div class="panel">
             <div class="filters">
-              <div class="search-box"><i data-lucide="search"></i><input placeholder="搜索项目编号 / 名称 / 方案号" data-filter="#projectTable" /></div>
-              <span class="select-mini"><i data-lucide="circle-dot"></i>全部状态</span>
-              <span class="select-mini"><i data-lucide="building-2"></i>全部中心</span>
-              <span class="select-mini"><i data-lucide="calendar"></i>2026 年</span>
+              <div class="search-box"><i data-lucide="search"></i><input id="projectSearch" placeholder="搜索项目编号 / 名称 / 方案号" /></div>
+              <span class="select-mini"><i data-lucide="circle-dot"></i><select id="projectStatus" class="filter-select"><option value="">全部状态</option><option>进行中</option><option>已完成</option><option>已结题</option></select></span>
+              <span class="select-mini"><i data-lucide="building-2"></i><select id="projectCenter" class="filter-select"><option value="">全部中心</option><option>01</option><option>01 / 02</option></select></span>
+              <span class="select-mini"><i data-lucide="calendar"></i><select id="projectYear" class="filter-select"><option value="">全部年份</option><option>2026</option><option>2025</option><option>2024</option></select></span>
               <span class="grow"></span>
-              <span class="tiny muted">共 5 个项目</span>
+              <span class="tiny muted" id="projectCount">共 5 个项目</span>
             </div>
             <table class="tbl" id="projectTable">
               <thead><tr><th>项目编号</th><th>项目名称</th><th>方案号</th><th>PI</th><th>CRA / CRC</th><th class="num">入组</th><th class="num">样本（管）</th><th>状态</th><th>CTMS 同步</th><th>操作</th></tr></thead>
               <tbody>
-                <tr><td class="mono strong">CD2026-001</td><td class="strong">注射用重组抗 PD-1 人源化单克隆抗体 III 期临床研究</td><td class="mono">CD2026-001-V3.0</td><td>陈建国</td><td>赵磊 / 李敏</td><td class="num">12 / 60</td><td class="num">386</td><td><span class="tag green"><i class="dot green"></i>进行中</span> <span class="tag amber">变更待确认</span></td><td class="mono">今天 08:30</td><td><button class="btn btn-ghost btn-sm" data-goto="section-project-detail">查看</button></td></tr>
-                <tr><td class="mono strong">CD2026-002</td><td class="strong">注射用 ADC 药物 II 期临床研究</td><td class="mono">CD2026-002-V1.2</td><td>王强</td><td>孙倩 / 周洁</td><td class="num">28 / 40</td><td class="num">742</td><td><span class="tag green"><i class="dot green"></i>进行中</span></td><td class="mono">今天 08:31</td><td><button class="btn btn-ghost btn-sm" data-toast="打开 CD2026-002 项目详情">查看</button></td></tr>
-                <tr><td class="mono strong">CD2025-018</td><td class="strong">某 GLP-1 受体激动剂 III 期临床研究</td><td class="mono">CD2025-018-V2.1</td><td>李娜</td><td>刘洋 / 赵倩</td><td class="num">46 / 50</td><td class="num">1,280</td><td><span class="tag green"><i class="dot green"></i>进行中</span></td><td class="mono">今天 08:32</td><td><button class="btn btn-ghost btn-sm" data-toast="打开 CD2025-018 项目详情">查看</button></td></tr>
-                <tr><td class="mono strong">CD2025-006</td><td class="strong">某重组疫苗 I 期临床研究</td><td class="mono">CD2025-006-V1.0</td><td>张伟</td><td>王芳 / 李敏</td><td class="num">20 / 20</td><td class="num">168</td><td><span class="tag gray"><i class="dot gray"></i>已完成</span></td><td class="mono">昨天 18:10</td><td><button class="btn btn-ghost btn-sm" data-toast="项目已完成，进入只读视图">查看</button></td></tr>
-                <tr><td class="mono strong">CD2024-011</td><td class="strong">某小分子药物 II 期临床研究</td><td class="mono">CD2024-011-V2.0</td><td>王强</td><td>孙倩 / 周洁</td><td class="num">36 / 36</td><td class="num">512</td><td><span class="tag gray"><i class="dot gray"></i>已结题</span></td><td class="mono">10-28 16:40</td><td><button class="btn btn-ghost btn-sm" data-toast="项目已结题，档案已归档">查看</button></td></tr>
+                <tr data-status="进行中" data-center="01" data-year="2026"><td class="mono strong">CD2026-001</td><td class="strong">注射用重组抗 PD-1 人源化单克隆抗体 III 期临床研究</td><td class="mono">CD2026-001-V3.0</td><td>陈建国</td><td>赵磊 / 李敏</td><td class="num">12 / 60</td><td class="num">386</td><td><span class="tag green"><i class="dot green"></i>进行中</span> <span class="tag amber">变更待确认</span></td><td class="mono">今天 08:30</td><td><button class="btn btn-ghost btn-sm table-link" data-goto="section-project-detail">查看</button></td></tr>
+                <tr data-status="进行中" data-center="01 / 02" data-year="2026"><td class="mono strong">CD2026-002</td><td class="strong">注射用 ADC 药物 II 期临床研究</td><td class="mono">CD2026-002-V1.2</td><td>王强</td><td>孙倩 / 周洁</td><td class="num">28 / 40</td><td class="num">742</td><td><span class="tag green"><i class="dot green"></i>进行中</span></td><td class="mono">今天 08:31</td><td><button class="btn btn-ghost btn-sm table-link" data-toast="打开 CD2026-002 项目详情">查看</button></td></tr>
+                <tr data-status="进行中" data-center="01" data-year="2025"><td class="mono strong">CD2025-018</td><td class="strong">某 GLP-1 受体激动剂 III 期临床研究</td><td class="mono">CD2025-018-V2.1</td><td>李娜</td><td>刘洋 / 赵倩</td><td class="num">46 / 50</td><td class="num">1,280</td><td><span class="tag green"><i class="dot green"></i>进行中</span></td><td class="mono">今天 08:32</td><td><button class="btn btn-ghost btn-sm table-link" data-toast="打开 CD2025-018 项目详情">查看</button></td></tr>
+                <tr data-status="已完成" data-center="01" data-year="2025"><td class="mono strong">CD2025-006</td><td class="strong">某重组疫苗 I 期临床研究</td><td class="mono">CD2025-006-V1.0</td><td>张伟</td><td>王芳 / 李敏</td><td class="num">20 / 20</td><td class="num">168</td><td><span class="tag gray"><i class="dot gray"></i>已完成</span></td><td class="mono">昨天 18:10</td><td><button class="btn btn-ghost btn-sm table-link" data-toast="项目已完成，进入只读视图">查看</button></td></tr>
+                <tr data-status="已结题" data-center="01" data-year="2024"><td class="mono strong">CD2024-011</td><td class="strong">某小分子药物 II 期临床研究</td><td class="mono">CD2024-011-V2.0</td><td>王强</td><td>孙倩 / 周洁</td><td class="num">36 / 36</td><td class="num">512</td><td><span class="tag gray"><i class="dot gray"></i>已结题</span></td><td class="mono">10-28 16:40</td><td><button class="btn btn-ghost btn-sm table-link" data-toast="项目已结题，档案已归档">查看</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -1788,31 +1792,26 @@ body { background: var(--background); font-size: 13px; }
             </div>
 
             <div class="tab-pane" data-pane="diff">
-              <div class="toolbar" style="margin-bottom:9px;">
-                <span class="tag">V2.0 · 2026-06-12</span><i data-lucide="arrow-right" style="width:12px;height:12px;color:var(--text-3);"></i><span class="tag blue">V3.0 · 2026-10-20</span>
-                <span class="grow"></span>
-                <span class="tag amber">检测到 3 处影响样本流程的变更</span>
-              </div>
-              <div class="diff">
-                <div class="diff-col"><div class="diff-h">方案 V2.0</div><div class="diff-b">
-                  V4 第 2 周期<br>
-                  采集：PK 6 点、ADA<br>
-                  样本类型：血清、血浆<br>
-                  离心：<span class="del">3000 rpm / 10 min</span><br>
-                  储存：-80℃
-                </div></div>
-                <div class="diff-col"><div class="diff-h">方案 V3.0</div><div class="diff-b">
-                  V4 第 2 周期<br>
-                  采集：PK <span class="add">8 点</span>、ADA、<span class="add">细胞因子</span><br>
-                  样本类型：血清、血浆、<span class="add">尿液</span><br>
-                  离心：<span class="add">3000 rpm / 15 min</span><br>
-                  储存：-80℃
-                </div></div>
-              </div>
-              <div class="grid g3" style="margin-top:10px;">
-                <div class="panel flat"><div class="panel-s">变更 1</div><div class="panel-t">V4 PK 采血点 6 → 8</div><div class="tiny muted" style="margin-top:3px;">影响采集工单模板与采血时间窗</div></div>
-                <div class="panel flat"><div class="panel-s">变更 2</div><div class="panel-t">新增尿液样本</div><div class="tiny muted" style="margin-top:3px;">需新增容器、分装规则与库位</div></div>
-                <div class="panel flat"><div class="panel-s">变更 3</div><div class="panel-t">离心 10 → 15 min</div><div class="tiny muted" style="margin-top:3px;">影响处理 SOP 与设备参数模板</div></div>
+              <div class="version-pair" data-pair="tab">
+                <div class="toolbar" style="margin-bottom:9px;">
+                  <select class="version-select" data-vside="left">
+                    <option value="V1.0">V1.0 · 2026-03-01</option>
+                    <option value="V2.0" selected>V2.0 · 2026-06-12</option>
+                    <option value="V3.0">V3.0 · 2026-10-20</option>
+                  </select>
+                  <i data-lucide="arrow-right" style="width:12px;height:12px;color:var(--text-3);"></i>
+                  <select class="version-select" data-vside="right">
+                    <option value="V1.0">V1.0 · 2026-03-01</option>
+                    <option value="V2.0">V2.0 · 2026-06-12</option>
+                    <option value="V3.0" selected>V3.0 · 2026-10-20</option>
+                  </select>
+                  <span class="grow"></span>
+                  <span class="tag amber" data-diff-summary>共 3 处差异</span>
+                </div>
+                <div class="diff">
+                  <div class="diff-col"><div class="diff-h" data-vside="left-head">方案 V2.0 · 2026-06-12</div><div class="diff-b" data-vside="left-body"></div></div>
+                  <div class="diff-col"><div class="diff-h" data-vside="right-head">方案 V3.0 · 2026-10-20</div><div class="diff-b" data-vside="right-body"></div></div>
+                </div>
               </div>
             </div>
 
@@ -3964,28 +3963,26 @@ body { background: var(--background); font-size: 13px; }
   <div class="form-dialog wide">
     <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
     <div class="form-dialog-title">方案版本比对</div>
-    <div class="toolbar" style="margin-bottom:10px;">
-      <span class="tag">V2.0 · 2026-06-12</span>
-      <i data-lucide="arrow-right" style="width:12px;height:12px;color:var(--text-3);"></i>
-      <span class="tag blue">V3.0 · 2026-10-20</span>
-      <span class="grow"></span>
-      <span class="tag amber">3 处影响样本流程</span>
-    </div>
-    <div class="diff">
-      <div class="diff-col"><div class="diff-h">方案 V2.0</div><div class="diff-b">
-        V4 第 2 周期<br>
-        采集：PK 6 点、ADA<br>
-        样本类型：血清、血浆<br>
-        离心：<span class="del">3000 rpm / 10 min</span><br>
-        储存：-80℃
-      </div></div>
-      <div class="diff-col"><div class="diff-h">方案 V3.0</div><div class="diff-b">
-        V4 第 2 周期<br>
-        采集：PK <span class="add">8 点</span>、ADA、<span class="add">细胞因子</span><br>
-        样本类型：血清、血浆、<span class="add">尿液</span><br>
-        离心：<span class="add">3000 rpm / 15 min</span><br>
-        储存：-80℃
-      </div></div>
+    <div class="version-pair" data-pair="modal">
+      <div class="toolbar" style="margin-bottom:10px;">
+        <select class="version-select" data-vside="left">
+          <option value="V1.0">V1.0 · 2026-03-01</option>
+          <option value="V2.0" selected>V2.0 · 2026-06-12</option>
+          <option value="V3.0">V3.0 · 2026-10-20</option>
+        </select>
+        <i data-lucide="arrow-right" style="width:12px;height:12px;color:var(--text-3);"></i>
+        <select class="version-select" data-vside="right">
+          <option value="V1.0">V1.0 · 2026-03-01</option>
+          <option value="V2.0">V2.0 · 2026-06-12</option>
+          <option value="V3.0" selected>V3.0 · 2026-10-20</option>
+        </select>
+        <span class="grow"></span>
+        <span class="tag amber" data-diff-summary>共 3 处差异</span>
+      </div>
+      <div class="diff">
+        <div class="diff-col"><div class="diff-h" data-vside="left-head">方案 V2.0 · 2026-06-12</div><div class="diff-b" data-vside="left-body"></div></div>
+        <div class="diff-col"><div class="diff-h" data-vside="right-head">方案 V3.0 · 2026-10-20</div><div class="diff-b" data-vside="right-body"></div></div>
+      </div>
     </div>
     <div class="grid g3" style="margin-top:10px;gap:8px;">
       <div class="panel flat" style="padding:8px 10px;"><div class="panel-s">影响流程节点</div><div class="strong" style="font-size:13px;">3 个</div></div>
@@ -3994,7 +3991,7 @@ body { background: var(--background); font-size: 13px; }
     </div>
     <div class="form-actions">
       <button class="btn btn-ghost btn-sm" data-close>取消</button>
-      <button class="btn btn-primary btn-sm" data-submit="已生成 3 项方案变更任务，待责任人确认">生成变更任务</button>
+      <button class="btn btn-primary btn-sm" data-submit="已生成变更任务，待责任人确认">生成变更任务</button>
     </div>
   </div>
 </div>
@@ -4603,6 +4600,78 @@ document.addEventListener('click', function(e){
   var b = e.target.closest('[data-mp-step]');
   if (b) mpGo(b.getAttribute('data-mp-step'));
 });
+
+/* ===== 项目情况筛选 ===== */
+function filterProjects() {
+  var q = (document.getElementById('projectSearch') || {}).value || '';
+  q = q.toLowerCase();
+  var status = (document.getElementById('projectStatus') || {}).value || '';
+  var center = (document.getElementById('projectCenter') || {}).value || '';
+  var year = (document.getElementById('projectYear') || {}).value || '';
+  var rows = document.querySelectorAll('#projectTable tbody tr');
+  var n = 0;
+  rows.forEach(function(tr){
+    var okQ = !q || tr.textContent.toLowerCase().indexOf(q) > -1;
+    var okS = !status || tr.getAttribute('data-status') === status;
+    var okC = !center || (tr.getAttribute('data-center') || '').indexOf(center) > -1;
+    var okY = !year || tr.getAttribute('data-year') === year;
+    var show = okQ && okS && okC && okY;
+    tr.style.display = show ? '' : 'none';
+    if (show) n++;
+  });
+  var count = document.getElementById('projectCount');
+  if (count) count.textContent = '共 ' + n + ' 个项目';
+}
+[['projectSearch','input'],['projectStatus','change'],['projectCenter','change'],['projectYear','change']].forEach(function(pair){
+  var el = document.getElementById(pair[0]);
+  if (el) el.addEventListener(pair[1], filterProjects);
+});
+
+/* ===== 方案版本比对 ===== */
+var PROTOCOL_VERSIONS = {
+  'V1.0': { label: 'V1.0', date: '2026-03-01', collect: 'PK 4 点、ADA', type: '血清、血浆', spin: '3000 rpm / 10 min', store: '-80℃' },
+  'V2.0': { label: 'V2.0', date: '2026-06-12', collect: 'PK 6 点、ADA', type: '血清、血浆', spin: '3000 rpm / 10 min', store: '-80℃' },
+  'V3.0': { label: 'V3.0', date: '2026-10-20', collect: 'PK 8 点、ADA、细胞因子', type: '血清、血浆、尿液', spin: '3000 rpm / 15 min', store: '-80℃' }
+};
+var VERSION_FIELDS = [['collect','采集'],['type','样本类型'],['spin','离心'],['store','储存']];
+function versionBody(v, other) {
+  var html = '版本：' + v.label + ' · ' + v.date + '<br>';
+  VERSION_FIELDS.forEach(function(f){
+    var changed = v[f[0]] !== other[f[0]];
+    html += f[1] + '：' + v[f[0]] + (changed ? ' <span class="tag amber" style="font-size:9px;">变更</span>' : '') + '<br>';
+  });
+  return html;
+}
+function renderVersionPair(pair) {
+  var leftSel = pair.querySelector('select[data-vside="left"]');
+  var rightSel = pair.querySelector('select[data-vside="right"]');
+  if (!leftSel || !rightSel) return;
+  var left = PROTOCOL_VERSIONS[leftSel.value];
+  var right = PROTOCOL_VERSIONS[rightSel.value];
+  var diff = VERSION_FIELDS.filter(function(f){ return left[f[0]] !== right[f[0]]; }).length;
+  var lHead = pair.querySelector('[data-vside="left-head"]');
+  var rHead = pair.querySelector('[data-vside="right-head"]');
+  var lBody = pair.querySelector('[data-vside="left-body"]');
+  var rBody = pair.querySelector('[data-vside="right-body"]');
+  var summary = pair.querySelector('[data-diff-summary]');
+  if (lHead) lHead.textContent = '方案 ' + left.label + ' · ' + left.date;
+  if (rHead) rHead.textContent = '方案 ' + right.label + ' · ' + right.date;
+  if (lBody) lBody.innerHTML = versionBody(left, right);
+  if (rBody) rBody.innerHTML = versionBody(right, left);
+  if (summary) {
+    summary.textContent = leftSel.value === rightSel.value ? '无差异' : '共 ' + diff + ' 处差异';
+    summary.className = leftSel.value === rightSel.value ? 'tag green' : 'tag amber';
+  }
+}
+function initVersionPairs() {
+  document.querySelectorAll('.version-pair').forEach(function(pair){
+    pair.querySelectorAll('select[data-vside]').forEach(function(sel){
+      sel.addEventListener('change', function(){ renderVersionPair(pair); });
+    });
+    renderVersionPair(pair);
+  });
+}
+initVersionPairs();
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
