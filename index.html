@@ -1159,6 +1159,10 @@ body.app-mode { padding: 0; }
 .filters .search-box { min-width: 210px; }
 .version-select { border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-full); padding: 6px 10px; font-size: 11px; color: var(--foreground); font-family: var(--font-sans); cursor: pointer; }
 .version-select:hover { border-color: var(--primary); }
+.role-switch { display: flex; align-items: center; gap: 4px; }
+.role-switch i { width: 12px; height: 12px; color: var(--text-3); }
+.role-switcher { border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-full); padding: 4px 8px; font-size: 10px; font-family: var(--font-sans); color: var(--text-2); cursor: pointer; }
+.role-switcher:hover { border-color: var(--primary); color: var(--primary); }
 .filter-select { border: none; outline: none; background: transparent; font-family: var(--font-sans); font-size: 11px; color: inherit; cursor: pointer; padding: 0; }
 .table-link { color: var(--primary) !important; font-weight: 600; }
 .select-mini { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-2); border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-btn); padding: 5px 9px; }
@@ -1708,7 +1712,7 @@ body { background: var(--background); font-size: 13px; }
           <div class="panel" style="margin-top:14px;">
             <div class="panel-h">
               <div class="panel-t"><i data-lucide="list-checks"></i>待处理事项</div>
-              <div class="toolbar"><span class="tag amber">3 项</span><button class="btn btn-secondary btn-sm" data-goto="section-audit"><i data-lucide="scroll-text" style="width:12px;height:12px;"></i>查看更新日志</button></div>
+              <div class="toolbar"><span class="tag amber">3 项</span><button class="btn btn-secondary btn-sm role-min-2" data-goto="section-audit"><i data-lucide="scroll-text" style="width:12px;height:12px;"></i>查看更新日志</button></div>
             </div>
             <div class="grid g3" style="gap:10px;">
               <div class="panel flat" style="padding:12px 14px;">
@@ -1755,7 +1759,7 @@ body { background: var(--background); font-size: 13px; }
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-modal="modal-protocol-doc"><i data-lucide="file-text" style="width:12px;height:12px;"></i>方案原文</button>
               <button class="btn btn-secondary btn-sm" data-modal="modal-protocol-diff"><i data-lucide="git-compare" style="width:12px;height:12px;"></i>版本比对</button>
-              <button class="btn btn-primary btn-sm" data-goto="section-project-change"><i data-lucide="sparkles" style="width:12px;height:12px;"></i>AI 变更分析</button>
+              <button class="btn btn-primary btn-sm role-min-2" data-goto="section-project-change"><i data-lucide="sparkles" style="width:12px;height:12px;"></i>AI 变更分析</button>
             </div>
           </div>
 
@@ -4350,31 +4354,55 @@ body { background: var(--background); font-size: 13px; }
 
 <script>
 /* ===== 产品内 sidebar 统一构建 ===== */
+var DEMO_ROLES = {
+  operator: { label: '样本管理员', level: 1 },
+  manager: { label: '项目管理者', level: 2 },
+  admin: { label: '机构管理者', level: 3 },
+  sysadmin: { label: '系统管理员', level: 4 }
+};
+var currentRole = 'manager';
+function roleLevel() { return DEMO_ROLES[currentRole].level; }
+function roleOptions() {
+  return Object.keys(DEMO_ROLES).map(function(k){
+    return '<option value="' + k + '"' + (k === currentRole ? ' selected' : '') + '>' + DEMO_ROLES[k].label + '</option>';
+  }).join('');
+}
+var SECTION_MIN_LEVEL = {
+  'section-project': 1, 'section-project-stats': 2, 'section-project-change': 2,
+  'section-collect': 1, 'section-collect-stats': 2,
+  'section-transport': 1, 'section-transport-stats': 2,
+  'section-process': 1, 'section-process-stats': 2,
+  'section-store': 1, 'section-trace': 1, 'section-patho': 1,
+  'section-audit': 2, 'section-ai-search': 1, 'section-ai-compliance': 1, 'section-ai-voice': 1,
+  'section-mobile': 1, 'section-settings': 4,
+  'section-project-detail': 1, 'section-ai-kb': 1,
+  'section-home': 1, 'section-ai-version': 1, 'section-ai-sop': 1
+};
 var NAV = [
   { group: '业务管理', items: [
     { id: 'project', label: '项目管理', icon: 'folder-kanban', children: [
       { id: 'project', label: '项目情况', icon: 'list' },
-      { id: 'project-stats', label: '项目统计', icon: 'bar-chart-3' },
-      { id: 'project-change', label: '方案变更', icon: 'git-compare' }
+      { id: 'project-stats', label: '项目统计', icon: 'bar-chart-3', min: 2 },
+      { id: 'project-change', label: '方案变更', icon: 'git-compare', min: 2 }
     ]},
     { id: 'collect', label: '样本采集', icon: 'test-tube', children: [
       { id: 'collect', label: '采集工单', icon: 'clipboard-list' },
-      { id: 'collect-stats', label: '采集统计', icon: 'bar-chart-3' }
+      { id: 'collect-stats', label: '采集统计', icon: 'bar-chart-3', min: 2 }
     ]},
     { id: 'transport', label: '样本转运', icon: 'truck', children: [
       { id: 'transport', label: '转运工单', icon: 'clipboard-list' },
-      { id: 'transport-stats', label: '转运统计', icon: 'bar-chart-3' }
+      { id: 'transport-stats', label: '转运统计', icon: 'bar-chart-3', min: 2 }
     ]},
     { id: 'process', label: '样本处理', icon: 'flask-conical', children: [
       { id: 'process', label: '处理工单', icon: 'clipboard-list' },
-      { id: 'process-stats', label: '处理统计', icon: 'bar-chart-3' }
+      { id: 'process-stats', label: '处理统计', icon: 'bar-chart-3', min: 2 }
     ]},
     { id: 'store', label: '样本储存', icon: 'archive' },
     { id: 'trace', label: '样本追溯', icon: 'git-commit-horizontal' },
     { id: 'patho', label: '病理切片', icon: 'microscope' }
   ]},
   { group: '质量与合规', items: [
-    { id: 'audit', label: '日志管理', icon: 'scroll-text' }
+    { id: 'audit', label: '日志管理', icon: 'scroll-text', min: 2 }
   ]},
   { group: '智能能力', items: [
     { id: 'ai', label: '智能体', icon: 'sparkles', badge: 'AI', children: [
@@ -4385,7 +4413,7 @@ var NAV = [
   ]},
   { group: '应用与设置', items: [
     { id: 'mobile', label: '移动端小程序', icon: 'smartphone' },
-    { id: 'settings', label: '系统设置', icon: 'settings-2' }
+    { id: 'settings', label: '系统设置', icon: 'settings-2', min: 4 }
   ]}
 ];
 var SECTION_MAP = {
@@ -4402,10 +4430,17 @@ function buildSidebar(active) {
     '<div style="width:22px;height:22px;border-radius:7px;background:var(--primary);display:flex;align-items:center;justify-content:center;">' +
     '<i data-lucide="dna" style="width:13px;height:13px;color:var(--primary-foreground);stroke-width:2.4;"></i></div>' +
     '<span style="font-size:13px;font-weight:650;letter-spacing:-0.02em;">样本库与GCP工作站</span></div>';
+  var level = roleLevel();
   NAV.forEach(function(g) {
+    var visibleItems = g.items.filter(function(it){
+      if (it.children) return it.children.some(function(c){ return level >= (c.min || 1); });
+      return level >= (it.min || 1);
+    });
+    if (!visibleItems.length) return;
     html += '<div class="sidebar-section-header" style="padding:7px 12px 5px;">' + g.group + '</div>';
-    g.items.forEach(function(it) {
-      var isParentActive = it.children && it.children.some(function(c){ return c.id === active; });
+    visibleItems.forEach(function(it) {
+      var children = (it.children || []).filter(function(c){ return level >= (c.min || 1); });
+      var isParentActive = children.some(function(c){ return c.id === active; });
       var act = isParentActive ? ' active-parent' : ((it.id === active && !it.children) ? ' active' : '');
       var target = SECTION_MAP[it.id] || ('section-' + it.id);
       var pcls = it.children ? ' sidebar-parent' : '';
@@ -4415,7 +4450,7 @@ function buildSidebar(active) {
         (it.children ? '<i data-lucide="chevron-down" class="chev"></i>' : '') + '</div>';
       if (it.children) {
         html += '<div class="sidebar-sub">';
-        it.children.forEach(function(c){
+        children.forEach(function(c){
           var ctarget = SECTION_MAP[c.id] || ('section-' + c.id);
           var cact = (c.id === active) ? ' active' : '';
           html += '<div class="sidebar-item sidebar-sub-item' + cact + '" data-goto="' + ctarget + '">' +
@@ -4427,7 +4462,8 @@ function buildSidebar(active) {
   });
   html += '<div style="flex:1"></div><div class="sidebar-divider"></div>' +
     '<div class="sidebar-item"><i data-lucide="shield-check" class="nav-icon"></i>合规中心<span class="si-badge" style="background:var(--success-muted);color:var(--success)">OK</span></div>' +
-    '<div style="padding:8px 12px 2px;font-size:9px;color:var(--text-3);" class="mono">GCP 2026 · E6(R3)</div>';
+    '<div style="padding:2px 12px 2px;font-size:9px;color:var(--text-3);">当前身份：' + DEMO_ROLES[currentRole].label + '</div>' +
+    '<div style="padding:4px 12px 2px;font-size:9px;color:var(--text-3);" class="mono">GCP 2026 · E6(R3)</div>';
   return html;
 }
 document.querySelectorAll('.app-sidebar[data-active]').forEach(function(el) {
@@ -4443,8 +4479,9 @@ document.querySelectorAll('.win-chrome-bar[data-crumb]').forEach(function(el) {
     '</div><div class="win-chrome-drag"></div><div class="win-chrome-actions">' +
     '<span class="badge badge-default" style="font-size:10px;"><i data-lucide="shield-check" style="width:10px;height:10px;"></i>审计追踪</span>' +
     '<div class="win-credits"><i data-lucide="package"></i><span>在库 12,846 管</span></div>' +
+    '<div class="role-switch"><i data-lucide="user-cog"></i><select class="role-switcher" onchange="setDemoRole(this.value)">' + roleOptions() + '</select></div>' +
     '<button class="win-chrome-btn" title="帮助" data-toast="帮助中心：GCP 合规操作指引"><i data-lucide="help-circle" class="win-chrome-icon"></i></button>' +
-    '<div class="win-avatar-chip"><span class="win-avatar">张</span><span style="font-size:10px;color:var(--text-2);">张三 · 样本管理员</span></div>' +
+    '<div class="win-avatar-chip"><span class="win-avatar">张</span><span class="current-role-label" style="font-size:10px;color:var(--text-2);">张三 · ' + DEMO_ROLES[currentRole].label + '</span></div>' +
     '<button class="win-chrome-btn" title="菜单"><i data-lucide="menu" class="win-chrome-icon"></i></button></div>';
 });
 
@@ -4588,6 +4625,11 @@ document.querySelectorAll('[data-filter]').forEach(function(input){
 /* ===== 演示模式 ===== */
 /* ===== 单页演示导航 ===== */
 function showSection(id) {
+  var need = SECTION_MIN_LEVEL[id] || 1;
+  if (roleLevel() < need) {
+    if (typeof toast === 'function') toast('当前身份无权查看该页面');
+    id = 'section-project';
+  }
   document.querySelectorAll('.proto-stack').forEach(function(s){ s.classList.remove('is-active'); });
   var el = document.getElementById(id);
   if (!el) return;
@@ -4614,6 +4656,27 @@ function showSection(id) {
     }
   }
   window.scrollTo(0, 0);
+}
+
+function setDemoRole(role) {
+  if (!DEMO_ROLES[role]) return;
+  currentRole = role;
+  document.querySelectorAll('.role-switcher').forEach(function(s){ s.value = role; });
+  document.querySelectorAll('.current-role-label').forEach(function(e){ e.textContent = '张三 · ' + DEMO_ROLES[role].label; });
+  document.querySelectorAll('.app-sidebar[data-active]').forEach(function(el){
+    el.innerHTML = buildSidebar(el.getAttribute('data-active'));
+  });
+  var current = (document.querySelector('.proto-stack.is-active') || {}).id || 'section-project';
+  showSection(current);
+  toast('已切换身份：' + DEMO_ROLES[role].label);
+  applyRoleVisibility();
+  if (window.lucide) lucide.createIcons();
+}
+
+function applyRoleVisibility() {
+  var level = roleLevel();
+  document.querySelectorAll('.role-min-2').forEach(function(el){ el.style.display = level >= 2 ? '' : 'none'; });
+  document.querySelectorAll('.role-min-4').forEach(function(el){ el.style.display = level >= 4 ? '' : 'none'; });
 }
 
 /* TOC 滚动高亮 */
@@ -4747,6 +4810,7 @@ function filterUpdateLogs() {
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
+applyRoleVisibility();
 if (window.lucide) lucide.createIcons();
 setTimeout(function(){ if (window.lucide) lucide.createIcons(); }, 300);
 </script>
