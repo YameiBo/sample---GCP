@@ -1157,6 +1157,10 @@ body.app-mode { padding: 0; }
 
 .filters { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; flex-wrap: wrap; }
 .filters .search-box { min-width: 210px; }
+.form-dialog.xwide { width: 900px; max-width: 94vw; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
+.table-scroll .tbl { min-width: 980px; }
+.table-scroll.wide15 .tbl { min-width: 1220px; }
 .version-select { border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-full); padding: 6px 10px; font-size: 11px; color: var(--foreground); font-family: var(--font-sans); cursor: pointer; }
 .version-select:hover { border-color: var(--primary); }
 .role-switch { display: flex; align-items: center; gap: 4px; }
@@ -2074,6 +2078,18 @@ body { background: var(--background); font-size: 13px; }
             <div class="kpi"><div class="l"><i data-lucide="user-check"></i>采集人员</div><div class="v">6<small>人</small></div><div class="d">均已授权并培训</div></div>
           </div>
 
+          <div class="panel" style="padding:10px 16px;margin-bottom:14px;">
+            <div class="panel-h"><div class="panel-t"><i data-lucide="workflow"></i>采集流转节点</div><div class="toolbar"><span class="tag blue">FB-005 / FB-008</span><button class="btn btn-secondary btn-sm" data-modal="modal-form-fb005"><i data-lucide="file-text" style="width:11px;height:11px;"></i>采集记录表</button></div></div>
+            <div class="steps">
+              <div class="step done"><span class="n">1</span>采集登记</div><div class="step-line done"></div>
+              <div class="step done"><span class="n">2</span>颠倒混匀</div><div class="step-line done"></div>
+              <div class="step now"><span class="n">3</span>采集/递交签名</div><div class="step-line"></div>
+              <div class="step"><span class="n">4</span>复核/接收签名</div><div class="step-line"></div>
+              <div class="step"><span class="n">5</span>转运/寄送</div><div class="step-line"></div>
+              <div class="step"><span class="n">6</span>温度记录</div>
+            </div>
+          </div>
+
           <div class="grid g21">
             <div class="panel">
               <div class="filters">
@@ -2213,6 +2229,17 @@ body { background: var(--background); font-size: 13px; }
             </div>
           </div>
 
+          <div class="panel" style="padding:10px 16px;margin-bottom:14px;">
+            <div class="panel-h"><div class="panel-t"><i data-lucide="workflow"></i>转运流转节点</div><div class="toolbar"><span class="tag blue">FB-005</span><button class="btn btn-secondary btn-sm" data-modal="modal-form-fb005"><i data-lucide="file-text" style="width:11px;height:11px;"></i>转运记录表</button></div></div>
+            <div class="steps">
+              <div class="step done"><span class="n">1</span>转运开始</div><div class="step-line done"></div>
+              <div class="step done"><span class="n">2</span>温度记录</div><div class="step-line done"></div>
+              <div class="step now"><span class="n">3</span>到达样本库</div><div class="step-line"></div>
+              <div class="step"><span class="n">4</span>双方签名</div><div class="step-line"></div>
+              <div class="step"><span class="n">5</span>入库</div>
+            </div>
+          </div>
+
           <div class="grid g21">
             <div class="panel">
               <div class="filters">
@@ -2279,6 +2306,99 @@ body { background: var(--background); font-size: 13px; }
               <div style="display:flex;gap:6px;">
                 <button class="btn btn-secondary btn-sm" style="flex:1;" data-toast="已标记异常，通知发出方复核">标记异常</button>
                 <button class="btn btn-primary btn-sm" style="flex:1;" data-toast="交接已确认，监管链节点已签名" data-drawer="drawer-sign"><i data-lucide="pen-line" style="width:12px;height:12px;"></i>确认交接</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="section-shipment" class="proto-stack">
+  <div class="proto-with-prd">
+    <div class="macos-window">
+      <div class="macos-body">
+        <div class="app-sidebar" data-active="shipment"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 样本转运 / 寄送管理"></div>
+        <div class="app-main">
+          <div class="page-head">
+            <div><div class="page-title">寄送管理</div><div class="page-sub">外送样本取样、复核、寄出与快递单号记录</div></div>
+            <div class="toolbar">
+              <button class="btn btn-secondary btn-sm" data-modal="modal-form-fb007"><i data-lucide="file-text" style="width:12px;height:12px;"></i>寄送记录表</button>
+              <button class="btn btn-primary btn-sm" data-toast="已新建寄送单"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建寄送</button>
+            </div>
+          </div>
+
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="send"></i>今日寄送</div><div class="v">4<small>单</small></div><div class="d">含检测管与备份管</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="clock"></i>待寄出</div><div class="v">2<small>单</small></div><div class="d warn">需复核签名</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="package-check"></i>已寄出</div><div class="v">1<small>单</small></div><div class="d">快递单号已回填</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="triangle-alert"></i>快递异常</div><div class="v">0<small>项</small></div><div class="d up">全部正常</div></div>
+          </div>
+
+          <div class="panel" style="padding:10px 16px;margin-bottom:14px;">
+            <div class="panel-h"><div class="panel-t"><i data-lucide="workflow"></i>寄送流转节点</div><span class="tag blue">JSCH-JG-SY-FB-007</span></div>
+            <div class="steps">
+              <div class="step done"><span class="n">1</span>取样</div><div class="step-line done"></div>
+              <div class="step done"><span class="n">2</span>取出者签名</div><div class="step-line done"></div>
+              <div class="step now"><span class="n">3</span>复核</div><div class="step-line"></div>
+              <div class="step"><span class="n">4</span>寄出者签名</div><div class="step-line"></div>
+              <div class="step"><span class="n">5</span>寄出</div><div class="step-line"></div>
+              <div class="step"><span class="n">6</span>快递单号</div>
+            </div>
+          </div>
+
+          <div class="grid g21">
+            <div class="panel">
+              <div class="filters">
+                <div class="search-box"><i data-lucide="search"></i><input placeholder="搜索寄送单 / 项目 / 快递单号" data-filter="#shipmentTable" /></div>
+                <span class="select-mini"><i data-lucide="circle-dot"></i>全部状态</span>
+                <span class="grow"></span><span class="tiny muted">5 条寄送记录</span>
+              </div>
+              <table class="tbl" id="shipmentTable">
+                <thead><tr><th>寄送单号</th><th>项目</th><th>受试者</th><th>样本</th><th class="num">管数</th><th>寄出时间</th><th>快递单号</th><th>状态</th></tr></thead>
+                <tbody>
+                  <tr class="is-sel"><td class="mono">SH-1103-002</td><td>CD2026-001</td><td>S007</td><td>血清 · PK</td><td class="num">2</td><td class="mono">11-03 10:20</td><td class="mono">SF1234567890</td><td><span class="tag green">已寄出</span></td></tr>
+                  <tr><td class="mono">SH-1103-001</td><td>CD2026-002</td><td>S003</td><td>血浆 · ADA</td><td class="num">1</td><td class="mono">11-03 09:15</td><td class="mono">—</td><td><span class="tag amber">待寄出</span></td></tr>
+                  <tr><td class="mono">SH-1102-004</td><td>CD2025-018</td><td>S012</td><td>全血 · 备份</td><td class="num">3</td><td class="mono">11-02 16:40</td><td class="mono">SF1234567888</td><td><span class="tag green">已寄出</span></td></tr>
+                  <tr><td class="mono">SH-1102-003</td><td>CD2026-001</td><td>S006</td><td>血清 · PK</td><td class="num">2</td><td class="mono">11-02 11:05</td><td class="mono">SF1234567877</td><td><span class="tag green">已寄出</span></td></tr>
+                  <tr><td class="mono">SH-1101-002</td><td>CD2026-002</td><td>S005</td><td>血浆 · 备份</td><td class="num">1</td><td class="mono">11-01 15:30</td><td class="mono">—</td><td><span class="tag amber">待寄出</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="package-check"></i>寄送详情</div><span class="tag green">已寄出</span></div>
+              <div class="info-rows" style="margin-bottom:9px;">
+                <div class="info-row"><span class="k">方案名称</span><span class="v">CD2026-001 PD-1 III 期</span></div>
+                <div class="info-row"><span class="k">方案号</span><span class="v mono">CD2026-001-V3.0</span></div>
+                <div class="info-row"><span class="k">参与者编号 / 姓名缩写</span><span class="v">S007 / Z**</span></div>
+                <div class="info-row"><span class="k">样本类型</span><span class="v">血液 · 血清</span></div>
+                <div class="info-row"><span class="k">采集节点 / 检测项目</span><span class="v">V3 第 1 周期 / PK</span></div>
+                <div class="info-row"><span class="k">取出者 / 时间</span><span class="v">张三 · 11-03 10:05</span></div>
+                <div class="info-row"><span class="k">取出管数 / 编号</span><span class="v">2 管 · SER-01-A / B</span></div>
+                <div class="info-row"><span class="k">复核 / 寄出者</span><span class="v">李敏 / 张三</span></div>
+                <div class="info-row"><span class="k">寄出时间</span><span class="v mono">11-03 10:20</span></div>
+                <div class="info-row"><span class="k">快递单号</span><span class="v mono">SF1234567890</span></div>
+                <div class="info-row"><span class="k">检测 / 备份</span><span class="v">检 1 管 / 备 1 管</span></div>
+              </div>
+              <div class="panel flat" style="padding:8px;margin-bottom:9px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span class="avatar">张</span>
+                  <div style="flex:1;"><div style="font-size:10px;font-weight:600;">张三 · 取出/寄出者</div><div class="tiny muted">已电子签名 · 11-03 10:05 / 10:20</div></div>
+                  <span class="tag green">已签</span>
+                </div>
+                <div class="split-line"></div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span class="avatar alt">李</span>
+                  <div style="flex:1;"><div style="font-size:10px;font-weight:600;">李敏 · 复核者</div><div class="tiny muted">已电子签名 · 11-03 10:12</div></div>
+                  <span class="tag green">已签</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:6px;">
+                <button class="btn btn-secondary btn-sm" style="flex:1;" data-toast="寄送记录表已打印"><i data-lucide="printer" style="width:12px;height:12px;"></i>打印记录表</button>
+                <button class="btn btn-primary btn-sm" style="flex:1;" data-toast="已确认寄出并回填快递单号"><i data-lucide="check" style="width:12px;height:12px;"></i>确认寄出</button>
               </div>
             </div>
           </div>
@@ -2361,6 +2481,18 @@ body { background: var(--background); font-size: 13px; }
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-toast="已打开设备参数模板"><i data-lucide="sliders-horizontal" style="width:12px;height:12px;"></i>参数模板</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-new-task"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建任务</button>
+            </div>
+          </div>
+
+          <div class="panel" style="padding:10px 16px;margin-bottom:14px;">
+            <div class="panel-h"><div class="panel-t"><i data-lucide="workflow"></i>处理/储存流转节点</div><div class="toolbar"><span class="tag blue">FB-006</span><button class="btn btn-secondary btn-sm" data-modal="modal-form-fb006"><i data-lucide="file-text" style="width:11px;height:11px;"></i>处理储存记录表</button></div></div>
+            <div class="steps">
+              <div class="step done"><span class="n">1</span>静置</div><div class="step-line done"></div>
+              <div class="step done"><span class="n">2</span>离心</div><div class="step-line done"></div>
+              <div class="step now"><span class="n">3</span>分装</div><div class="step-line"></div>
+              <div class="step"><span class="n">4</span>操作者签名</div><div class="step-line"></div>
+              <div class="step"><span class="n">5</span>复核签名</div><div class="step-line"></div>
+              <div class="step"><span class="n">6</span>储存</div>
             </div>
           </div>
 
@@ -2512,6 +2644,18 @@ body { background: var(--background); font-size: 13px; }
             <div class="kpi"><div class="l"><i data-lucide="layers"></i>切片</div><div class="v">426<small>张</small></div><div class="d">在库 412 · 借出 14</div></div>
             <div class="kpi"><div class="l"><i data-lucide="arrow-up-right"></i>本月借出</div><div class="v">20<small>次</small></div><div class="d">已归还 18</div></div>
             <div class="kpi"><div class="l"><i data-lucide="building-2"></i>外院交接</div><div class="v">4<small>单</small></div><div class="d warn">1 单待归还</div></div>
+          </div>
+
+          <div class="panel" style="padding:10px 16px;margin-bottom:14px;">
+            <div class="panel-h"><div class="panel-t"><i data-lucide="workflow"></i>病理流转节点</div><div class="toolbar"><span class="tag blue">FB-004</span><button class="btn btn-secondary btn-sm" data-modal="modal-form-fb004"><i data-lucide="file-text" style="width:11px;height:11px;"></i>病理记录表</button></div></div>
+            <div class="steps">
+              <div class="step done"><span class="n">1</span>交接</div><div class="step-line done"></div>
+              <div class="step done"><span class="n">2</span>切片</div><div class="step-line done"></div>
+              <div class="step now"><span class="n">3</span>借片/退回</div><div class="step-line"></div>
+              <div class="step"><span class="n">4</span>院内转运</div><div class="step-line"></div>
+              <div class="step"><span class="n">5</span>储存</div><div class="step-line"></div>
+              <div class="step"><span class="n">6</span>寄送</div>
+            </div>
           </div>
 
           <div class="panel">
@@ -3983,6 +4127,163 @@ body { background: var(--background); font-size: 13px; }
   </div>
 </div>
 
+<!-- ===== 记录表弹窗 ===== -->
+<div class="demo-modal" id="modal-form-fb005">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">临床试验生物样品采集记录表</div>
+    <div class="tab-set">
+      <div class="tabs">
+        <div class="tab active" data-tab="fb005">采集 + 转运（FB-005）</div>
+        <div class="tab" data-tab="fb008">采集 + 寄送（FB-008）</div>
+      </div>
+      <div class="tab-pane active" data-pane="fb005">
+        <div class="panel flat" style="padding:8px 12px;margin-bottom:8px;">
+          <div class="grid g3" style="gap:8px;">
+            <div class="info-row"><span class="k">方案名称</span><span class="v">CD2026-001 PD-1 III 期</span></div>
+            <div class="info-row"><span class="k">方案号</span><span class="v mono">CD2026-001-V3.0</span></div>
+            <div class="info-row"><span class="k">项目负责人</span><span class="v">陈建国</span></div>
+            <div class="info-row"><span class="k">参与者编号/缩写</span><span class="v">S007 / Z**</span></div>
+            <div class="info-row"><span class="k">转运箱编号</span><span class="v mono">BOX-03</span></div>
+            <div class="info-row"><span class="k">样本类型</span><span class="v">血液 · 血清</span></div>
+          </div>
+        </div>
+        <div class="table-scroll wide15">
+          <table class="tbl compact">
+            <thead><tr><th>采集节点</th><th>检测项目</th><th>采集日期时间</th><th>颠倒混匀</th><th>采集管数</th><th>采集管编号</th><th>采集/递交者签名</th><th>复核/接收/转运者签名</th><th>转运开始时间</th><th>温度最低</th><th>温度最高</th><th>温度计编号</th><th>接收日期时间</th><th>接收管数</th><th>交/接收者签名</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>V3 第1周期</td><td>PK</td><td class="mono">11-03 08:32</td><td><span class="tag green">是</span></td><td class="num">1</td><td class="mono">SER-01-A</td><td>李敏 / 08:32</td><td>张三 / 08:40</td><td class="mono">08:40</td><td class="num">3.6℃</td><td class="num">4.2℃</td><td class="mono">T-03</td><td class="mono">09:02</td><td class="num">1</td><td>张三 / 09:02</td><td>—</td></tr>
+              <tr><td>V3 第1周期</td><td>ADA</td><td class="mono">11-03 08:32</td><td><span class="tag green">是</span></td><td class="num">1</td><td class="mono">SER-01-B</td><td>李敏 / 08:32</td><td>张三 / 08:40</td><td class="mono">08:40</td><td class="num">3.6℃</td><td class="num">4.2℃</td><td class="mono">T-03</td><td class="mono">09:02</td><td class="num">1</td><td>张三 / 09:02</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tiny muted" style="margin-top:5px;">转运温度为必填项；递交者和接收者均需签名。</div>
+      </div>
+      <div class="tab-pane" data-pane="fb008">
+        <div class="panel flat" style="padding:8px 12px;margin-bottom:8px;">
+          <div class="grid g3" style="gap:8px;">
+            <div class="info-row"><span class="k">方案名称</span><span class="v">CD2026-001 PD-1 III 期</span></div>
+            <div class="info-row"><span class="k">方案号</span><span class="v mono">CD2026-001-V3.0</span></div>
+            <div class="info-row"><span class="k">项目负责人</span><span class="v">陈建国</span></div>
+            <div class="info-row"><span class="k">参与者编号/缩写</span><span class="v">S007 / Z**</span></div>
+            <div class="info-row"><span class="k">样本类型</span><span class="v">血液 · 血清</span></div>
+            <div class="info-row"><span class="k">寄送方式</span><span class="v">顺丰冷链</span></div>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="tbl compact">
+            <thead><tr><th>采集节点</th><th>检测项目</th><th>采集日期时间</th><th>采集管数</th><th>采集管编号</th><th>采集/递交者签名</th><th>复核/接收者签名</th><th>寄送者签名</th><th>寄出日期时间</th><th>快递单号</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>V3 第1周期</td><td>PK</td><td class="mono">11-03 08:32</td><td class="num">1</td><td class="mono">SER-01-A</td><td>李敏 / 08:32</td><td>张三 / 09:02</td><td>张三 / 10:20</td><td class="mono">11-03 10:20</td><td class="mono">SF1234567890</td><td>检</td></tr>
+              <tr><td>V3 第1周期</td><td>ADA</td><td class="mono">11-03 08:32</td><td class="num">1</td><td class="mono">SER-01-B</td><td>李敏 / 08:32</td><td>张三 / 09:02</td><td>张三 / 10:20</td><td class="mono">11-03 10:20</td><td class="mono">SF1234567890</td><td>备</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-toast="采集记录表已导出"><i data-lucide="download" style="width:12px;height:12px;"></i>导出记录表</button>
+      <button class="btn btn-primary btn-sm" data-close>关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-form-fb006">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">临床试验生物样品处理、储存记录表</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:8px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">方案名称</span><span class="v">CD2026-001 PD-1 III 期</span></div>
+        <div class="info-row"><span class="k">方案号</span><span class="v mono">CD2026-001-V3.0</span></div>
+        <div class="info-row"><span class="k">项目负责人</span><span class="v">陈建国</span></div>
+        <div class="info-row"><span class="k">参与者编号/缩写</span><span class="v">S007 / Z**</span></div>
+        <div class="info-row"><span class="k">储存地点/设备</span><span class="v">8号楼2楼检测冰箱 / 备份冰箱</span></div>
+        <div class="info-row"><span class="k">储存温度</span><span class="v">-60℃ ~ -90℃</span></div>
+      </div>
+    </div>
+    <div class="table-scroll wide15">
+      <table class="tbl compact">
+        <thead><tr><th>采集节点</th><th>检测项目</th><th>静置起止</th><th>离心起止</th><th>离心力/温度</th><th>分离管数</th><th>体积</th><th>条形码/编号</th><th>操作者签名</th><th>复核者签名</th><th>储存日期</th><th>储存开始时间</th><th>储存者签名</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td>V3 第1周期</td><td>PK</td><td class="mono">08:40-09:00</td><td class="mono">09:05-09:15</td><td>3000 rpm / 4℃</td><td class="num">检 1 / 备 1</td><td>1.5 mL</td><td class="mono">SER-01-A / C</td><td>陈晓 / 09:18</td><td>张三 / 09:25</td><td class="mono">11-03</td><td class="mono">10:00</td><td>张三 / 10:00</td><td>—</td></tr>
+          <tr><td>V3 第1周期</td><td>ADA</td><td class="mono">08:40-09:00</td><td class="mono">09:05-09:15</td><td>3000 rpm / 4℃</td><td class="num">检 1 / 备 1</td><td>1.5 mL</td><td class="mono">SER-01-B / C</td><td>陈晓 / 09:18</td><td>张三 / 09:25</td><td class="mono">11-03</td><td class="mono">10:00</td><td>张三 / 10:00</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tiny muted" style="margin-top:5px;">离心机品牌/型号：Beckman X30R / Lc 404R / TDL 220R；检测管与备份管分开存放。</div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-toast="处理储存记录表已导出"><i data-lucide="download" style="width:12px;height:12px;"></i>导出记录表</button>
+      <button class="btn btn-primary btn-sm" data-close>关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-form-fb007">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">临床试验生物样品寄送记录表</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:8px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">方案名称</span><span class="v">CD2026-001 PD-1 III 期</span></div>
+        <div class="info-row"><span class="k">方案号</span><span class="v mono">CD2026-001-V3.0</span></div>
+        <div class="info-row"><span class="k">项目负责人</span><span class="v">陈建国</span></div>
+        <div class="info-row"><span class="k">参与者编号</span><span class="v">S007</span></div>
+        <div class="info-row"><span class="k">姓名缩写</span><span class="v">Z**</span></div>
+        <div class="info-row"><span class="k">样品类型</span><span class="v">血液 · 血清</span></div>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="tbl compact">
+        <thead><tr><th>采集节点</th><th>检测项目</th><th>取出者签名/日期</th><th>取出时间</th><th>取出管数</th><th>取出样品编号</th><th>复核/寄出者签名</th><th>寄出日期时间</th><th>快递单号</th><th>备注</th></tr></thead>
+        <tbody>
+          <tr><td>V3 第1周期</td><td>PK</td><td>张三 / 11-03</td><td class="mono">10:05</td><td class="num">1</td><td class="mono">SER-01-A</td><td>李敏 / 张三</td><td class="mono">11-03 10:20</td><td class="mono">SF1234567890</td><td>检</td></tr>
+          <tr><td>V3 第1周期</td><td>ADA</td><td>张三 / 11-03</td><td class="mono">10:05</td><td class="num">1</td><td class="mono">SER-01-B</td><td>李敏 / 张三</td><td class="mono">11-03 10:20</td><td class="mono">SF1234567890</td><td>备</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-toast="寄送记录表已导出"><i data-lucide="download" style="width:12px;height:12px;"></i>导出记录表</button>
+      <button class="btn btn-primary btn-sm" data-close>关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-form-fb004">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">临床试验病理样品记录表</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:8px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">方案名称/号</span><span class="v">CD2026-001 / V3.0</span></div>
+        <div class="info-row"><span class="k">中心编号</span><span class="v">01</span></div>
+        <div class="info-row"><span class="k">主要研究者</span><span class="v">陈建国</span></div>
+        <div class="info-row"><span class="k">参与者编号/缩写</span><span class="v">S007 / Z**</span></div>
+        <div class="info-row"><span class="k">病理号</span><span class="v mono">PA-2026-0187</span></div>
+        <div class="info-row"><span class="k">手术/活检日期</span><span class="v mono">2026-10-18</span></div>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="tbl compact">
+        <thead><tr><th>环节</th><th>记录项</th><th>记录内容</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">交接</td><td>交接类型 / 样品类型</td><td>外院蜡块-家属至病理科；蜡块 2 块 / 切片 8 片</td></tr>
+          <tr><td class="strong">交接</td><td>签名</td><td>参与者/家属：Z** / 10-18；接收人：王磊 / 10-18；复核者：刘芳 / 10-18</td></tr>
+          <tr><td class="strong">病理科切片</td><td>蜡块来源 / 切片</td><td>外院蜡块 PA-2026-0187；切片日期 10-20；数量 8 片；切片人：张敏</td></tr>
+          <tr><td class="strong">借片/退回</td><td>借片 / 退回</td><td>外院切片 8 片；借片 10-22；取片人张敏；CRC 接收 10-22；退回 10-23，CRC/病理科双签</td></tr>
+          <tr><td class="strong">院内转运</td><td>转运 / 交接</td><td>转运开始 10-23 16:40；转运人李敏；接收 17:05；接收人王磊；温度 4.0~5.2℃；温度计 T-03</td></tr>
+          <tr><td class="strong">储存</td><td>设备 / 位置 / 温度</td><td>病理蜡块柜 B-05-02-11；放入 10-23 17:10；操作者王磊；取出 —；温度 18~22℃</td></tr>
+          <tr><td class="strong">寄送/退回</td><td>寄送 / 快递</td><td>生物样本库 → 第三方实验室；切片 4 片；复核/寄出者张三；快递 SF1234567890；退回 4 片，接收人王磊</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-toast="病理记录表已导出"><i data-lucide="download" style="width:12px;height:12px;"></i>导出记录表</button>
+      <button class="btn btn-primary btn-sm" data-close>关闭</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 方案文档弹窗 ===== -->
 <div class="demo-modal" id="modal-protocol-doc">
   <div class="form-dialog wide">
@@ -4370,7 +4671,7 @@ function roleOptions() {
 var SECTION_MIN_LEVEL = {
   'section-project': 1, 'section-project-stats': 2, 'section-project-change': 2,
   'section-collect': 1, 'section-collect-stats': 2,
-  'section-transport': 1, 'section-transport-stats': 2,
+  'section-transport': 1, 'section-shipment': 1, 'section-transport-stats': 2,
   'section-process': 1, 'section-process-stats': 2,
   'section-store': 1, 'section-trace': 1, 'section-patho': 1,
   'section-audit': 2, 'section-ai-search': 1, 'section-ai-compliance': 1, 'section-ai-voice': 1,
@@ -4391,6 +4692,7 @@ var NAV = [
     ]},
     { id: 'transport', label: '样本转运', icon: 'truck', children: [
       { id: 'transport', label: '转运工单', icon: 'clipboard-list' },
+      { id: 'shipment', label: '寄送管理', icon: 'send' },
       { id: 'transport-stats', label: '转运统计', icon: 'bar-chart-3', min: 2 }
     ]},
     { id: 'process', label: '样本处理', icon: 'flask-conical', children: [
@@ -4419,7 +4721,7 @@ var NAV = [
 var SECTION_MAP = {
   project: 'section-project', 'project-stats': 'section-project-stats', 'project-change': 'section-project-change',
   collect: 'section-collect', 'collect-stats': 'section-collect-stats',
-  transport: 'section-transport', 'transport-stats': 'section-transport-stats',
+  transport: 'section-transport', shipment: 'section-shipment', 'transport-stats': 'section-transport-stats',
   process: 'section-process', 'process-stats': 'section-process-stats',
   store: 'section-store', trace: 'section-trace', patho: 'section-patho', audit: 'section-audit',
   ai: 'section-ai-search', 'ai-search': 'section-ai-search', 'ai-compliance': 'section-ai-compliance',
