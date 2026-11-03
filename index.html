@@ -1705,23 +1705,27 @@ body { background: var(--background); font-size: 13px; }
             </table>
           </div>
 
-          <div class="grid g21" style="margin-top:14px;">
-            <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="history"></i>最近同步日志</div><span class="tag green">全部成功</span></div>
-              <table class="tbl compact">
-                <thead><tr><th>时间</th><th>同步类型</th><th>更新项目</th><th>结果</th></tr></thead>
-                <tbody>
-                  <tr><td class="mono">11-03 08:30</td><td>定时同步</td><td>5 个项目</td><td><span class="tag green">成功</span></td></tr>
-                  <tr><td class="mono">11-02 18:10</td><td>定时同步</td><td>无字段变化</td><td><span class="tag green">成功</span></td></tr>
-                  <tr><td class="mono">11-01 09:05</td><td>方案变更推送</td><td>CD2026-001</td><td><span class="tag amber">部分成功</span></td></tr>
-                </tbody>
-              </table>
+          <div class="panel" style="margin-top:14px;">
+            <div class="panel-h">
+              <div class="panel-t"><i data-lucide="list-checks"></i>待处理事项</div>
+              <div class="toolbar"><span class="tag amber">3 项</span><button class="btn btn-secondary btn-sm" data-goto="section-audit"><i data-lucide="scroll-text" style="width:12px;height:12px;"></i>查看更新日志</button></div>
             </div>
-            <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="list-checks"></i>待处理事项</div><span class="tag amber">3 项</span></div>
-              <div class="issue" style="padding:7px 0;"><div class="ic amber"><i data-lucide="git-compare"></i></div><div class="body"><div class="t">CD2026-001 方案变更待确认</div><div class="d">V3.0 新增 V4 尿液样本与 PK 采血点。</div></div></div>
-              <div class="issue" style="padding:7px 0;"><div class="ic blue"><i data-lucide="file-text"></i></div><div class="body"><div class="t">2 个项目资料待补充</div><div class="d">CD2026-002 / CD2025-018 访视点待人工确认。</div></div></div>
-              <div class="issue" style="padding:7px 0;border-bottom:none;"><div class="ic green"><i data-lucide="check"></i></div><div class="body"><div class="t">其余项目同步正常</div><div class="d">基础信息与入组状态均为最新。</div></div></div>
+            <div class="grid g3" style="gap:10px;">
+              <div class="panel flat" style="padding:12px 14px;">
+                <div style="display:flex;align-items:center;gap:6px;"><span class="tag amber">方案变更</span><span class="tiny muted">CD2026-001</span></div>
+                <div class="panel-t" style="margin-top:6px;">方案变更待确认</div>
+                <div class="tiny muted" style="margin-top:3px;">V3.0 新增 V4 尿液样本与 PK 采血点，需确认影响范围。</div>
+              </div>
+              <div class="panel flat" style="padding:12px 14px;">
+                <div style="display:flex;align-items:center;gap:6px;"><span class="tag blue">资料补充</span><span class="tiny muted">2 个项目</span></div>
+                <div class="panel-t" style="margin-top:6px;">访视点待人工确认</div>
+                <div class="tiny muted" style="margin-top:3px;">CD2026-002 / CD2025-018 的 CTMS 访视点需复核。</div>
+              </div>
+              <div class="panel flat" style="padding:12px 14px;">
+                <div style="display:flex;align-items:center;gap:6px;"><span class="tag green">同步正常</span><span class="tiny muted">其余项目</span></div>
+                <div class="panel-t" style="margin-top:6px;">基础信息均为最新</div>
+                <div class="tiny muted" style="margin-top:3px;">其余项目入组状态与基础信息无待处理项。</div>
+              </div>
             </div>
           </div>
         </div>
@@ -2791,9 +2795,10 @@ body { background: var(--background); font-size: 13px; }
           <div class="page-head">
             <div>
               <div class="page-title">日志管理</div>
-              <div class="page-sub">审计追踪、登录日志、数据修改与导出记录</div>
+              <div class="page-sub">各类更新日志、审计追踪、登录、修改与导出记录</div>
             </div>
             <div class="toolbar">
+              <button class="btn btn-secondary btn-sm" data-modal="modal-log-types"><i data-lucide="settings-2" style="width:12px;height:12px;"></i>日志类型设置</button>
               <button class="btn btn-secondary btn-sm" data-toast="完整性校验通过：全部日志哈希链一致"><i data-lucide="shield-check" style="width:12px;height:12px;"></i>完整性校验</button>
               <button class="btn btn-primary btn-sm" data-toast="已导出审计日志（CSV + 签名文件）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出日志</button>
             </div>
@@ -2801,6 +2806,7 @@ body { background: var(--background); font-size: 13px; }
 
           <div class="panel" style="margin-bottom:12px;display:flex;align-items:center;gap:10px;padding:9px 14px;">
             <span class="tag green"><i data-lucide="lock" style="width:10px;height:10px;"></i>审计追踪已启用</span>
+            <span class="tag blue">日志类型 8 类</span>
             <span class="tiny" style="color:var(--text-2);">日志写入后不可修改；每次修改记录前值、后值、理由、操作人、时间与终端。</span>
             <span class="grow"></span>
             <span class="mono tiny" style="color:var(--text-3);">哈希链：a7f3…9c2e → 4b18…7d01</span>
@@ -2815,13 +2821,38 @@ body { background: var(--background); font-size: 13px; }
 
           <div class="panel">
             <div class="tabs">
-              <div class="tab active" data-tab="audit">审计追踪</div>
+              <div class="tab active" data-tab="update">更新日志</div>
+              <div class="tab" data-tab="audit">审计追踪</div>
               <div class="tab" data-tab="login">登录日志</div>
               <div class="tab" data-tab="change">数据修改</div>
               <div class="tab" data-tab="export">导出记录</div>
             </div>
 
-            <div class="tab-pane active" data-pane="audit">
+            <div class="tab-pane active" data-pane="update">
+              <div class="filters">
+                <div class="search-box"><i data-lucide="search"></i><input id="updateLogSearch" placeholder="搜索日志类型 / 对象 / 更新内容" /></div>
+                <span class="select-mini"><i data-lucide="filter"></i><select id="updateLogType" class="filter-select"><option value="">全部类型</option><option>项目更新</option><option>方案变更</option><option>CTMS 同步</option><option>样本操作</option><option>权限变更</option><option>系统配置</option><option>数据导出</option></select></span>
+                <span class="select-mini"><i data-lucide="calendar"></i>近 7 天</span>
+                <span class="grow"></span>
+                <button class="btn btn-secondary btn-sm" data-modal="modal-log-types"><i data-lucide="settings-2" style="width:11px;height:11px;"></i>管理类型</button>
+              </div>
+              <table class="tbl" id="updateLogTable">
+                <thead><tr><th>时间</th><th>日志类型</th><th>对象</th><th>操作人</th><th>更新内容</th><th>来源系统</th><th>状态</th></tr></thead>
+                <tbody>
+                  <tr data-type="CTMS 同步"><td class="mono">11-03 08:30</td><td><span class="tag blue">CTMS 同步</span></td><td>5 个项目</td><td>系统</td><td>更新项目基础信息与访视点</td><td>CTMS</td><td><span class="tag green">成功</span></td></tr>
+                  <tr data-type="方案变更"><td class="mono">11-03 08:32</td><td><span class="tag amber">方案变更</span></td><td class="mono">CD2026-001</td><td>陈建国</td><td>方案 V3.0 新增 V4 尿液样本与 PK 采血点</td><td>方案管理</td><td><span class="tag amber">待确认</span></td></tr>
+                  <tr data-type="CTMS 同步"><td class="mono">11-02 18:10</td><td><span class="tag blue">CTMS 同步</span></td><td>5 个项目</td><td>系统</td><td>无字段变化</td><td>CTMS</td><td><span class="tag green">成功</span></td></tr>
+                  <tr data-type="项目更新"><td class="mono">11-02 16:20</td><td><span class="tag green">项目更新</span></td><td class="mono">CD2026-002</td><td>王强</td><td>入组状态更新为进行中</td><td>CTMS</td><td><span class="tag green">成功</span></td></tr>
+                  <tr data-type="方案变更"><td class="mono">11-01 09:05</td><td><span class="tag amber">方案变更</span></td><td class="mono">CD2026-001</td><td>陈建国</td><td>方案号更新，访视点待人工确认</td><td>CTMS</td><td><span class="tag amber">部分成功</span></td></tr>
+                  <tr data-type="权限变更"><td class="mono">10-31 14:30</td><td><span class="tag">权限变更</span></td><td>张三</td><td>系统管理员</td><td>新增样本管理员角色</td><td>系统设置</td><td><span class="tag green">成功</span></td></tr>
+                  <tr data-type="样本操作"><td class="mono">10-30 10:15</td><td><span class="tag green">样本操作</span></td><td>S007 V3 血清</td><td>李敏</td><td>采集登记提交</td><td>小程序</td><td><span class="tag green">成功</span></td></tr>
+                  <tr data-type="系统配置"><td class="mono">10-29 09:00</td><td><span class="tag">系统配置</span></td><td class="mono">CODE-001</td><td>张三</td><td>更新样本编码序号位数</td><td>系统设置</td><td><span class="tag green">成功</span></td></tr>
+                  <tr data-type="数据导出"><td class="mono">10-28 11:00</td><td><span class="tag blue">数据导出</span></td><td>样本清单</td><td>张三</td><td>导出 386 管样本清单</td><td>数据导出</td><td><span class="tag green">成功</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-pane" data-pane="audit">
               <div class="filters">
                 <div class="search-box"><i data-lucide="search"></i><input placeholder="搜索用户 / 操作 / 对象" data-filter="#auditTable" /></div>
                 <span class="select-mini"><i data-lucide="user"></i>全部角色</span>
@@ -3922,6 +3953,32 @@ body { background: var(--background); font-size: 13px; }
   </div>
 </div>
 
+<div class="demo-modal" id="modal-log-types">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">日志类型设置</div>
+    <div class="tiny muted" style="margin-bottom:10px;">启用需要的日志类型；不同类型的更新日志会分别归档，便于筛选与导出。</div>
+    <div class="panel flat" style="padding:4px 12px;">
+      <label style="display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 项目更新 <span class="tag green" style="margin-left:auto;">128 条</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 方案变更 <span class="tag amber" style="margin-left:auto;">36 条</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> CTMS 同步 <span class="tag blue" style="margin-left:auto;">214 条</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 样本操作 <span class="tag green" style="margin-left:auto;">1,842 条</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 权限变更 <span class="tag" style="margin-left:auto;">48 条</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 系统配置 <span class="tag" style="margin-left:auto;">22 条</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 数据导出 <span class="tag blue" style="margin-left:auto;">64 条</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:10px;padding:7px 0;"><input type="checkbox" checked /> 其他 <span class="tag" style="margin-left:auto;">12 条</span></label>
+    </div>
+    <div class="form-row-2" style="margin-top:10px;align-items:flex-end;">
+      <div class="form-group"><label class="form-label">新增日志类型</label><input class="form-input" placeholder="如：培训记录 / 设备维护" /></div>
+      <button class="btn btn-secondary btn-sm" style="height:34px;" data-toast="已添加日志类型，保存后生效">添加类型</button>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="日志类型设置已保存">保存设置</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 方案文档弹窗 ===== -->
 <div class="demo-modal" id="modal-protocol-doc">
   <div class="form-dialog wide">
@@ -4672,6 +4729,21 @@ function initVersionPairs() {
   });
 }
 initVersionPairs();
+
+/* ===== 更新日志筛选 ===== */
+function filterUpdateLogs() {
+  var q = ((document.getElementById('updateLogSearch') || {}).value || '').toLowerCase();
+  var type = (document.getElementById('updateLogType') || {}).value || '';
+  document.querySelectorAll('#updateLogTable tbody tr').forEach(function(tr){
+    var okQ = !q || tr.textContent.toLowerCase().indexOf(q) > -1;
+    var okT = !type || tr.getAttribute('data-type') === type;
+    tr.style.display = (okQ && okT) ? '' : 'none';
+  });
+}
+[['updateLogSearch','input'],['updateLogType','change']].forEach(function(pair){
+  var el = document.getElementById(pair[0]);
+  if (el) el.addEventListener(pair[1], filterUpdateLogs);
+});
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
