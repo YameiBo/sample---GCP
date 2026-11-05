@@ -1157,6 +1157,11 @@ body.app-mode { padding: 0; }
 
 .filters { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; flex-wrap: wrap; }
 .filters .search-box { min-width: 210px; }
+.kb-preview { border: 1px solid var(--border); border-radius: 12px; background: linear-gradient(180deg, color-mix(in oklch, var(--muted) 45%, var(--background)), var(--background)); padding: 22px 26px; max-height: 320px; overflow-y: auto; }
+.kb-preview-title { font-size: 17px; font-weight: 700; text-align: center; margin: 10px 0 3px; letter-spacing: -0.02em; }
+.kb-preview-meta { font-size: 10px; color: var(--text-3); text-align: center; margin-bottom: 12px; }
+.kb-preview-section { font-size: 11px; font-weight: 600; margin-top: 10px; }
+.kb-preview-text { font-size: 10px; color: var(--text-2); line-height: 1.8; margin-top: 2px; }
 .form-dialog.xwide { width: 900px; max-width: 94vw; }
 .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; }
 .table-scroll .tbl { min-width: 980px; }
@@ -3349,13 +3354,13 @@ body { background: var(--background); font-size: 13px; }
               <table class="tbl" id="kbTable">
                 <thead><tr><th>文档名称</th><th>类型</th><th>版本</th><th>生效日期</th><th>责任部门</th><th>状态</th><th>操作</th></tr></thead>
                 <tbody>
-                  <tr><td class="strong">SOP-SMP-007 样本离心与分装</td><td><span class="tag blue">SOP</span></td><td class="mono">V3.3</td><td class="mono">2026-11-01</td><td>质量部</td><td><span class="tag amber">拟生效</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开 SOP-SMP-007 详情">查看</button></td></tr>
-                  <tr><td class="strong">SOP-SMP-003 样本转运管理</td><td><span class="tag blue">SOP</span></td><td class="mono">V2.1</td><td class="mono">2026-08-01</td><td>样本库</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开 SOP-SMP-003 详情">查看</button></td></tr>
-                  <tr><td class="strong">样本库质量手册</td><td><span class="tag">体系文件</span></td><td class="mono">V2.1</td><td class="mono">2026-06-15</td><td>质量部</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开质量手册详情">查看</button></td></tr>
-                  <tr><td class="strong">FORM-P-006 离心记录表</td><td><span class="tag">表单模板</span></td><td class="mono">V2.0</td><td class="mono">2026-10-18</td><td>样本库</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开表单模板">查看</button></td></tr>
-                  <tr><td class="strong">TR-SMP-003 新版 SOP 培训材料</td><td><span class="tag">培训材料</span></td><td class="mono">V1.1</td><td class="mono">2026-10-20</td><td>培训部</td><td><span class="tag amber">待复核</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开培训材料">查看</button></td></tr>
-                  <tr><td class="strong">药物临床试验质量管理规范（2026 修订）</td><td><span class="tag">法规</span></td><td class="mono">2026</td><td class="mono">2026-09-01</td><td>法规事务</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开法规原文">查看</button></td></tr>
-                  <tr><td class="strong">ICH E6(R3) 技术指导原则</td><td><span class="tag">法规</span></td><td class="mono">R3</td><td class="mono">2026-01-06</td><td>法规事务</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm" data-toast="已打开指导原则原文">查看</button></td></tr>
+                  <tr><td class="strong">SOP-SMP-007 样本离心与分装</td><td><span class="tag blue">SOP</span></td><td class="mono">V3.3</td><td class="mono">2026-11-01</td><td>质量部</td><td><span class="tag amber">拟生效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-kb-doc" data-doc-title="SOP-SMP-007 样本离心与分装" data-doc-type="SOP" data-doc-version="V3.3" data-doc-date="2026-11-01" data-doc-owner="质量部" data-doc-status="拟生效">查看</button></td></tr>
+                  <tr><td class="strong">SOP-SMP-003 样本转运管理</td><td><span class="tag blue">SOP</span></td><td class="mono">V2.1</td><td class="mono">2026-08-01</td><td>样本库</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-kb-doc" data-doc-title="SOP-SMP-003 样本转运管理" data-doc-type="SOP" data-doc-version="V2.1" data-doc-date="2026-08-01" data-doc-owner="样本库" data-doc-status="已生效">查看</button></td></tr>
+                  <tr><td class="strong">样本库质量手册</td><td><span class="tag">体系文件</span></td><td class="mono">V2.1</td><td class="mono">2026-06-15</td><td>质量部</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-kb-doc" data-doc-title="样本库质量手册" data-doc-type="体系文件" data-doc-version="V2.1" data-doc-date="2026-06-15" data-doc-owner="质量部" data-doc-status="已生效">查看</button></td></tr>
+                  <tr><td class="strong">FORM-P-006 离心记录表</td><td><span class="tag">表单模板</span></td><td class="mono">V2.0</td><td class="mono">2026-10-18</td><td>样本库</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-kb-doc" data-doc-title="FORM-P-006 离心记录表" data-doc-type="表单模板" data-doc-version="V2.0" data-doc-date="2026-10-18" data-doc-owner="样本库" data-doc-status="已生效">查看</button></td></tr>
+                  <tr><td class="strong">TR-SMP-003 新版 SOP 培训材料</td><td><span class="tag">培训材料</span></td><td class="mono">V1.1</td><td class="mono">2026-10-20</td><td>培训部</td><td><span class="tag amber">待复核</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-kb-doc" data-doc-title="TR-SMP-003 新版 SOP 培训材料" data-doc-type="培训材料" data-doc-version="V1.1" data-doc-date="2026-10-20" data-doc-owner="培训部" data-doc-status="待复核">查看</button></td></tr>
+                  <tr><td class="strong">药物临床试验质量管理规范（2026 修订）</td><td><span class="tag">法规</span></td><td class="mono">2026</td><td class="mono">2026-09-01</td><td>法规事务</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-kb-doc" data-doc-title="药物临床试验质量管理规范（2026 修订）" data-doc-type="法规" data-doc-version="2026" data-doc-date="2026-09-01" data-doc-owner="法规事务" data-doc-status="已生效">查看</button></td></tr>
+                  <tr><td class="strong">ICH E6(R3) 技术指导原则</td><td><span class="tag">法规</span></td><td class="mono">R3</td><td class="mono">2026-01-06</td><td>法规事务</td><td><span class="tag green">已生效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-kb-doc" data-doc-title="ICH E6(R3) 技术指导原则" data-doc-type="法规" data-doc-version="R3" data-doc-date="2026-01-06" data-doc-owner="法规事务" data-doc-status="已生效">查看</button></td></tr>
                 </tbody>
               </table>
             </div>
@@ -4154,6 +4159,40 @@ body { background: var(--background); font-size: 13px; }
     <div class="form-actions">
       <button class="btn btn-ghost btn-sm" data-close>取消</button>
       <button class="btn btn-primary btn-sm" data-submit="日志类型设置已保存">保存设置</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-kb-doc">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">文档预览</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:10px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">文档类型</span><span class="v" id="kbDocInfoType">SOP</span></div>
+        <div class="info-row"><span class="k">版本</span><span class="v mono" id="kbDocInfoVersion">V3.3</span></div>
+        <div class="info-row"><span class="k">生效日期</span><span class="v mono" id="kbDocInfoDate">2026-11-01</span></div>
+        <div class="info-row"><span class="k">责任部门</span><span class="v" id="kbDocInfoOwner">质量部</span></div>
+        <div class="info-row"><span class="k">状态</span><span class="v"><span class="tag amber" id="kbDocInfoStatus">拟生效</span></span></div>
+        <div class="info-row"><span class="k">访问权限</span><span class="v">授权用户可预览</span></div>
+      </div>
+    </div>
+    <div class="kb-preview">
+      <div style="display:flex;align-items:center;justify-content:space-between;"><span class="tag blue" id="kbDocTypeTag">SOP</span><span class="tiny muted">受控文件 · 仅供预览</span></div>
+      <div class="kb-preview-title" id="kbDocTitle">SOP-SMP-007 样本离心与分装</div>
+      <div class="kb-preview-meta" id="kbDocMeta">V3.3 · 2026-11-01 · 质量部</div>
+      <div class="split-line"></div>
+      <div class="kb-preview-section" id="kbDocSection1">1. 目的与范围</div>
+      <div class="kb-preview-text" id="kbDocText1">本文件规定了样本离心、静置与分装的操作要求、设备参数、记录方式与追溯要求。</div>
+      <div class="kb-preview-section" id="kbDocSection2">2. 操作流程</div>
+      <div class="kb-preview-text" id="kbDocText2">接收样本 → 核对编号 → 离心 → 静置 → 分装 → 贴标 → 入库；全过程记录操作人、时间与设备数据。</div>
+      <div class="kb-preview-section" id="kbDocSection3">3. 记录与追溯</div>
+      <div class="kb-preview-text" id="kbDocText3">使用 FORM-P-006 离心记录表与 FORM-P-007 分装记录表；记录须可追溯，修改需填写理由并保留原始记录。</div>
+    </div>
+    <div class="tiny muted" style="margin-top:6px;">正式内容以受控版本为准；下载行为将记入导出记录。</div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-toast="文档 PDF 已开始下载，已记入导出记录"><i data-lucide="download" style="width:12px;height:12px;"></i>下载 PDF</button>
+      <button class="btn btn-primary btn-sm" data-close>关闭</button>
     </div>
   </div>
 </div>
@@ -5189,6 +5228,41 @@ function filterUpdateLogs() {
   if (toggle) toggle.addEventListener('click', function(){
     body.classList.toggle('collapsed');
     toggle.textContent = body.classList.contains('collapsed') ? '+' : '−';
+  });
+})();
+
+/* ===== 知识库文档预览 ===== */
+(function(){
+  var sectionMap = {
+    'SOP': ['1. 目的与范围', '2. 操作流程', '3. 记录与追溯'],
+    '体系文件': ['1. 质量方针与目标', '2. 组织与职责', '3. 文件控制'],
+    '表单模板': ['1. 表单字段', '2. 填写说明', '3. 归档要求'],
+    '培训材料': ['1. 培训目标', '2. 课程大纲', '3. 考核要求'],
+    '法规': ['第一章 总则', '第二章 伦理审查', '第三章 数据治理']
+  };
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-modal="modal-kb-doc"]');
+    if (!btn) return;
+    var d = btn.dataset;
+    var type = d.docType || '文档';
+    var title = d.docTitle || '';
+    document.getElementById('kbDocInfoType').textContent = type;
+    document.getElementById('kbDocInfoVersion').textContent = d.docVersion || '—';
+    document.getElementById('kbDocInfoDate').textContent = d.docDate || '—';
+    document.getElementById('kbDocInfoOwner').textContent = d.docOwner || '—';
+    var st = document.getElementById('kbDocInfoStatus');
+    st.textContent = d.docStatus || '—';
+    st.className = (d.docStatus === '已生效') ? 'tag green' : 'tag amber';
+    document.getElementById('kbDocTypeTag').textContent = type;
+    document.getElementById('kbDocTitle').textContent = title;
+    document.getElementById('kbDocMeta').textContent = (d.docVersion || '') + ' · ' + (d.docDate || '') + ' · ' + (d.docOwner || '');
+    var secs = sectionMap[type] || sectionMap['SOP'];
+    document.getElementById('kbDocSection1').textContent = secs[0];
+    document.getElementById('kbDocSection2').textContent = secs[1];
+    document.getElementById('kbDocSection3').textContent = secs[2];
+    document.getElementById('kbDocText1').textContent = '本文件规定了「' + title + '」的适用范围、职责分工与操作要求。';
+    document.getElementById('kbDocText2').textContent = '按照机构 SOP 与 GCP 要求执行；关键步骤需记录操作人、时间、设备与结果，并保留原始记录。';
+    document.getElementById('kbDocText3').textContent = '记录须真实、完整、可追溯；修改需填写理由并保留修改前后值，审计追踪不可关闭。';
   });
 })();
 
