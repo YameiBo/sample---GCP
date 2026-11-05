@@ -1266,6 +1266,30 @@ body.app-mode { padding: 0; }
 .p-btn:active { transform: scale(.985); }
 .p-btn.is-done { background: var(--success); color: var(--success-foreground); box-shadow: none; }
 .p-btn.ghost:hover { background: var(--muted); box-shadow: none; }
+.mp-screen { display: none; }
+.mp-screen.active { display: block; }
+.mp-role-switch { display: inline-flex; background: var(--muted); border-radius: var(--radius-full); padding: 3px; gap: 2px; }
+.mp-role-btn { border: none; background: transparent; border-radius: var(--radius-full); padding: 5px 10px; font-size: 10px; font-family: var(--font-sans); color: var(--text-2); cursor: pointer; }
+.mp-role-btn.active { background: var(--primary); color: var(--primary-foreground); font-weight: 600; }
+.mp-task { border: 1px solid var(--border); background: var(--background); border-radius: 10px; padding: 9px 10px; cursor: pointer; transition: border-color .12s, transform .12s, box-shadow .12s; }
+.mp-task:hover { border-color: var(--primary); transform: translateY(-1px); box-shadow: 0 6px 16px color-mix(in oklch, var(--primary) 12%, transparent); }
+.mp-task-title { font-size: 11px; font-weight: 600; }
+.mp-task-meta { font-size: 9.5px; color: var(--text-2); margin-top: 2px; line-height: 1.5; }
+.mp-task-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.mp-task-tabs { display: flex; gap: 4px; margin: 2px 0 4px; }
+.mp-task-tab { border: 1px solid var(--border); background: var(--background); color: var(--text-2); border-radius: var(--radius-full); padding: 4px 10px; font-size: 9.5px; cursor: pointer; font-family: var(--font-sans); }
+.mp-task-tab.active { background: var(--primary); color: var(--primary-foreground); border-color: var(--primary); font-weight: 600; }
+.mp-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.mp-field { background: var(--background); border: 1px solid var(--border); border-radius: 8px; padding: 6px 8px; }
+.mp-field .l { font-size: 8.5px; color: var(--text-3); }
+.mp-field .v { font-size: 10.5px; font-weight: 600; margin-top: 1px; }
+.mp-signature { background: color-mix(in oklch, var(--muted) 55%, transparent); border-radius: 8px; padding: 6px 8px; margin: 6px 0; }
+.p-label { font-size: 9.5px; }
+.p-value { font-size: 12px; }
+.p-row { font-size: 10px; }
+.p-head b { font-size: 13px; }
+.p-head div { font-size: 9.5px; }
+.p-btn { font-size: 12px; }
 .mp-step { display: none; }
 .mp-step.active { display: block; }
 .mp-dots { display: flex; justify-content: center; gap: 5px; padding: 7px 0 0; background: var(--muted); }
@@ -1702,6 +1726,7 @@ body { background: var(--background); font-size: 13px; }
             </div>
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-toast="已导出项目清单（Excel）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出</button>
+              <button class="btn btn-secondary btn-sm role-min-2" data-modal="modal-mp-auth"><i data-lucide="user-cog" style="width:12px;height:12px;"></i>项目授权</button>
               <button class="btn btn-secondary btn-sm" data-toast="已从 CTMS 同步 5 个项目，更新 12 个字段"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>从 CTMS 同步</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-new-project"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建项目</button>
             </div>
@@ -3179,91 +3204,214 @@ body { background: var(--background); font-size: 13px; }
           <div class="page-head">
             <div>
               <div class="page-title">移动端小程序</div>
-              <div class="page-sub">医院内网 · 公众号入口 · 工号登录 · 前端只采集不改数据</div>
+              <div class="page-sub">CRC / 样本处理员的移动操作台 · 工号登录 · 项目授权 · 现场留痕</div>
             </div>
             <div class="toolbar">
-              <span class="tag green"><i class="dot green"></i>已绑定 6 台现场设备</span>
+              <div class="mp-role-switch">
+                <button class="mp-role-btn active" data-mp-role="crc">CRC</button>
+                <button class="mp-role-btn" data-mp-role="processor">样本处理员</button>
+              </div>
               <button class="btn btn-secondary btn-sm" data-modal="modal-mobile-qr"><i data-lucide="qr-code" style="width:12px;height:12px;"></i>体验二维码</button>
             </div>
           </div>
 
           <div class="grid g21">
             <div class="panel" style="display:flex;justify-content:center;padding:18px;">
-              <div class="phone" style="width:300px;">
-                <div class="phone-screen" style="min-height:560px;">
+              <div class="phone" style="width:334px;">
+                <div class="phone-screen" style="height:660px;display:flex;flex-direction:column;">
                   <div class="p-status"><span>09:41</span><span>医院内网 ▮▮▮</span></div>
-                  <div class="p-head"><b>样本采集</b><div>江苏省肿瘤医院 · 小程序</div></div>
-                  <div class="mp-dots">
-                    <span class="mp-dot active" data-mp-dot="1">1</span><span class="mp-dot" data-mp-dot="2">2</span><span class="mp-dot" data-mp-dot="3">3</span><span class="mp-dot" data-mp-dot="4">4</span><span class="mp-dot" data-mp-dot="5">5</span>
-                  </div>
-                  <div class="p-body">
-                    <div class="mp-step active" data-mp="1">
+                  <div class="p-head"><b id="mpTitle">样本采集</b><div id="mpSub">CRC · 江苏省肿瘤医院</div></div>
+                  <div class="p-body" style="flex:1;overflow-y:auto;">
+                    <div class="mp-screen active" data-mp-screen="login">
                       <div class="p-card" style="text-align:center;padding:16px 10px;">
                         <div class="avatar" style="width:44px;height:44px;font-size:16px;margin:0 auto 8px;">张</div>
-                        <div class="p-value">张三 · 样本管理员</div>
+                        <div class="p-value">张三 · <span class="mp-role-label">CRC</span></div>
                         <div class="p-label" style="margin-top:2px;">江苏省肿瘤医院 · 内网</div>
                       </div>
                       <div class="p-card"><div class="p-label">工号</div><div class="p-value mono">S-0137</div></div>
                       <div class="p-card"><div class="p-label">访问网络</div><div class="p-value" style="color:var(--success);">医院内网 · 已认证</div></div>
-                      <button class="p-btn" data-mp-step="2">进入小程序</button>
-                      <div class="tiny muted" style="text-align:center;">仅限医院内网访问，前端只采集不改数据</div>
+                      <button class="p-btn" data-mp-screen="projects">进入小程序</button>
+                      <div class="tiny muted" style="text-align:center;">仅限医院内网访问，前端操作实时回传管理端</div>
                     </div>
 
-                    <div class="mp-step" data-mp="2">
-                      <div style="display:flex;justify-content:space-between;align-items:center;"><span class="p-label">今日任务</span><span class="tag amber">3 条</span></div>
-                      <div class="p-card" data-mp-step="3" style="cursor:pointer;">
-                        <div style="display:flex;justify-content:space-between;"><b style="font-size:10px;">S007 · V3 血清</b><span class="tag amber">待采集</span></div>
-                        <div class="p-label">CD2026-001 · 预约 08:30</div>
+                    <div class="mp-screen" data-mp-screen="projects">
+                      <div class="p-label">授权项目（2 个）</div>
+                      <div class="mp-task" data-mp-screen="tasks">
+                        <div class="mp-task-title">CD2026-001 · PD-1 III 期</div>
+                        <div class="mp-task-meta">授权角色：<span class="mp-role-label">CRC</span> · 入组 12 / 60 例</div>
+                        <div class="mp-task-tags"><span class="tag green">进行中</span><span class="tag">访视点已同步</span></div>
                       </div>
-                      <div class="p-card">
-                        <div style="display:flex;justify-content:space-between;"><b style="font-size:10px;">S008 · V2 全血</b><span class="tag">已确认</span></div>
-                        <div class="p-label">CD2026-001 · 预约 09:00</div>
+                      <div class="mp-task" data-mp-screen="tasks">
+                        <div class="mp-task-title">CD2026-002 · ADC II 期</div>
+                        <div class="mp-task-meta">授权角色：<span class="mp-role-label">CRC</span> · 入组 28 / 40 例</div>
+                        <div class="mp-task-tags"><span class="tag green">进行中</span><span class="tag">访视点已同步</span></div>
                       </div>
-                      <div class="p-card">
-                        <div style="display:flex;justify-content:space-between;"><b style="font-size:10px;">S009 · V2 血浆</b><span class="tag red">超时</span></div>
-                        <div class="p-label">CD2026-001 · 预约 08:00</div>
-                      </div>
-                      <button class="p-btn ghost" data-mp-step="1">退出登录</button>
+                      <button class="p-btn ghost" data-mp-screen="login">退出登录</button>
+                      <div class="tiny muted" style="text-align:center;">仅显示管理端已授权的项目</div>
                     </div>
 
-                    <div class="mp-step" data-mp="3">
-                      <div class="p-scan"><i data-lucide="scan-line"></i><span>对准样本条码扫描</span></div>
-                      <div class="p-card">
-                        <div class="p-label">识别结果</div>
-                        <div class="p-value mono" style="font-size:9px;">CD2026-001-01-S007-V3-SER-01</div>
-                        <div class="p-row" style="margin-top:4px;"><span>样本类型</span><b>血清 · 5 mL</b></div>
-                        <div class="p-row"><span>访视</span><b>V3 第 1 周期</b></div>
+                    <div class="mp-screen" data-mp-screen="tasks">
+                      <div style="display:flex;align-items:center;justify-content:space-between;">
+                        <div><div class="p-value">今日任务</div><div class="p-label">CD2026-001 · <span class="mp-role-label">CRC</span></div></div>
+                        <span class="tag amber" id="mpTaskCount">3 待办</span>
                       </div>
-                      <button class="p-btn" data-mp-step="4">确认样本</button>
-                      <button class="p-btn ghost" data-mp-step="2">返回任务</button>
+                      <div class="mp-task-tabs">
+                        <button class="mp-task-tab active" data-mp-task-tab="pending">待办</button>
+                        <button class="mp-task-tab" data-mp-task-tab="done">已完成</button>
+                      </div>
+                      <div class="mp-task-group" data-mp-group="pending">
+                        <div class="mp-task" data-mp-screen="collect-form" data-mp-task-role="crc">
+                          <div style="display:flex;justify-content:space-between;"><div class="mp-task-title">C1D1 · 给药前</div><span class="tag amber">待采集</span></div>
+                          <div class="mp-task-meta">检测项目：PK / ADA · 血清 5 mL</div>
+                          <div class="mp-task-tags"><span class="tag blue">采集 + 转运</span><span class="tag">S007</span></div>
+                        </div>
+                        <div class="mp-task" data-mp-screen="ship-form" data-mp-task-role="crc">
+                          <div style="display:flex;justify-content:space-between;"><div class="mp-task-title">C1D1 · 给药后</div><span class="tag amber">待采集</span></div>
+                          <div class="mp-task-meta">检测项目：PK · 血浆 3 mL</div>
+                          <div class="mp-task-tags"><span class="tag blue">采集 + 寄送</span><span class="tag">S007</span></div>
+                        </div>
+                        <div class="mp-task" data-mp-screen="process-form" data-mp-task-role="processor">
+                          <div style="display:flex;justify-content:space-between;"><div class="mp-task-title">C1D1 · PK</div><span class="tag amber">待处理</span></div>
+                          <div class="mp-task-meta">静置 / 离心 / 分装 · 血清</div>
+                          <div class="mp-task-tags"><span class="tag blue">处理 + 储存</span><span class="tag">S007</span></div>
+                        </div>
+                        <div class="mp-task" data-mp-screen="patho-form" data-mp-task-role="all">
+                          <div style="display:flex;justify-content:space-between;"><div class="mp-task-title">PA-2026-0188</div><span class="tag amber">待借出</span></div>
+                          <div class="mp-task-meta">外院切片 · 借片 8 张 · 预计归还 11-10</div>
+                          <div class="mp-task-tags"><span class="tag">病理借片</span><span class="tag">S007</span></div>
+                        </div>
+                      </div>
+                      <div class="mp-task-group" data-mp-group="done" style="display:none;">
+                        <div class="mp-task" data-mp-screen="completed">
+                          <div style="display:flex;justify-content:space-between;"><div class="mp-task-title">C1D1 · PK / ADA</div><span class="tag green">已提交</span></div>
+                          <div class="mp-task-meta">采集 08:32 · 复核 09:20 · 血清 2 管</div>
+                          <div class="mp-task-tags"><span class="tag">只读详情</span><span class="tag">S007</span></div>
+                        </div>
+                      </div>
+                      <button class="p-btn ghost" data-mp-screen="projects">返回项目</button>
                     </div>
 
-                    <div class="mp-step" data-mp="4">
+                    <div class="mp-screen" data-mp-screen="collect-form">
+                      <div style="display:flex;justify-content:space-between;align-items:center;"><div class="p-value">采集 + 转运</div><span class="tag blue">FB-005</span></div>
                       <div class="p-card">
-                        <div class="p-label">实际采集时间</div><div class="p-value mono" style="font-size:9px;">2026-11-03 08:32</div>
-                        <div class="p-label" style="margin-top:5px;">采血量</div><div class="p-value">5 mL</div>
-                        <div class="p-label" style="margin-top:5px;">样本状态</div><div class="p-value" style="color:var(--success);">正常</div>
+                        <div class="p-label">访视点 / 给药节点</div><div class="p-value">C1D1 · 给药前</div>
+                        <div class="p-label" style="margin-top:4px;">检测项目 / 样本</div><div class="p-value">PK、ADA · 血清 5 mL</div>
                       </div>
-                      <div class="p-card">
-                        <div class="p-row"><span>条码已打印</span><b style="color:var(--success);">是</b></div>
-                        <div class="p-row"><span>照片留痕</span><b>2 张</b></div>
+                      <div class="mp-form-grid">
+                        <div class="mp-field"><div class="l">采集时间</div><div class="v mono">11-03 08:32</div></div>
+                        <div class="mp-field"><div class="l">颠倒混匀</div><div class="v" style="color:var(--success);">是</div></div>
+                        <div class="mp-field"><div class="l">采集管数</div><div class="v">2 管</div></div>
+                        <div class="mp-field"><div class="l">温度计编号</div><div class="v mono">T-03</div></div>
+                        <div class="mp-field" style="grid-column:span 2;"><div class="l">采集管编号</div><div class="v mono">SER-01-A / SER-01-B</div></div>
+                        <div class="mp-field"><div class="l">转运箱编号</div><div class="v mono">BOX-03</div></div>
+                        <div class="mp-field"><div class="l">转运开始</div><div class="v mono">08:40</div></div>
+                        <div class="mp-field"><div class="l">转运温度</div><div class="v">3.6℃ ~ 4.2℃</div></div>
+                        <div class="mp-field"><div class="l">接收管数</div><div class="v">2 管</div></div>
+                      </div>
+                      <div class="mp-signature">
+                        <div class="p-row"><span>采集 / 递交者</span><b>张三 · 已签名</b></div>
+                        <div class="p-row"><span>复核 / 接收 / 转运者</span><b>李敏 · 已签名</b></div>
                       </div>
                       <button class="p-btn ghost" data-toast="已调用摄像头拍照留痕">拍照留痕</button>
-                      <button class="p-btn" data-mp-step="5">保存并提交</button>
+                      <button class="p-btn" data-mp-screen="success">保存并提交</button>
+                      <button class="p-btn ghost" data-mp-screen="tasks">返回任务</button>
                     </div>
 
-                    <div class="mp-step" data-mp="5">
-                      <div style="text-align:center;padding:14px 0 6px;">
-                        <i data-lucide="check-circle-2" style="width:42px;height:42px;color:var(--success);"></i>
-                        <div class="p-value" style="margin-top:5px;">提交成功</div>
-                        <div class="p-label">数据已通过网闸回传内网</div>
+                    <div class="mp-screen" data-mp-screen="ship-form">
+                      <div style="display:flex;justify-content:space-between;align-items:center;"><div class="p-value">采集 + 寄送</div><span class="tag blue">FB-008</span></div>
+                      <div class="p-card">
+                        <div class="p-label">访视点 / 给药节点</div><div class="p-value">C1D1 · 给药后</div>
+                        <div class="p-label" style="margin-top:4px;">检测项目 / 样本</div><div class="p-value">PK · 血浆 3 mL</div>
+                      </div>
+                      <div class="mp-form-grid">
+                        <div class="mp-field"><div class="l">采集时间</div><div class="v mono">11-03 08:35</div></div>
+                        <div class="mp-field"><div class="l">采集管数</div><div class="v">1 管</div></div>
+                        <div class="mp-field" style="grid-column:span 2;"><div class="l">采集管编号</div><div class="v mono">PLA-01-A</div></div>
+                        <div class="mp-field"><div class="l">寄送者</div><div class="v">张三</div></div>
+                        <div class="mp-field"><div class="l">寄出时间</div><div class="v mono">10:20</div></div>
+                        <div class="mp-field" style="grid-column:span 2;"><div class="l">快递单号</div><div class="v mono">SF1234567890</div></div>
+                      </div>
+                      <div class="mp-signature">
+                        <div class="p-row"><span>采集/递交者</span><b>张三 · 已签名</b></div>
+                        <div class="p-row"><span>复核/接收者</span><b>李敏 · 已签名</b></div>
+                      </div>
+                      <button class="p-btn" data-mp-screen="success">保存并提交</button>
+                      <button class="p-btn ghost" data-mp-screen="tasks">返回任务</button>
+                    </div>
+
+                    <div class="mp-screen" data-mp-screen="process-form">
+                      <div style="display:flex;justify-content:space-between;align-items:center;"><div class="p-value">处理 + 储存</div><span class="tag blue">FB-006</span></div>
+                      <div class="p-card">
+                        <div class="p-label">访视点 / 检测项目</div><div class="p-value">C1D1 · PK · 血清</div>
+                      </div>
+                      <div class="mp-form-grid">
+                        <div class="mp-field"><div class="l">静置起止</div><div class="v mono">08:40-09:00</div></div>
+                        <div class="mp-field"><div class="l">离心起止</div><div class="v mono">09:05-09:15</div></div>
+                        <div class="mp-field"><div class="l">离心力 / 温度</div><div class="v">3000 rpm / 4℃</div></div>
+                        <div class="mp-field"><div class="l">分离管</div><div class="v">检 1 / 备 1</div></div>
+                        <div class="mp-field"><div class="l">体积</div><div class="v">1.5 mL</div></div>
+                        <div class="mp-field"><div class="l">编号</div><div class="v mono">SER-01-A / C</div></div>
+                        <div class="mp-field"><div class="l">储存设备</div><div class="v">-80℃ 冰箱 02</div></div>
+                        <div class="mp-field"><div class="l">储存位置</div><div class="v mono">B-02-03-04</div></div>
+                        <div class="mp-field"><div class="l">操作者</div><div class="v">陈晓</div></div>
+                        <div class="mp-field"><div class="l">复核者</div><div class="v">张三</div></div>
+                      </div>
+                      <div class="mp-signature">
+                        <div class="p-row"><span>操作者签名</span><b>陈晓 · 已签名</b></div>
+                        <div class="p-row"><span>复核者签名</span><b>张三 · 已签名</b></div>
+                      </div>
+                      <button class="p-btn" data-mp-screen="success">保存并提交</button>
+                      <button class="p-btn ghost" data-mp-screen="tasks">返回任务</button>
+                    </div>
+
+                    <div class="mp-screen" data-mp-screen="patho-form">
+                      <div style="display:flex;justify-content:space-between;align-items:center;"><div class="p-value">病理借片</div><span class="tag blue">FB-004</span></div>
+                      <div class="p-card">
+                        <div class="p-label">病理号</div><div class="p-value mono">PA-2026-0188</div>
+                        <div class="p-label" style="margin-top:4px;">借片来源</div><div class="p-value">外院切片 · 8 张</div>
+                      </div>
+                      <div class="mp-form-grid">
+                        <div class="mp-field"><div class="l">借片日期</div><div class="v mono">11-03</div></div>
+                        <div class="mp-field"><div class="l">借片数量</div><div class="v">8 张</div></div>
+                        <div class="mp-field"><div class="l">取片人</div><div class="v">张敏</div></div>
+                        <div class="mp-field"><div class="l">CRC 接收</div><div class="v">张三</div></div>
+                        <div class="mp-field"><div class="l">预计归还</div><div class="v mono">11-10</div></div>
+                        <div class="mp-field"><div class="l">用途</div><div class="v">免疫组化复染</div></div>
+                      </div>
+                      <div class="mp-signature">
+                        <div class="p-row"><span>取片人签名</span><b>张敏 · 已签名</b></div>
+                        <div class="p-row"><span>CRC 接收签名</span><b>张三 · 已签名</b></div>
+                      </div>
+                      <button class="p-btn" data-mp-screen="success">保存并提交</button>
+                      <button class="p-btn ghost" data-mp-screen="tasks">返回任务</button>
+                    </div>
+
+                    <div class="mp-screen" data-mp-screen="success">
+                      <div style="text-align:center;padding:16px 0 8px;">
+                        <i data-lucide="check-circle-2" style="width:44px;height:44px;color:var(--success);"></i>
+                        <div class="p-value" style="margin-top:6px;">提交成功</div>
+                        <div class="p-label">数据已实时回传管理端</div>
                       </div>
                       <div class="p-card">
-                        <div class="p-row"><span>工单号</span><b class="mono">CO-1028-007</b></div>
+                        <div class="p-row"><span>后台工单</span><b class="mono">CO-1103-007</b></div>
                         <div class="p-row"><span>回传状态</span><b style="color:var(--success);">已到达</b></div>
-                        <div class="p-row"><span>后台复核</span><b style="color:var(--warning);">待复核</b></div>
+                        <div class="p-row"><span>复核状态</span><b style="color:var(--warning);">待样本管理员复核</b></div>
                       </div>
-                      <button class="p-btn" data-mp-step="2">返回任务列表</button>
+                      <button class="p-btn" data-mp-screen="tasks">返回任务列表</button>
+                      <button class="p-btn ghost" data-mp-screen="completed">查看已完成任务</button>
+                    </div>
+
+                    <div class="mp-screen" data-mp-screen="completed">
+                      <div style="display:flex;justify-content:space-between;align-items:center;"><div class="p-value">已完成任务</div><span class="tag green">只读</span></div>
+                      <div class="p-card">
+                        <div class="p-label">访视点 / 检测项目</div><div class="p-value">C1D1 · PK / ADA</div>
+                        <div class="p-label" style="margin-top:4px;">采集时间 / 采集人</div><div class="p-value">11-03 08:32 · 张三</div>
+                        <div class="p-label" style="margin-top:4px;">采集管数 / 编号</div><div class="p-value">2 管 · SER-01-A / B</div>
+                        <div class="p-label" style="margin-top:4px;">复核人 / 转运温度</div><div class="p-value">李敏 · 3.6℃~4.2℃</div>
+                      </div>
+                      <div class="panel flat" style="padding:8px;font-size:9px;color:var(--text-2);">已提交数据不可直接修改；如发现错误，请提交修改申请，由样本管理员审核。</div>
+                      <button class="p-btn ghost" data-modal="modal-mp-modify">提交修改申请</button>
+                      <button class="p-btn" data-mp-screen="tasks">返回任务列表</button>
                     </div>
                   </div>
                 </div>
@@ -3271,42 +3419,63 @@ body { background: var(--background); font-size: 13px; }
             </div>
 
             <div style="display:flex;flex-direction:column;gap:12px;">
-              <div class="panel">
+              <div class="panel role-min-2">
                 <div class="panel-h"><div class="panel-t"><i data-lucide="monitor-smartphone"></i>后台工单</div><span class="tag amber" id="mpBackendStatus">等待提交</span></div>
                 <div id="mpBackendPending">
                   <div class="info-rows">
-                    <div class="info-row"><span class="k">工单号</span><span class="v mono">CO-1028-007</span></div>
-                    <div class="info-row"><span class="k">受试者 / 访视</span><span class="v">S007 · V3</span></div>
-                    <div class="info-row"><span class="k">采集类型</span><span class="v">PK 6 点 · 血清</span></div>
+                    <div class="info-row"><span class="k">工单号</span><span class="v mono">CO-1103-007</span></div>
+                    <div class="info-row"><span class="k">项目 / 访视</span><span class="v">CD2026-001 · C1D1</span></div>
+                    <div class="info-row"><span class="k">检测项目</span><span class="v">PK / ADA · 血清</span></div>
                     <div class="info-row"><span class="k">状态</span><span class="v">移动端采集中</span></div>
                   </div>
-                  <div class="panel flat" style="margin-top:9px;padding:8px;font-size:9px;color:var(--text-2);">小程序提交后，数据经网闸回传并自动写入该工单。</div>
+                  <div class="panel flat" style="margin-top:9px;padding:8px;font-size:9px;color:var(--text-2);">小程序提交后自动生成后台工单，等待样本管理员复核。</div>
                 </div>
                 <div id="mpBackendReceived" style="display:none;">
                   <div class="info-rows">
-                    <div class="info-row"><span class="k">工单号</span><span class="v mono">CO-1028-007</span></div>
+                    <div class="info-row"><span class="k">工单号</span><span class="v mono">CO-1103-007</span></div>
                     <div class="info-row"><span class="k">采集时间</span><span class="v mono">11-03 08:32</span></div>
-                    <div class="info-row"><span class="k">采血量</span><span class="v">5 mL</span></div>
+                    <div class="info-row"><span class="k">采集管数</span><span class="v">2 管</span></div>
                     <div class="info-row"><span class="k">照片</span><span class="v">2 张</span></div>
-                    <div class="info-row"><span class="k">网闸回传</span><span class="v" style="color:var(--success);">成功</span></div>
-                    <div class="info-row"><span class="k">后台状态</span><span class="v" style="color:var(--warning);">待复核</span></div>
+                    <div class="info-row"><span class="k">回传状态</span><span class="v" style="color:var(--success);">已到达</span></div>
+                    <div class="info-row"><span class="k">复核状态</span><span class="v" style="color:var(--warning);">待复核</span></div>
                   </div>
                   <button class="btn btn-primary btn-sm" style="width:100%;margin-top:9px;" data-modal="modal-collect-review">进入后台复核</button>
                 </div>
               </div>
+
+              <div class="panel role-min-2">
+                <div class="panel-h"><div class="panel-t"><i data-lucide="user-cog"></i>项目授权</div><button class="btn btn-secondary btn-sm" data-modal="modal-mp-auth">管理授权</button></div>
+                <div class="info-rows">
+                  <div class="info-row"><span class="k">授权项目</span><span class="v">2 个</span></div>
+                  <div class="info-row"><span class="k">授权用户</span><span class="v">3 人</span></div>
+                  <div class="info-row"><span class="k">当前角色</span><span class="v"><span class="mp-role-label">CRC</span> · 张三</span></div>
+                </div>
+                <div class="split-line"></div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                  <div class="p-row"><span><span class="avatar" style="width:18px;height:18px;font-size:8px;">张</span> 张三</span><b>CRC · CD2026-001</b></div>
+                  <div class="p-row"><span><span class="avatar alt" style="width:18px;height:18px;font-size:8px;">李</span> 李敏</span><b>CRC · CD2026-001</b></div>
+                  <div class="p-row"><span><span class="avatar green" style="width:18px;height:18px;font-size:8px;">陈</span> 陈晓</span><b>样本处理员 · CD2026-001</b></div>
+                </div>
+              </div>
+
+              <div class="panel role-min-2">
+                <div class="panel-h"><div class="panel-t"><i data-lucide="file-pen-line"></i>修改申请</div><span class="tag amber" id="mpModifyStatus">待审核</span></div>
+                <div class="mp-task" style="cursor:default;">
+                  <div style="display:flex;justify-content:space-between;"><div class="mp-task-title">S007 · C1D1 采集时间</div><span class="tag amber" id="mpModifyCardStatus">待审核</span></div>
+                  <div class="mp-task-meta">申请人：张三 · 原因：采集时间录入错误</div>
+                  <div class="mp-task-tags"><span class="tag">原值 08:32</span><span class="tag">申请改为 08:35</span></div>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px;" data-modal="modal-mp-modify-review">审核申请</button>
+              </div>
+
               <div class="panel">
                 <div class="panel-h"><div class="panel-t"><i data-lucide="network"></i>接入方式</div></div>
                 <div class="info-rows">
                   <div class="info-row"><span class="k">入口</span><span class="v">医院公众号 → 小程序</span></div>
                   <div class="info-row"><span class="k">登录</span><span class="v">工号 + 内网认证</span></div>
-                  <div class="info-row"><span class="k">数据回传</span><span class="v">外网小程序 → 网闸 → 内网管理端</span></div>
-                  <div class="info-row"><span class="k">权限</span><span class="v">仅采集提交，不可修改</span></div>
+                  <div class="info-row"><span class="k">授权</span><span class="v">项目 + 角色</span></div>
+                  <div class="info-row"><span class="k">数据回传</span><span class="v">实时回传管理端</span></div>
                 </div>
-              </div>
-              <div class="grid g3" style="gap:8px;">
-                <div class="panel flat" style="padding:9px;"><div class="panel-t"><i data-lucide="scan-line"></i>扫码即操作</div><div class="tiny muted" style="margin-top:2px;">减少手工录入</div></div>
-                <div class="panel flat" style="padding:9px;"><div class="panel-t"><i data-lucide="wifi-off"></i>弱网可用</div><div class="tiny muted" style="margin-top:2px;">本地暂存后同步</div></div>
-                <div class="panel flat" style="padding:9px;"><div class="panel-t"><i data-lucide="network"></i>网闸回传</div><div class="tiny muted" style="margin-top:2px;">内外网安全交互</div></div>
               </div>
             </div>
           </div>
@@ -4193,6 +4362,69 @@ body { background: var(--background); font-size: 13px; }
     <div class="form-actions">
       <button class="btn btn-secondary btn-sm" data-toast="文档 PDF 已开始下载，已记入导出记录"><i data-lucide="download" style="width:12px;height:12px;"></i>下载 PDF</button>
       <button class="btn btn-primary btn-sm" data-close>关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-mp-auth">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">项目授权</div>
+    <div class="tiny muted" style="margin-bottom:9px;">仅被授权的用户可在小程序看到对应项目与访视点。</div>
+    <div class="form-group"><label class="form-label">项目</label><input class="form-input" value="CD2026-001 · PD-1 III 期" /></div>
+    <div class="panel flat" style="padding:4px 10px;">
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 张三 · CRC <span class="tag blue" style="margin-left:auto;">已授权</span></label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 李敏 · CRC <span class="tag blue" style="margin-left:auto;">已授权</span></label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:10px;padding:7px 0;"><input type="checkbox" checked /> 陈晓 · 样本处理员 <span class="tag blue" style="margin-left:auto;">已授权</span></label>
+    </div>
+    <div class="form-group" style="margin-top:9px;"><label class="form-label">授权访视点</label><input class="form-input" value="C1D1、C2D1、C3D1" /></div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="项目授权已保存，仅授权用户可在小程序看到该项目">保存授权</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-mp-modify">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">提交修改申请</div>
+    <div class="panel flat" style="padding:8px;margin-bottom:9px;">
+      <div class="info-rows">
+        <div class="info-row"><span class="k">任务</span><span class="v">S007 · C1D1 · PK / ADA</span></div>
+        <div class="info-row"><span class="k">当前状态</span><span class="v">已提交 · 只读</span></div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">修改字段</label><input class="form-input" value="采集时间" /></div>
+      <div class="form-group"><label class="form-label">原值</label><input class="form-input" value="2026-11-03 08:32" /></div>
+    </div>
+    <div class="form-group"><label class="form-label">申请改为</label><input class="form-input" value="2026-11-03 08:35" /></div>
+    <div class="form-group"><label class="form-label">修改原因</label><input class="form-input" value="采集时间录入错误" /></div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="修改申请已提交，等待样本管理员审核">提交申请</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-mp-modify-review">
+  <div class="form-dialog">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">审核修改申请</div>
+    <div class="panel flat" style="padding:9px;margin-bottom:9px;">
+      <div class="info-rows">
+        <div class="info-row"><span class="k">任务</span><span class="v">S007 · C1D1 · PK / ADA</span></div>
+        <div class="info-row"><span class="k">申请人</span><span class="v">张三 · CRC</span></div>
+        <div class="info-row"><span class="k">修改字段</span><span class="v">采集时间</span></div>
+        <div class="info-row"><span class="k">原值 → 申请值</span><span class="v">08:32 → 08:35</span></div>
+        <div class="info-row"><span class="k">原因</span><span class="v">采集时间录入错误</span></div>
+      </div>
+    </div>
+    <div class="tiny muted" style="margin-bottom:9px;">通过后 CRC 可在小程序重新编辑并提交；系统保留修改前后值与审核记录。</div>
+    <div class="form-actions" style="justify-content:space-between;">
+      <button class="btn btn-danger btn-sm" id="mpRejectBtn">驳回</button>
+      <div style="display:flex;gap:6px;"><button class="btn btn-ghost btn-sm" data-close>取消</button><button class="btn btn-primary btn-sm" id="mpApproveBtn">通过并允许修改</button></div>
     </div>
   </div>
 </div>
@@ -5266,9 +5498,99 @@ function filterUpdateLogs() {
   });
 })();
 
+/* ===== 小程序移动操作台 ===== */
+var mpRole = 'crc';
+var MP_TITLES = {
+  login: ['样本采集', 'CRC · 江苏省肿瘤医院'],
+  projects: ['选择项目', '已授权项目 · 二次确认'],
+  tasks: ['今日任务', 'CD2026-001 · CRC'],
+  'collect-form': ['采集 + 转运', 'C1D1 · 给药前 · FB-005'],
+  'ship-form': ['采集 + 寄送', 'C1D1 · 给药后 · FB-008'],
+  'process-form': ['处理 + 储存', 'C1D1 · PK · FB-006'],
+  'patho-form': ['病理借片', 'PA-2026-0188 · FB-004'],
+  success: ['提交成功', '已实时回传管理端'],
+  completed: ['已完成任务', '只读详情 · 可申请修改']
+};
+function mpRoleName(){ return mpRole === 'processor' ? '样本处理员' : 'CRC'; }
+function mpUpdateCount(){
+  var count = 0;
+  document.querySelectorAll('[data-mp-group="pending"] .mp-task[data-mp-task-role]').forEach(function(el){
+    if (el.style.display !== 'none') count++;
+  });
+  var tag = document.getElementById('mpTaskCount');
+  if (tag) tag.textContent = count + ' 待办';
+}
+function mpShowScreen(name){
+  document.querySelectorAll('.mp-screen').forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-mp-screen') === name); });
+  var t = MP_TITLES[name] || MP_TITLES.tasks;
+  var title = document.getElementById('mpTitle');
+  var sub = document.getElementById('mpSub');
+  if (title) title.textContent = t[0];
+  if (sub) sub.textContent = t[1].replace('CRC', mpRoleName());
+  if (name === 'success') {
+    var status = document.getElementById('mpBackendStatus');
+    var pending = document.getElementById('mpBackendPending');
+    var received = document.getElementById('mpBackendReceived');
+    if (status) { status.textContent = '已回传'; status.className = 'tag green'; }
+    if (pending) pending.style.display = 'none';
+    if (received) received.style.display = 'block';
+  }
+  if (name === 'tasks') mpUpdateCount();
+}
+function mpSetRole(role){
+  mpRole = role;
+  document.querySelectorAll('.mp-role-btn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-mp-role') === role); });
+  document.querySelectorAll('.mp-role-label').forEach(function(e){ e.textContent = mpRoleName(); });
+  document.querySelectorAll('.mp-task[data-mp-task-role]').forEach(function(el){
+    var r = el.getAttribute('data-mp-task-role');
+    el.style.display = (r === 'all' || r === role) ? '' : 'none';
+  });
+  mpUpdateCount();
+  var sub = document.getElementById('mpSub');
+  if (sub) sub.textContent = sub.textContent.replace(/CRC|样本处理员/, mpRoleName());
+}
+function mpTaskTab(tab){
+  document.querySelectorAll('.mp-task-tab').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-mp-task-tab') === tab); });
+  document.querySelectorAll('.mp-task-group').forEach(function(g){ g.style.display = g.getAttribute('data-mp-group') === tab ? 'block' : 'none'; });
+}
+document.addEventListener('click', function(e){
+  var s = e.target.closest('[data-mp-screen]');
+  if (s) mpShowScreen(s.getAttribute('data-mp-screen'));
+  var r = e.target.closest('[data-mp-role]');
+  if (r) mpSetRole(r.getAttribute('data-mp-role'));
+  var t = e.target.closest('[data-mp-task-tab]');
+  if (t) mpTaskTab(t.getAttribute('data-mp-task-tab'));
+});
+var mpModifySubmit = document.querySelector('#modal-mp-modify [data-submit]');
+if (mpModifySubmit) mpModifySubmit.addEventListener('click', function(){
+  var st = document.getElementById('mpModifyStatus');
+  var cs = document.getElementById('mpModifyCardStatus');
+  if (st) { st.textContent = '待审核'; st.className = 'tag amber'; }
+  if (cs) { cs.textContent = '待审核'; cs.className = 'tag amber'; }
+});
+var approveBtn = document.getElementById('mpApproveBtn');
+if (approveBtn) approveBtn.addEventListener('click', function(){
+  var st = document.getElementById('mpModifyStatus');
+  var cs = document.getElementById('mpModifyCardStatus');
+  if (st) { st.textContent = '已通过'; st.className = 'tag green'; }
+  if (cs) { cs.textContent = '已通过'; cs.className = 'tag green'; }
+  toast('修改申请已通过，CRC 可重新编辑并提交');
+  closeModal();
+});
+var rejectBtn = document.getElementById('mpRejectBtn');
+if (rejectBtn) rejectBtn.addEventListener('click', function(){
+  var st = document.getElementById('mpModifyStatus');
+  var cs = document.getElementById('mpModifyCardStatus');
+  if (st) { st.textContent = '已驳回'; st.className = 'tag red'; }
+  if (cs) { cs.textContent = '已驳回'; cs.className = 'tag red'; }
+  toast('修改申请已驳回，已通知申请人');
+  closeModal();
+});
+
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
 applyRoleVisibility();
+mpSetRole(mpRole);
 if (window.lucide) lucide.createIcons();
 setTimeout(function(){ if (window.lucide) lucide.createIcons(); }, 300);
 </script>
