@@ -3270,6 +3270,11 @@ body { background: var(--background); font-size: 13px; }
                           <div class="mp-task-meta">检测项目：PK · 血浆 3 mL</div>
                           <div class="mp-task-tags"><span class="tag blue">采集 + 寄送</span><span class="tag">S007</span></div>
                         </div>
+                        <div class="mp-task" data-mp-screen="shipment-form" data-mp-task-role="crc">
+                          <div style="display:flex;justify-content:space-between;"><div class="mp-task-title">SH-1103-002 · 待寄出</div><span class="tag amber">待寄出</span></div>
+                          <div class="mp-task-meta">检测项目：ADA · 检/备 2 管 · 快递单号待回填</div>
+                          <div class="mp-task-tags"><span class="tag blue">寄送</span><span class="tag">S007</span></div>
+                        </div>
                         <div class="mp-task" data-mp-screen="process-form" data-mp-task-role="processor">
                           <div style="display:flex;justify-content:space-between;"><div class="mp-task-title">C1D1 · PK</div><span class="tag amber">待处理</span></div>
                           <div class="mp-task-meta">静置 / 离心 / 分装 · 血清</div>
@@ -3381,6 +3386,28 @@ body { background: var(--background); font-size: 13px; }
                       <div class="mp-signature">
                         <div class="p-row"><span>取片人签名</span><b>张敏 · 已签名</b></div>
                         <div class="p-row"><span>CRC 接收签名</span><b>张三 · 已签名</b></div>
+                      </div>
+                      <button class="p-btn" data-mp-screen="success">保存并提交</button>
+                      <button class="p-btn ghost" data-mp-screen="tasks">返回任务</button>
+                    </div>
+
+                    <div class="mp-screen" data-mp-screen="shipment-form">
+                      <div style="display:flex;justify-content:space-between;align-items:center;"><div class="p-value">寄送</div><span class="tag blue">FB-007</span></div>
+                      <div class="p-card">
+                        <div class="p-label">采集节点 / 检测项目</div><div class="p-value">C2D1 · ADA</div>
+                        <div class="p-label" style="margin-top:4px;">样品类型 / 取出管数</div><div class="p-value">血浆 · 检 1 / 备 1</div>
+                      </div>
+                      <div class="mp-form-grid">
+                        <div class="mp-field"><div class="l">取出者</div><div class="v">张三</div></div>
+                        <div class="mp-field"><div class="l">取出时间</div><div class="v mono">10:05</div></div>
+                        <div class="mp-field" style="grid-column:span 2;"><div class="l">取出样品编号</div><div class="v mono">SER-01-A / SER-01-B</div></div>
+                        <div class="mp-field"><div class="l">复核/寄出者</div><div class="v">李敏 / 张三</div></div>
+                        <div class="mp-field"><div class="l">寄出时间</div><div class="v mono">10:20</div></div>
+                        <div class="mp-field" style="grid-column:span 2;"><div class="l">快递单号</div><div class="v mono">SF1234567890</div></div>
+                      </div>
+                      <div class="mp-signature">
+                        <div class="p-row"><span>取出者签名</span><b>张三 · 已签名</b></div>
+                        <div class="p-row"><span>复核/寄出者签名</span><b>李敏 · 已签名</b></div>
                       </div>
                       <button class="p-btn" data-mp-screen="success">保存并提交</button>
                       <button class="p-btn ghost" data-mp-screen="tasks">返回任务</button>
@@ -5506,6 +5533,7 @@ var MP_TITLES = {
   tasks: ['今日任务', 'CD2026-001 · CRC'],
   'collect-form': ['采集 + 转运', 'C1D1 · 给药前 · FB-005'],
   'ship-form': ['采集 + 寄送', 'C1D1 · 给药后 · FB-008'],
+  'shipment-form': ['寄送', 'SH-1103-002 · FB-007'],
   'process-form': ['处理 + 储存', 'C1D1 · PK · FB-006'],
   'patho-form': ['病理借片', 'PA-2026-0188 · FB-004'],
   success: ['提交成功', '已实时回传管理端'],
