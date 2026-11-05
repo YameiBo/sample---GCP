@@ -1268,6 +1268,23 @@ body.app-mode { padding: 0; }
 .mp-dot.active { background: var(--primary); color: var(--primary-foreground); font-weight: 700; }
 .phone { transition: transform .18s ease, box-shadow .18s ease; }
 .phone:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,.16); }
+.ai-chat-window { display: flex; flex-direction: column; }
+.ai-chat-body { display: flex; flex-direction: column; gap: 8px; }
+.ai-chat-body.collapsed { display: none; }
+.ai-chat-messages { display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; padding-right: 2px; }
+.ai-chat-messages .chat-q, .ai-chat-messages .chat-a { animation: chatMsgIn .18s ease; }
+@keyframes chatMsgIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.ai-chat-suggestions { display: flex; flex-wrap: wrap; gap: 4px; }
+.ai-chat-suggestions .tag { cursor: pointer; }
+.ai-chat-input { display: flex; gap: 6px; align-items: center; }
+.ai-chat-input input { flex: 1; border: 1px solid var(--border); border-radius: var(--radius-full); padding: 7px 12px; font-size: 11px; font-family: var(--font-sans); background: var(--background); outline: none; color: var(--foreground); }
+.ai-chat-input input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in oklch, var(--primary) 14%, transparent); }
+.ai-chat-status { width: 6px; height: 6px; border-radius: 50%; background: var(--success); display: inline-block; }
+.typing { display: flex; gap: 3px; align-items: center; min-height: 20px; }
+.typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--text-3); animation: typingDot 1s infinite; }
+.typing span:nth-child(2) { animation-delay: .15s; }
+.typing span:nth-child(3) { animation-delay: .3s; }
+@keyframes typingDot { 0%, 80%, 100% { transform: translateY(0); opacity: .4; } 40% { transform: translateY(-3px); opacity: 1; } }
 .voice-mic { width: 92px; height: 92px; border-radius: 50%; margin: 0 auto; background: linear-gradient(135deg, oklch(0.62 0.22 273), var(--primary)); color: var(--primary-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 14px 34px color-mix(in oklch, var(--primary) 32%, transparent); transition: transform .15s, box-shadow .15s; }
 .voice-mic:hover { transform: scale(1.04); box-shadow: 0 18px 42px color-mix(in oklch, var(--primary) 40%, transparent); }
 .voice-wave { display: flex; align-items: center; gap: 3px; height: 34px; }
@@ -3426,11 +3443,25 @@ body { background: var(--background); font-size: 13px; }
                   <div class="info-row"><span class="k">最近同步</span><span class="v mono">11-03 08:30</span></div>
                 </div>
               </div>
-              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="sparkles"></i>常用问法</div></div>
-                <div style="display:flex;flex-direction:column;gap:5px;">
-                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="CD2026-001 在库样本 386 管">在库样本有多少？</button>
-                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="CD2026-001 已出库 42 管">已出库样本有多少？</button>
-                  <button class="btn btn-secondary btn-sm" style="justify-content:flex-start;" data-toast="本周采集 28 管，完成率 96.4%">本周采集情况？</button>
+              <div class="panel ai-chat-window" id="aiChatWindow">
+                <div class="panel-h">
+                  <div class="panel-t"><i data-lucide="message-square-text"></i>智能问答 <span class="ai-chat-status"></span></div>
+                  <button class="btn btn-ghost btn-sm" id="aiChatToggle" style="padding:2px 7px;">−</button>
+                </div>
+                <div class="ai-chat-body" id="aiChatBody">
+                  <div class="ai-chat-messages" id="aiChatMessages">
+                    <div class="chat-a">你好，我是项目样本检索助手。可以问我 CD2026-001 的在库、出库、采集、库位、温度异常或留存情况。</div>
+                  </div>
+                  <div class="ai-chat-suggestions">
+                    <button class="tag" data-ai-q="CD2026-001 在库样本有多少？">在库样本</button>
+                    <button class="tag" data-ai-q="已出库多少管？">已出库</button>
+                    <button class="tag" data-ai-q="S007 的样本在哪个库位？">样本库位</button>
+                    <button class="tag" data-ai-q="有温度异常吗？">温度异常</button>
+                  </div>
+                  <div class="ai-chat-input">
+                    <input id="aiChatInput" placeholder="输入问题，回车发送" />
+                    <button class="btn btn-primary btn-sm" id="aiChatSend"><i data-lucide="send" style="width:11px;height:11px;"></i>发送</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -4779,7 +4810,6 @@ document.querySelectorAll('.win-chrome-bar[data-crumb]').forEach(function(el) {
       return i === arr.length - 1 ? '<b>' + p + '</b>' : '<span>' + p + '</span><i data-lucide="chevron-right" style="width:10px;height:10px;"></i>';
     }).join('') +
     '</div><div class="win-chrome-drag"></div><div class="win-chrome-actions">' +
-    '<span class="badge badge-default" style="font-size:10px;"><i data-lucide="shield-check" style="width:10px;height:10px;"></i>审计追踪</span>' +
     '<div class="win-credits"><i data-lucide="package"></i><span>在库 12,846 管</span></div>' +
     '<div class="role-switch"><i data-lucide="user-cog"></i><select class="role-switcher" onchange="setDemoRole(this.value)">' + roleOptions() + '</select></div>' +
     '<button class="win-chrome-btn" title="帮助" data-toast="帮助中心：GCP 合规操作指引"><i data-lucide="help-circle" class="win-chrome-icon"></i></button>' +
@@ -5109,6 +5139,58 @@ function filterUpdateLogs() {
   var el = document.getElementById(pair[0]);
   if (el) el.addEventListener(pair[1], filterUpdateLogs);
 });
+
+/* ===== 项目样本检索问答 ===== */
+(function(){
+  var input = document.getElementById('aiChatInput');
+  var sendBtn = document.getElementById('aiChatSend');
+  var messages = document.getElementById('aiChatMessages');
+  var toggle = document.getElementById('aiChatToggle');
+  var body = document.getElementById('aiChatBody');
+  if (!input || !sendBtn || !messages) return;
+
+  function scrollBottom(){ messages.scrollTop = messages.scrollHeight; }
+  function addMessage(text, who){
+    var el = document.createElement('div');
+    el.className = who === 'user' ? 'chat-q' : 'chat-a';
+    el.textContent = text;
+    messages.appendChild(el);
+    scrollBottom();
+  }
+  function answer(q){
+    if (/在库|库存/.test(q)) return 'CD2026-001 当前在库 386 管：血清 186、血浆 96、全血 48、尿液 32、组织/蜡块 24。';
+    if (/出库/.test(q)) return '已出库 42 管（检测 36、销毁 6）；最近出库为 S006 V4 血浆 2 管，用于 PK 检测。';
+    if (/本周|采集/.test(q)) return '本周累计采集 28 管，计划完成率 96.4%；最近一次采集为 S007 V3 血清（11-03 08:32）。';
+    if (/库位|S007/.test(q)) return 'S007 V3 血清子管 A 当前库位 B-02-03-04，-80℃ 冰箱 02；子管 B 同库位，子管 C 为备份管。';
+    if (/温度|异常/.test(q)) return '当前有 1 单温度待复核：TR-1028-003 最高 7.8℃，未超过 8℃ 上限，建议由 PI 复核样本可用性。';
+    if (/留存|销毁/.test(q)) return '剩余样本 12 管，知情同意 v2.1 允许科研使用至 2031-12-31；销毁需样本管理员、PI、QA 三方签署。';
+    return '我可以查询项目样本的在库、出库、采集、库位、温度异常和留存情况。你可以试试：CD2026-001 在库样本有多少？';
+  }
+  function ask(q){
+    q = (q || '').trim();
+    if (!q) return;
+    addMessage(q, 'user');
+    input.value = '';
+    var typing = document.createElement('div');
+    typing.className = 'chat-a typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    messages.appendChild(typing);
+    scrollBottom();
+    setTimeout(function(){
+      typing.remove();
+      addMessage(answer(q), 'ai');
+    }, 700);
+  }
+  sendBtn.addEventListener('click', function(){ ask(input.value); });
+  input.addEventListener('keydown', function(e){ if (e.key === 'Enter') ask(input.value); });
+  document.querySelectorAll('[data-ai-q]').forEach(function(btn){
+    btn.addEventListener('click', function(){ ask(btn.getAttribute('data-ai-q')); });
+  });
+  if (toggle) toggle.addEventListener('click', function(){
+    body.classList.toggle('collapsed');
+    toggle.textContent = body.classList.contains('collapsed') ? '+' : '−';
+  });
+})();
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
