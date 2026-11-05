@@ -1590,6 +1590,63 @@ body { font-size: 14px; }
 .mp-field .v { font-size: 14px; }
 .storage-grid .slot { height: 26px; }
 .mp-dot { width: 20px; height: 20px; }
+
+/* ===== 深色主题菜单栏 ===== */
+.macos-body { grid-template-columns: 240px 1fr; }
+.app-sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, oklch(0.31 0.09 275) 0%, oklch(0.24 0.07 275) 100%);
+  border-right: 1px solid oklch(0.38 0.08 275);
+  color: oklch(0.93 0.02 280);
+}
+.app-sidebar .sidebar-section-header {
+  color: oklch(0.72 0.04 280);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+.app-sidebar .sidebar-item {
+  color: oklch(0.88 0.02 280);
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 5px 10px;
+  margin: 0 8px;
+}
+.app-sidebar .sidebar-item:hover {
+  background: color-mix(in oklch, white 12%, transparent);
+  color: #fff;
+}
+.app-sidebar .sidebar-item.active {
+  background: oklch(0.94 0.025 280);
+  color: oklch(0.34 0.14 275);
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+}
+.app-sidebar .sidebar-item.active .nav-icon { color: oklch(0.45 0.16 275); }
+.app-sidebar .sidebar-sub-item {
+  color: oklch(0.82 0.02 280);
+  font-size: 15px;
+  line-height: 1.2;
+  padding: 5px 10px 5px 30px;
+}
+.app-sidebar .sidebar-sub-item:hover { background: color-mix(in oklch, white 9%, transparent); color: #fff; }
+.app-sidebar .sidebar-sub-item.active {
+  background: oklch(0.94 0.025 280);
+  color: oklch(0.34 0.14 275);
+  font-weight: 700;
+}
+.app-sidebar .sidebar-sub-item.active .nav-icon { color: oklch(0.45 0.16 275); }
+.app-sidebar .sidebar-parent.active-parent { color: #fff; }
+.app-sidebar .sidebar-parent .chev { color: oklch(0.78 0.03 280); }
+.app-sidebar .sidebar-divider { background: color-mix(in oklch, white 15%, transparent); }
+.app-sidebar .si-badge {
+  background: color-mix(in oklch, white 14%, transparent);
+  color: #fff;
+  font-size: 12px;
+}
+.app-sidebar .sidebar-item.active .si-badge {
+  background: color-mix(in oklch, var(--primary) 14%, transparent);
+  color: var(--primary);
+}
 </style>
 </head>
 <body class="app-mode">
@@ -5088,10 +5145,10 @@ var SECTION_MAP = {
   'ai-voice': 'section-ai-voice', mobile: 'section-mobile', settings: 'section-settings'
 };
 function buildSidebar(active) {
-  var html = '<div style="padding:4px 14px 10px;display:flex;align-items:center;gap:8px;">' +
-    '<div style="width:22px;height:22px;border-radius:7px;background:var(--primary);display:flex;align-items:center;justify-content:center;">' +
-    '<i data-lucide="dna" style="width:13px;height:13px;color:var(--primary-foreground);stroke-width:2.4;"></i></div>' +
-    '<span style="font-size:13px;font-weight:650;letter-spacing:-0.02em;">样本库与GCP工作站</span></div>';
+  var html = '<div style="padding:8px 14px 14px;display:flex;align-items:center;gap:9px;">' +
+    '<div style="width:30px;height:30px;border-radius:9px;background:oklch(0.95 0.02 280);display:flex;align-items:center;justify-content:center;">' +
+    '<i data-lucide="dna" style="width:16px;height:16px;color:var(--primary);stroke-width:2.4;"></i></div>' +
+    '<span style="font-size:17px;font-weight:700;letter-spacing:-0.02em;color:oklch(0.97 0.01 280);">样本库与GCP工作站</span></div>';
   var level = roleLevel();
   NAV.forEach(function(g) {
     var visibleItems = g.items.filter(function(it){
@@ -5124,8 +5181,8 @@ function buildSidebar(active) {
   });
   html += '<div style="flex:1"></div><div class="sidebar-divider"></div>' +
     '<div class="sidebar-item"><i data-lucide="shield-check" class="nav-icon"></i>合规中心<span class="si-badge" style="background:var(--success-muted);color:var(--success)">OK</span></div>' +
-    '<div style="padding:2px 12px 2px;font-size:12px;color:var(--text-3);">当前身份：' + DEMO_ROLES[currentRole].label + '</div>' +
-    '<div style="padding:4px 12px 2px;font-size:12px;color:var(--text-3);" class="mono">GCP 2026 · E6(R3)</div>';
+    '<div style="padding:2px 12px 2px;font-size:12px;color:oklch(0.78 0.03 280);">当前身份：' + DEMO_ROLES[currentRole].label + '</div>' +
+    '<div style="padding:4px 12px 2px;font-size:12px;color:oklch(0.62 0.03 280);" class="mono">GCP 2026 · E6(R3)</div>';
   return html;
 }
 document.querySelectorAll('.app-sidebar[data-active]').forEach(function(el) {
