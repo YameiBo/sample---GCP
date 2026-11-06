@@ -1817,7 +1817,7 @@ body { font-size: 14px; }
               <div class="page-sub">CTMS 同步项目基础信息，点击项目进入方案、样本与变更管理</div>
             </div>
             <div class="toolbar">
-              <button class="btn btn-secondary btn-sm" data-toast="已导出项目清单（Excel）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出</button>
+              <button class="btn btn-secondary btn-sm" data-export data-export-name="项目清单.csv"><i data-lucide="download" style="width:12px;height:12px;"></i>导出</button>
               <button class="btn btn-secondary btn-sm role-min-2" data-modal="modal-mp-auth"><i data-lucide="user-cog" style="width:12px;height:12px;"></i>项目授权</button>
               <button class="btn btn-secondary btn-sm role-min-2" data-modal="modal-ctms-sync"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>从 CTMS 同步</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-new-project"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建项目</button>
@@ -2314,7 +2314,7 @@ body { font-size: 14px; }
         <div class="app-main">
           <div class="page-head">
             <div><div class="page-title">采集统计</div><div class="page-sub">按项目、样本类型与采集及时率统计</div></div>
-            <div class="toolbar"><button class="btn btn-primary btn-sm" data-toast="采集统计报表已导出"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
+            <div class="toolbar"><button class="btn btn-primary btn-sm" data-export data-export-name="采集统计.csv"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
           </div>
           <div class="kpi-grid" style="margin-bottom:14px;">
             <div class="kpi"><div class="l"><i data-lucide="clipboard-list"></i>今日工单</div><div class="v">14<small>单</small></div><div class="d">已完成 9</div></div>
@@ -2568,7 +2568,7 @@ body { font-size: 14px; }
         <div class="app-main">
           <div class="page-head">
             <div><div class="page-title">转运统计</div><div class="page-sub">转运量、时效、温度异常与交接完成率</div></div>
-            <div class="toolbar"><button class="btn btn-primary btn-sm" data-toast="转运统计报表已导出"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
+            <div class="toolbar"><button class="btn btn-primary btn-sm" data-export data-export-name="转运统计.csv"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
           </div>
           <div class="kpi-grid" style="margin-bottom:14px;">
             <div class="kpi"><div class="l"><i data-lucide="truck"></i>今日转运单</div><div class="v">5<small>单</small></div><div class="d">已交接 3</div></div>
@@ -2724,7 +2724,7 @@ body { font-size: 14px; }
         <div class="app-main">
           <div class="page-head">
             <div><div class="page-title">处理统计</div><div class="page-sub">处理任务量、设备利用率、平均处理时长与中止情况</div></div>
-            <div class="toolbar"><button class="btn btn-primary btn-sm" data-toast="处理统计报表已导出"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
+            <div class="toolbar"><button class="btn btn-primary btn-sm" data-export data-export-name="处理统计.csv"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button></div>
           </div>
           <div class="kpi-grid" style="margin-bottom:14px;">
             <div class="kpi"><div class="l"><i data-lucide="flask-conical"></i>今日任务</div><div class="v">5<small>个</small></div><div class="d">已完成 3</div></div>
@@ -3099,7 +3099,7 @@ body { font-size: 14px; }
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-modal="modal-log-types"><i data-lucide="settings-2" style="width:12px;height:12px;"></i>日志类型设置</button>
               <button class="btn btn-secondary btn-sm" data-toast="完整性校验通过：全部日志哈希链一致"><i data-lucide="shield-check" style="width:12px;height:12px;"></i>完整性校验</button>
-              <button class="btn btn-primary btn-sm" data-toast="已导出审计日志（CSV + 签名文件）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出日志</button>
+              <button class="btn btn-primary btn-sm" data-export data-export-name="审计日志.csv"><i data-lucide="download" style="width:12px;height:12px;"></i>导出日志</button>
             </div>
           </div>
 
@@ -3225,7 +3225,7 @@ body { font-size: 14px; }
             </div>
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-toast="已切换至 2026 年 11 月"><i data-lucide="calendar-days" style="width:12px;height:12px;"></i>2026 年 11 月</button>
-              <button class="btn btn-primary btn-sm" data-toast="项目统计报表已生成并加入导出队列"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button>
+              <button class="btn btn-primary btn-sm" data-export data-export-name="项目统计.csv"><i data-lucide="file-down" style="width:12px;height:12px;"></i>导出报表</button>
             </div>
           </div>
 
@@ -6086,6 +6086,35 @@ if (rejectBtn) rejectBtn.addEventListener('click', function(){
     }, 120);
   });
 })();
+
+/* ===== CSV 导出 ===== */
+function exportVisibleTable(name) {
+  var section = document.querySelector('.proto-stack.is-active');
+  var tables = section ? section.querySelectorAll('table.tbl') : [];
+  var table = Array.from(tables).find(function(t){ return t.offsetParent !== null; });
+  if (!table) { toast('当前页面暂无可导出的表格'); return; }
+  var rows = Array.from(table.querySelectorAll('tr')).filter(function(tr){ return tr.offsetParent !== null; });
+  var csv = rows.map(function(tr){
+    return Array.from(tr.querySelectorAll('th,td')).map(function(cell){
+      var text = cell.textContent.trim().replace(/\s+/g, ' ').replace(/"/g, '""');
+      return '"' + text + '"';
+    }).join(',');
+  }).join('\r\n');
+  var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = name || '导出.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  toast('已导出 ' + a.download);
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest('[data-export]');
+  if (b) {
+    e.preventDefault();
+    exportVisibleTable(b.getAttribute('data-export-name') || '导出.csv');
+  }
+});
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
