@@ -3711,7 +3711,7 @@ body { font-size: 14px; }
         <div class="app-main">
           <div class="page-head">
             <div><div class="page-title">项目样本检索</div><div class="page-sub">按项目检索在库、出库、采集与留存样本</div></div>
-            <div class="toolbar"><button class="btn btn-secondary btn-sm" data-goto="section-ai-kb"><i data-lucide="database" style="width:12px;height:12px;"></i>知识库</button><button class="btn btn-secondary btn-sm" data-goto="section-ai-voice"><i data-lucide="mic" style="width:12px;height:12px;"></i>语音检索</button></div>
+            <div class="toolbar"><button class="btn btn-secondary btn-sm role-min-2" data-goto="section-ai-kb"><i data-lucide="database" style="width:12px;height:12px;"></i>知识库</button><button class="btn btn-secondary btn-sm" data-goto="section-ai-voice"><i data-lucide="mic" style="width:12px;height:12px;"></i>语音检索</button></div>
           </div>
           <div class="panel" style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:14px;">
             <i data-lucide="search" style="width:15px;height:15px;color:var(--text-3);"></i>
@@ -3787,7 +3787,7 @@ body { font-size: 14px; }
         <div class="app-main">
           <div class="page-head">
             <div><div class="page-title">SOP 合规校验</div><div class="page-sub">基于方案与操作手册，检查录入数据与操作流程是否符合要求</div></div>
-            <div class="toolbar"><button class="btn btn-secondary btn-sm" data-goto="section-ai-kb"><i data-lucide="database" style="width:12px;height:12px;"></i>知识库</button><button class="btn btn-primary btn-sm" data-toast="已重新校验 CD2026-001 V3 访视，发现 3 项待确认"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>重新校验</button></div>
+            <div class="toolbar"><button class="btn btn-secondary btn-sm role-min-2" data-goto="section-ai-kb"><i data-lucide="database" style="width:12px;height:12px;"></i>知识库</button><button class="btn btn-primary btn-sm" data-toast="已重新校验 CD2026-001 V3 访视，发现 3 项待确认"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>重新校验</button></div>
           </div>
           <div class="panel" style="display:flex;align-items:center;gap:8px;padding:9px 14px;margin-bottom:14px;">
             <span class="tiny muted">校验对象</span>
@@ -3893,6 +3893,129 @@ body { font-size: 14px; }
   </div>
 </div>
 
+<!-- ===== AI 知识图谱 ===== -->
+<div id="section-ai-graph" class="proto-stack">
+  <div class="proto-with-prd">
+    <div class="macos-window">
+      <div class="macos-body">
+        <div class="app-sidebar" data-active="ai-graph"></div>
+        <div class="win-chrome-bar" data-crumb="智能体 / 知识图谱"></div>
+        <div class="app-main">
+          <div class="page-head">
+            <div><div class="page-title">文档关系图谱</div><div class="page-sub">体系文件、SOP、表单与记录之间的引用与依赖关系</div></div>
+            <div class="toolbar"><button class="btn btn-secondary btn-sm" data-toast="已切换至分层视图"><i data-lucide="layers" style="width:12px;height:12px;"></i>分层视图</button><button class="btn btn-secondary btn-sm" data-toast="图谱已导出（JSON）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出图谱</button></div>
+          </div>
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="files"></i>文档节点</div><div class="v">128<small>个</small></div><div class="d">5 类文档</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="git-branch"></i>引用关系</div><div class="v">326<small>条</small></div><div class="d">含依赖关系</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="triangle-alert"></i>异常关系</div><div class="v">6<small>条</small></div><div class="d warn">待巡检处理</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="calendar-clock"></i>最近更新</div><div class="v" style="font-size:15px;">11-03</div><div class="d">SOP-SMP-007 V3.3</div></div>
+          </div>
+          <div class="grid g21">
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="network"></i>样本管理体系文件图谱</div><span class="tag">点击节点查看</span></div>
+              <div class="graph" style="height:360px;">
+                <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:1;">
+                  <line x1="50%" y1="50%" x2="20%" y2="18%" stroke="var(--border-2)" stroke-width="1" />
+                  <line x1="50%" y1="50%" x2="78%" y2="16%" stroke="var(--border-2)" stroke-width="1" />
+                  <line x1="50%" y1="50%" x2="15%" y2="55%" stroke="var(--border-2)" stroke-width="1" />
+                  <line x1="50%" y1="50%" x2="30%" y2="82%" stroke="var(--border-2)" stroke-width="1" />
+                  <line x1="50%" y1="50%" x2="70%" y2="82%" stroke="var(--border-2)" stroke-width="1" />
+                  <line x1="50%" y1="50%" x2="85%" y2="55%" stroke="var(--border-2)" stroke-width="1" />
+                  <line x1="50%" y1="50%" x2="50%" y2="20%" stroke="var(--border-2)" stroke-width="1" />
+                  <line x1="50%" y1="50%" x2="50%" y2="78%" stroke="var(--border-2)" stroke-width="1" />
+                  <line x1="30%" y1="82%" x2="70%" y2="82%" stroke="var(--warning)" stroke-width="1" stroke-dasharray="3 3" />
+                </svg>
+                <div class="gnode" style="left:50%;top:50%;" data-toast="已选择核心节点：SOP 体系总纲"><span class="b core"><i data-lucide="book-open"></i>SOP 体系总纲</span></div>
+                <div class="gnode" style="left:20%;top:18%;" data-toast="已选择节点：体系文件"><span class="b"><i data-lucide="folder"></i>体系文件</span></div>
+                <div class="gnode" style="left:78%;top:16%;" data-toast="已选择节点：质量手册"><span class="b"><i data-lucide="award"></i>质量手册</span></div>
+                <div class="gnode" style="left:15%;top:55%;" data-toast="已选择节点：样本管理 SOP"><span class="b"><i data-lucide="file-text"></i>样本管理 SOP</span></div>
+                <div class="gnode" style="left:30%;top:82%;" data-toast="已选择节点：采集 SOP"><span class="b"><i data-lucide="test-tube"></i>采集 SOP</span></div>
+                <div class="gnode" style="left:70%;top:82%;" data-toast="已选择节点：处理 SOP"><span class="b warn"><i data-lucide="triangle-alert"></i>处理 SOP · 待复核</span></div>
+                <div class="gnode" style="left:85%;top:55%;" data-toast="已选择节点：储存 SOP"><span class="b"><i data-lucide="archive"></i>储存 SOP</span></div>
+                <div class="gnode" style="left:50%;top:20%;" data-toast="已选择节点：表单模板"><span class="b"><i data-lucide="clipboard-list"></i>表单模板</span></div>
+                <div class="gnode" style="left:50%;top:78%;" data-toast="已选择节点：记录"><span class="b"><i data-lucide="database"></i>记录</span></div>
+              </div>
+              <div class="storage-legend"><span><i class="dot blue"></i>核心文档</span><span><i class="dot amber"></i>待复核文档</span><span style="margin-left:auto;">实线引用 · 虚线依赖</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="file-text"></i>节点详情</div><span class="tag amber">待复核</span></div>
+                <div class="info-rows">
+                  <div class="info-row"><span class="k">文档名称</span><span class="v strong">SOP-SMP-007 样本离心与分装</span></div>
+                  <div class="info-row"><span class="k">当前版本</span><span class="v mono">V3.3</span></div>
+                  <div class="info-row"><span class="k">生效日期</span><span class="v mono">2026-11-01</span></div>
+                  <div class="info-row"><span class="k">责任部门</span><span class="v">质量部</span></div>
+                  <div class="info-row"><span class="k">被引用</span><span class="v">12 次</span></div>
+                  <div class="info-row"><span class="k">引用他人</span><span class="v">5 次</span></div>
+                  <div class="info-row"><span class="k">关联表单</span><span class="v mono">FORM-P-006</span></div>
+                </div>
+                <button class="btn btn-primary btn-sm" style="width:100%;margin-top:9px;" data-modal="modal-kb-doc" data-doc-title="SOP-SMP-007 样本离心与分装" data-doc-type="SOP" data-doc-version="V3.3" data-doc-date="2026-11-01" data-doc-owner="质量部" data-doc-status="拟生效">查看文档</button>
+              </div>
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="git-branch"></i>上下游关系</div></div>
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                  <div class="file-chip"><i data-lucide="file-text"></i>SOP 体系总纲 V2.0</div>
+                  <div class="file-chip"><i data-lucide="file-text"></i>样本管理 SOP V4.1</div>
+                  <div class="file-chip"><i data-lucide="clipboard-list"></i>FORM-P-006 离心记录表</div>
+                  <div class="file-chip"><i data-lucide="file-text"></i>SOP-SMP-009 分装与标识</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== AI 缺陷巡检 ===== -->
+<div id="section-ai-inspect" class="proto-stack">
+  <div class="proto-with-prd">
+    <div class="macos-window">
+      <div class="macos-body">
+        <div class="app-sidebar" data-active="ai-inspect"></div>
+        <div class="win-chrome-bar" data-crumb="智能体 / 缺陷巡检"></div>
+        <div class="app-main">
+          <div class="page-head">
+            <div><div class="page-title">体系缺陷巡检</div><div class="page-sub">自动识别断链、孤立文档与循环引用，输出整改清单</div></div>
+            <div class="toolbar"><button class="btn btn-secondary btn-sm" data-toast="整改清单已导出"><i data-lucide="download" style="width:12px;height:12px;"></i>导出清单</button><button class="btn btn-primary btn-sm" data-toast="已重新巡检 128 份文档，发现 5 项问题"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>重新巡检</button></div>
+          </div>
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="unlink"></i>断链</div><div class="v">2<small>项</small></div><div class="d warn">引用目标不存在</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="file-x"></i>孤立文档</div><div class="v">2<small>项</small></div><div class="d warn">无任何引用关系</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="refresh-ccw"></i>循环引用</div><div class="v">1<small>项</small></div><div class="d warn">A→B→A</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="circle-check"></i>已整改</div><div class="v">8<small>项</small></div><div class="d up">本月闭环率 72%</div></div>
+          </div>
+          <div class="grid g21">
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="scan-search"></i>问题清单</div><div class="toolbar"><span class="tag red">高 2</span><span class="tag amber">中 2</span><span class="tag">低 1</span></div></div>
+              <div class="issue"><div class="ic red"><i data-lucide="unlink"></i></div><div class="body"><div class="t">断链：SOP-SMP-012 引用已废止的 FORM-P-003 <span class="tag red">高</span></div><div class="d">SOP-SMP-012《样本出库管理》第 4.2 条引用的表单已于 2026-09-01 废止，当前无有效替代表单。</div><div class="a">建议：替换为 FORM-P-006 V2.0，或修订 SOP 引用条款。</div></div></div>
+              <div class="issue"><div class="ic red"><i data-lucide="unlink"></i></div><div class="body"><div class="t">断链：质量手册引用了不存在的附件 7 <span class="tag red">高</span></div><div class="d">《样本库质量手册》V2.1 附录 A 引用“附件 7 样本稳定性验证报告”，知识库中未找到对应文件。</div><div class="a">建议：上传附件 7，或删除该引用并修订附录。</div></div></div>
+              <div class="issue"><div class="ic amber"><i data-lucide="file-x"></i></div><div class="body"><div class="t">孤立文档：SOP-SMP-015 无人引用 <span class="tag amber">中</span></div><div class="d">SOP-SMP-015《样本库应急演练》未被任何体系文件、表单或培训材料引用。</div><div class="a">建议：确认是否应纳入体系总纲，或标记为归档。</div></div></div>
+              <div class="issue"><div class="ic amber"><i data-lucide="refresh-ccw"></i></div><div class="body"><div class="t">循环引用：SOP-SMP-007 ↔ SOP-SMP-009 <span class="tag amber">中</span></div><div class="d">两份 SOP 在分装与标识要求上互相引用，未指向唯一主责文件，评审时可能产生歧义。</div><div class="a">建议：以 SOP-SMP-007 为主责，SOP-SMP-009 改为单向引用。</div></div></div>
+              <div class="issue" style="border-bottom:none;"><div class="ic blue"><i data-lucide="file-x"></i></div><div class="body"><div class="t">孤立文档：培训材料 TR-SMP-003 <span class="tag">低</span></div><div class="d">培训材料未关联到培训矩阵与岗位授权记录。</div><div class="a">建议：关联培训矩阵 T-03。</div></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="gauge"></i>体系健康度</div><span class="tag green">86 分</span></div>
+                <div class="donut-wrap"><div class="donut" style="width:82px;height:82px;background:conic-gradient(var(--success) 0 86%, var(--muted) 86% 100%);"><div class="donut-c"><b>86</b><span>健康度</span></div></div>
+                  <div class="legend" style="flex:1;"><span>完整性<b style="color:var(--success)">92%</b></span><span>一致性<b style="color:var(--warning)">78%</b></span><span>可追溯性<b style="color:var(--success)">88%</b></span></div>
+                </div>
+              </div>
+              <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="list-checks"></i>整改任务</div><span class="tag amber">3 项待处理</span></div>
+                <div class="timeline">
+                  <div class="tl-item"><span class="tl-dot warn"></span><div class="tl-time">截止 10-30</div><div class="tl-title">替换 SOP-SMP-012 引用表单</div><div class="tl-desc">责任人：质量部 刘芳</div></div>
+                  <div class="tl-item"><span class="tl-dot"></span><div class="tl-time">截止 11-02</div><div class="tl-title">补充质量手册附件 7</div><div class="tl-desc">责任人：QA 周敏</div></div>
+                  <div class="tl-item"><span class="tl-dot done"></span><div class="tl-time">已完成 10-27</div><div class="tl-title">归档废弃表单 FORM-P-003</div><div class="tl-desc">责任人：文档管理员 刘芳</div></div>
+                </div>
+                <button class="btn btn-primary btn-sm" style="width:100%;margin-top:9px;" data-toast="已生成 5 项整改任务并通知责任人"><i data-lucide="list-plus" style="width:12px;height:12px;"></i>一键生成整改任务</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===== AI 版本推演 ===== -->
 <div id="section-ai-version" class="proto-stack">
   <div class="proto-with-prd">
@@ -3982,7 +4105,7 @@ body { font-size: 14px; }
     <div class="macos-window">
       <div class="macos-body">
         <div class="app-sidebar" data-active="ai-sop"></div>
-        <div class="win-chrome-bar" data-crumb="文档智能体 / SOP 智能解析"></div>
+        <div class="win-chrome-bar" data-crumb="智能体 / SOP 智能解析"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
@@ -5157,10 +5280,11 @@ var SECTION_MIN_LEVEL = {
   'section-transport': 1, 'section-shipment': 1, 'section-transport-stats': 2,
   'section-process': 1, 'section-process-stats': 2,
   'section-store': 1, 'section-trace': 1, 'section-patho': 1,
-  'section-audit': 2, 'section-ai-search': 1, 'section-ai-compliance': 1, 'section-ai-version': 2, 'section-ai-voice': 1,
+  'section-audit': 2, 'section-ai-search': 1, 'section-ai-compliance': 1,
+  'section-ai-graph': 2, 'section-ai-inspect': 2, 'section-ai-version': 2, 'section-ai-sop': 2, 'section-ai-voice': 1,
   'section-mobile': 1, 'section-settings': 4,
-  'section-project-detail': 1, 'section-ai-kb': 1,
-  'section-home': 1, 'section-ai-version': 1, 'section-ai-sop': 1
+  'section-project-detail': 1, 'section-ai-kb': 2,
+  'section-home': 1
 };
 var NAV = [
   { group: '业务管理', items: [
@@ -5182,8 +5306,10 @@ var NAV = [
       { id: 'process', label: '处理工单', icon: 'clipboard-list' },
       { id: 'process-stats', label: '处理统计', icon: 'bar-chart-3', min: 2 }
     ]},
-    { id: 'store', label: '样本储存', icon: 'archive' },
-    { id: 'trace', label: '样本追溯', icon: 'git-commit-horizontal' },
+    { id: 'store', label: '样本储存管理', icon: 'archive', children: [
+      { id: 'store', label: '储存与库位', icon: 'archive' },
+      { id: 'trace', label: '样本追溯', icon: 'git-commit-horizontal' }
+    ]},
     { id: 'patho', label: '病理切片', icon: 'microscope' }
   ]},
   { group: '质量与合规', items: [
@@ -5193,7 +5319,10 @@ var NAV = [
     { id: 'ai', label: '智能体', icon: 'sparkles', badge: 'AI', children: [
       { id: 'ai-search', label: '项目样本检索', icon: 'search' },
       { id: 'ai-compliance', label: 'SOP 合规校验', icon: 'shield-check' },
+      { id: 'ai-graph', label: '知识图谱', icon: 'network', min: 2 },
+      { id: 'ai-inspect', label: '缺陷巡检', icon: 'scan-search', min: 2 },
       { id: 'ai-version', label: '版本变更推演', icon: 'git-compare', min: 2 },
+      { id: 'ai-sop', label: 'SOP 智能解析', icon: 'file-search', min: 2 },
       { id: 'ai-voice', label: '语音检索', icon: 'mic' }
     ]}
   ]},
@@ -5209,7 +5338,7 @@ var SECTION_MAP = {
   process: 'section-process', 'process-stats': 'section-process-stats',
   store: 'section-store', trace: 'section-trace', patho: 'section-patho', audit: 'section-audit',
   ai: 'section-ai-search', 'ai-search': 'section-ai-search', 'ai-compliance': 'section-ai-compliance',
-  'ai-version': 'section-ai-version', 'ai-voice': 'section-ai-voice', mobile: 'section-mobile', settings: 'section-settings'
+  'ai-graph': 'section-ai-graph', 'ai-inspect': 'section-ai-inspect', 'ai-version': 'section-ai-version', 'ai-sop': 'section-ai-sop', 'ai-voice': 'section-ai-voice', mobile: 'section-mobile', settings: 'section-settings'
 };
 function buildSidebar(active) {
   var html = '<div style="padding:8px 14px 14px;display:flex;align-items:center;gap:9px;">' +
@@ -5423,8 +5552,7 @@ function showSection(id) {
     'section-project-detail': 'section-project',
     'section-project-change': 'section-project-change',
     'section-home': 'section-project',
-    'section-ai-kb': 'section-ai-search',
-    'section-ai-sop': 'section-ai-search'
+    'section-ai-kb': 'section-ai-search'
   };
   var navTarget = ACTIVE_FOR[id] || id;
   var sb = el.querySelector('.app-sidebar');
