@@ -2411,7 +2411,7 @@ body { font-size: 14px; }
               </table>
 
               <div class="split-line"></div>
-              <div class="panel-h"><div class="panel-t"><i data-lucide="thermometer"></i>TR-1028-003 全程温度</div><div class="panel-s">2–8℃ 冷链 · 采样间隔 5 min</div></div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="thermometer"></i>TR-1028-003 全程温度</div><div class="toolbar"><span class="panel-s">2–8℃ 冷链 · 采样间隔 5 min</span><span class="tag amber">模拟数据</span></div></div>
               <div class="bar-chart" style="height:82px;">
                 <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:32%"></div></div><div class="bar-label">08:40</div></div>
                 <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:38%"></div></div><div class="bar-label">08:45</div></div>
@@ -2667,7 +2667,7 @@ body { font-size: 14px; }
               </table>
 
               <div class="split-line"></div>
-              <div class="panel-h"><div class="panel-t"><i data-lucide="activity"></i>离心转速曲线 · DEV-CEN-03</div><div class="panel-s">3000 rpm / 10 min / 4℃</div></div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="activity"></i>离心转速曲线 · DEV-CEN-03</div><div class="toolbar"><span class="panel-s">3000 rpm / 10 min / 4℃</span><span class="tag amber">模拟数据 · 接口预留</span></div></div>
               <div class="bar-chart" style="height:88px;">
                 <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:18%"></div></div><div class="bar-label">0'</div></div>
                 <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:72%"></div></div><div class="bar-label">1'</div></div>
@@ -2678,7 +2678,7 @@ body { font-size: 14px; }
                 <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:62%"></div></div><div class="bar-label">9'</div></div>
                 <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:12%"></div></div><div class="bar-label">10'</div></div>
               </div>
-              <div class="sect-note"><i data-lucide="radio"></i>设备数据由 IoT 网关自动采集，时间戳与设备编号同步写入审计追踪。</div>
+              <div class="sect-note"><i data-lucide="radio"></i>设备数据接口已预留；当前 Demo 为模拟数据，正式接入后由 IoT 网关自动采集，时间戳与设备编号同步写入审计追踪。</div>
             </div>
 
             <div class="panel">
@@ -2958,7 +2958,7 @@ body { font-size: 14px; }
 
           <div class="grid g2">
             <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="thermometer-snowflake"></i>-80℃ 温度曲线</div><div class="panel-s">DEV-FRZ-02 · 近 12 小时</div></div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="thermometer-snowflake"></i>-80℃ 温度曲线</div><div class="toolbar"><span class="panel-s">DEV-FRZ-02 · 近 12 小时</span><span class="tag amber">模拟数据 · 接口预留</span></div></div>
               <div class="bar-chart" style="height:78px;">
                 <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:64%"></div></div><div class="bar-label">22:00</div></div>
                 <div class="bar-col"><div class="bar-stack"><div class="bar alt" style="height:66%"></div></div><div class="bar-label">00:00</div></div>
@@ -2971,7 +2971,7 @@ body { font-size: 14px; }
               <div class="sect-note"><i data-lucide="check-circle-2"></i>温度稳定在 -80.2℃ ~ -79.6℃，未触发告警阈值。</div>
             </div>
             <div class="panel">
-              <div class="panel-h"><div class="panel-t"><i data-lucide="door-open"></i>冰箱开门记录</div><div class="panel-s">近 24 小时 23 次</div></div>
+              <div class="panel-h"><div class="panel-t"><i data-lucide="door-open"></i>冰箱开门记录</div><div class="toolbar"><span class="panel-s">近 24 小时 23 次</span><span class="tag amber">模拟数据 · 接口预留</span></div></div>
               <table class="tbl compact">
                 <thead><tr><th>时间</th><th>操作人</th><th>时长</th><th>事由</th><th>状态</th></tr></thead>
                 <tbody>
@@ -4224,10 +4224,10 @@ body { font-size: 14px; }
           <div class="page-head">
             <div>
               <div class="page-title">系统设置</div>
-              <div class="page-sub">用户角色、权限矩阵、样本编码、电子签名与系统验证</div>
+              <div class="page-sub">用户角色、权限矩阵、样本编码、电子签名、系统验证与认证资质</div>
             </div>
             <div class="toolbar">
-              <span class="tag green"><i class="dot green"></i>系统验证有效</span>
+              <span class="tag green"><i class="dot green"></i>验证与资质有效</span>
               <button class="btn btn-secondary btn-sm" data-toast="已导出权限配置与变更记录"><i data-lucide="download" style="width:12px;height:12px;"></i>导出配置</button>
             </div>
           </div>
@@ -4239,6 +4239,7 @@ body { font-size: 14px; }
               <div class="tab" data-tab="code">样本编码规则</div>
               <div class="tab" data-tab="sign">电子签名</div>
               <div class="tab" data-tab="csv">系统验证</div>
+              <div class="tab" data-tab="cert">认证与资质</div>
             </div>
 
             <div class="tab-pane active" data-pane="user">
@@ -4366,6 +4367,27 @@ body { font-size: 14px; }
                 </tbody>
               </table>
               <div class="sect-note"><i data-lucide="info"></i>对应 GCP 2026 第五十三条与 E6(R3) 4.3.4：系统应通过可靠验证，并保持验证状态。</div>
+            </div>
+
+            <div class="tab-pane" data-pane="cert">
+              <div class="grid g4" style="margin-bottom:10px;">
+                <div class="panel flat"><div class="panel-t"><i data-lucide="award"></i>有效证书</div><div class="kpi-value" style="font-size:16px;">4 项</div><div class="tiny muted">著作权/产品登记/等保</div></div>
+                <div class="panel flat"><div class="panel-t"><i data-lucide="circle-check"></i>3Q 验证</div><div class="kpi-value" style="font-size:16px;color:var(--success);">通过</div><div class="tiny muted">IQ / OQ / PQ</div></div>
+                <div class="panel flat"><div class="panel-t"><i data-lucide="shield-check"></i>等保</div><div class="kpi-value" style="font-size:16px;">三级</div><div class="tiny muted">测评有效</div></div>
+                <div class="panel flat"><div class="panel-t"><i data-lucide="triangle-alert"></i>过期/缺失</div><div class="kpi-value" style="font-size:16px;color:var(--success);">0 项</div><div class="tiny muted">全部有效</div></div>
+              </div>
+              <table class="tbl compact">
+                <thead><tr><th>证书 / 报告</th><th>编号</th><th>颁发机构</th><th>日期 / 有效期</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr><td class="strong">软件著作权证书</td><td class="mono">2026SR0123456</td><td>国家版权局</td><td class="mono">2026-08-15</td><td><span class="tag green">有效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-cert">查看</button></td></tr>
+                  <tr><td class="strong">软件产品登记证书</td><td class="mono">苏软登字第2026-018号</td><td>江苏省工信厅</td><td class="mono">2027-08-14</td><td><span class="tag green">有效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-cert">查看</button></td></tr>
+                  <tr><td class="strong">第三方软件评测报告</td><td class="mono">TEST-2026-089</td><td>省级软件评测中心</td><td class="mono">2026-07-20</td><td><span class="tag green">符合</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-cert">查看</button></td></tr>
+                  <tr><td class="strong">FDA 符合性 / 电子记录可追溯</td><td class="mono">FDA-CFR-11</td><td>第三方评估机构</td><td class="mono">2026-09-01</td><td><span class="tag green">符合</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-cert">查看</button></td></tr>
+                  <tr><td class="strong">等保三级测评报告</td><td class="mono">DJCP-2026-031</td><td>测评机构</td><td class="mono">2027-06-30</td><td><span class="tag green">有效</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-cert">查看</button></td></tr>
+                  <tr><td class="strong">IQ/OQ/PQ 验证报告</td><td class="mono">CSV-2026-001</td><td>质量部</td><td class="mono">2026-07-28</td><td><span class="tag green">已完成</span></td><td><button class="btn btn-ghost btn-sm table-link" data-modal="modal-cert">查看</button></td></tr>
+                </tbody>
+              </table>
+              <div class="sect-note"><i data-lucide="info"></i>正式证书扫描件、评测报告与授权书在投标文件中提供；Demo 展示证书/报告状态与编号。</div>
             </div>
           </div>
         </div>
@@ -4729,6 +4751,25 @@ body { font-size: 14px; }
     <div class="form-actions">
       <button class="btn btn-ghost btn-sm" data-close>取消</button>
       <button class="btn btn-primary btn-sm" id="revisionConfirmBtn" disabled>确认采纳</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-cert">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">证书 / 报告预览</div>
+    <div style="border:1px solid var(--border);border-radius:12px;padding:26px 24px;text-align:center;background:linear-gradient(180deg,color-mix(in oklch,var(--primary) 6%,var(--background)),var(--background));">
+      <span class="tag blue">演示样例</span>
+      <div style="font-size:20px;font-weight:700;margin-top:10px;">软件著作权证书</div>
+      <div class="tiny muted" style="margin-top:4px;">登记号：2026SR0123456</div>
+      <div style="font-size:13px;margin-top:10px;">国家版权局</div>
+      <div class="tiny muted" style="margin-top:2px;">登记日期：2026-08-15</div>
+      <div style="margin-top:16px;font-size:12px;color:var(--text-2);">本页为证书/报告状态预览，正式扫描件与评测报告在投标文件中提供。</div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-toast="证书扫描件将在投标文件中提供"><i data-lucide="download" style="width:12px;height:12px;"></i>下载证书</button>
+      <button class="btn btn-primary btn-sm" data-close>关闭</button>
     </div>
   </div>
 </div>
