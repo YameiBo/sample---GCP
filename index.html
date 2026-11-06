@@ -1819,7 +1819,7 @@ body { font-size: 14px; }
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-toast="已导出项目清单（Excel）"><i data-lucide="download" style="width:12px;height:12px;"></i>导出</button>
               <button class="btn btn-secondary btn-sm role-min-2" data-modal="modal-mp-auth"><i data-lucide="user-cog" style="width:12px;height:12px;"></i>项目授权</button>
-              <button class="btn btn-secondary btn-sm" data-toast="已从 CTMS 同步 5 个项目，更新 12 个字段"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>从 CTMS 同步</button>
+              <button class="btn btn-secondary btn-sm role-min-2" data-modal="modal-ctms-sync"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>从 CTMS 同步</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-new-project"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建项目</button>
             </div>
           </div>
@@ -2025,7 +2025,7 @@ body { font-size: 14px; }
                 <span class="tag green"><i class="dot green"></i>CTMS 已连接</span>
                 <span class="tiny muted">最近同步 2026-11-03 08:30 · 成功 5 / 5</span>
                 <span class="grow"></span>
-                <button class="btn btn-secondary btn-sm" data-toast="已重新同步 CD2026-001，更新 8 个字段"><i data-lucide="refresh-cw" style="width:11px;height:11px;"></i>立即同步</button>
+                <button class="btn btn-secondary btn-sm role-min-2" data-modal="modal-ctms-sync"><i data-lucide="refresh-cw" style="width:11px;height:11px;"></i>立即同步</button>
               </div>
               <div class="panel-s" style="margin-bottom:5px;">字段映射</div>
               <table class="tbl compact">
@@ -3631,6 +3631,7 @@ body { font-size: 14px; }
             </div>
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-toast="已打开新建文档分类"><i data-lucide="folder-plus" style="width:12px;height:12px;"></i>新建分类</button>
+              <button class="btn btn-secondary btn-sm" data-modal="modal-kb-qa"><i data-lucide="message-square-text" style="width:12px;height:12px;"></i>文档问答</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-upload-sop"><i data-lucide="upload" style="width:12px;height:12px;"></i>上传文档</button>
             </div>
           </div>
@@ -4770,6 +4771,61 @@ body { font-size: 14px; }
     <div class="form-actions">
       <button class="btn btn-secondary btn-sm" data-toast="证书扫描件将在投标文件中提供"><i data-lucide="download" style="width:12px;height:12px;"></i>下载证书</button>
       <button class="btn btn-primary btn-sm" data-close>关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-kb-qa">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">知识库智能问答</div>
+    <div class="ai-chat-messages" id="kbQaMessages" style="max-height:260px;">
+      <div class="chat-a">你好，我是知识库问答助手。可以问 SOP 离心参数、转运温度、剩余样本销毁、病理借片流程等问题，回答会标注来源。</div>
+    </div>
+    <div class="ai-chat-suggestions" style="margin-top:8px;">
+      <button class="tag" data-kbq="SOP-SMP-007 离心参数是什么？">离心参数</button>
+      <button class="tag" data-kbq="样本转运温度要求是什么？">转运温度</button>
+      <button class="tag" data-kbq="剩余样本销毁需要谁审批？">销毁审批</button>
+      <button class="tag" data-kbq="病理借片流程是什么？">病理借片</button>
+    </div>
+    <div class="ai-chat-input" style="margin-top:8px;">
+      <input id="kbQaInput" placeholder="输入问题，回车发送" />
+      <button class="btn btn-primary btn-sm" id="kbQaSend"><i data-lucide="send" style="width:11px;height:11px;"></i>发送</button>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-close>关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-ctms-sync">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">CTMS 同步</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:10px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">连接状态</span><span class="v" style="color:var(--success);">已连接</span></div>
+        <div class="info-row"><span class="k">同步项目</span><span class="v">5 个</span></div>
+        <div class="info-row"><span class="k">最近同步</span><span class="v mono">2026-11-03 08:30</span></div>
+      </div>
+    </div>
+    <div class="tiny muted" style="margin-bottom:6px;">同步范围</div>
+    <div class="panel flat" style="padding:4px 10px;">
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 项目基础信息（项目号、方案号、名称、总例数）</label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> PI / CRA / CRC 与联系方式</label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 入组时间与入组状态</label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;"><input type="checkbox" checked /> 方案访视点</label>
+    </div>
+    <div style="margin-top:10px;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-3);margin-bottom:3px;"><span id="ctmsStatus">等待同步</span><span id="ctmsPct">0%</span></div>
+      <div class="progress"><i id="ctmsProgressBar" style="width:0%"></i></div>
+    </div>
+    <div id="ctmsResult" class="panel flat" style="display:none;margin-top:10px;padding:9px;font-size:12px;color:var(--text-2);">
+      同步完成：5 个项目，12 个字段已更新；同步日志已写入日志管理。
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" id="ctmsStartBtn">开始同步</button>
     </div>
   </div>
 </div>
@@ -5958,6 +6014,77 @@ if (rejectBtn) rejectBtn.addEventListener('click', function(){
       if (window.lucide) lucide.createIcons();
     });
   }
+})();
+
+/* ===== 知识库问答 ===== */
+(function(){
+  var input = document.getElementById('kbQaInput');
+  var send = document.getElementById('kbQaSend');
+  var messages = document.getElementById('kbQaMessages');
+  if (!input || !send || !messages) return;
+  function scrollBottom(){ messages.scrollTop = messages.scrollHeight; }
+  function add(text, who){
+    var el = document.createElement('div');
+    el.className = who === 'user' ? 'chat-q' : 'chat-a';
+    el.textContent = text;
+    messages.appendChild(el);
+    scrollBottom();
+  }
+  function answer(q){
+    if (/离心|SOP-SMP-007/.test(q)) return 'SOP-SMP-007 V3.3：3000 rpm / 15 min / 4℃；分装 3 支，每支 1.5 mL。V3.2 仍为 10 min / 1.0 mL，V3.3 拟于 2026-11-01 生效。来源：[1] SOP-SMP-007 V3.3 §5.3/5.4。';
+    if (/转运|温度/.test(q)) return 'SOP-SMP-003 V2.1：样本转运采用 2–8℃ 冷链，转运温度最低/最高值和温度计编号为必填项；发出方与接收方均需签名。来源：[1] SOP-SMP-003 §6.2。';
+    if (/销毁|留存|剩余/.test(q)) return '知情同意 v2.1 §8.3 允许剩余样本在去标识化后用于科研，保存至 2031-12-31；销毁需样本管理员、PI、QA 三方签署。来源：[1] 知情同意 v2.1 §8.3；[2] SOP-SMP-012。';
+    if (/病理|借片/.test(q)) return 'FB-004 病理借片流程：记录借片来源、切片号、借片日期、数量、取片人、CRC 接收与预计归还日期；退回时记录退回数量并由 CRC 与病理科双方签名。来源：[1] JSCH-JG-SY-FB-004。';
+    return '我可以回答知识库中的 SOP 离心/分装、样本转运温度、剩余样本销毁、病理借片等问题；请在问题中包含 SOP 编号或关键词。';
+  }
+  function ask(q){
+    q = (q || '').trim(); if (!q) return;
+    add(q, 'user'); input.value = '';
+    var typing = document.createElement('div');
+    typing.className = 'chat-a typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    messages.appendChild(typing); scrollBottom();
+    setTimeout(function(){ typing.remove(); add(answer(q), 'ai'); }, 650);
+  }
+  send.addEventListener('click', function(){ ask(input.value); });
+  input.addEventListener('keydown', function(e){ if (e.key === 'Enter') ask(input.value); });
+  document.querySelectorAll('[data-kbq]').forEach(function(b){ b.addEventListener('click', function(){ ask(b.getAttribute('data-kbq')); }); });
+})();
+
+/* ===== CTMS 同步模拟 ===== */
+(function(){
+  var start = document.getElementById('ctmsStartBtn');
+  var bar = document.getElementById('ctmsProgressBar');
+  var pctEl = document.getElementById('ctmsPct');
+  var status = document.getElementById('ctmsStatus');
+  var result = document.getElementById('ctmsResult');
+  if (!start || !bar) return;
+  function reset(){
+    bar.style.width = '0%';
+    if (pctEl) pctEl.textContent = '0%';
+    if (status) status.textContent = '等待同步';
+    if (result) result.style.display = 'none';
+    start.disabled = false; start.textContent = '开始同步';
+  }
+  document.addEventListener('click', function(e){ if (e.target.closest('[data-modal="modal-ctms-sync"]')) reset(); });
+  start.addEventListener('click', function(){
+    if (start.disabled) return;
+    start.disabled = true; start.textContent = '同步中…';
+    var pct = 0;
+    var timer = setInterval(function(){
+      pct += 10;
+      bar.style.width = pct + '%';
+      if (pctEl) pctEl.textContent = pct + '%';
+      if (status) status.textContent = '正在同步项目基础信息、PI/CRA/CRC、入组状态与访视点…';
+      if (pct >= 100) {
+        clearInterval(timer);
+        if (status) status.textContent = '同步完成';
+        if (result) result.style.display = 'block';
+        start.textContent = '同步完成';
+        toast('CTMS 同步完成：5 个项目，12 个字段已更新');
+      }
+    }, 120);
+  });
 })();
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
