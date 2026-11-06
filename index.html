@@ -1174,6 +1174,7 @@ body.app-mode { padding: 0; }
 .role-switcher:hover { border-color: var(--primary); color: var(--primary); }
 .filter-select { border: none; outline: none; background: transparent; font-family: var(--font-sans); font-size:12px; color: inherit; cursor: pointer; padding: 0; }
 .table-link { color: var(--primary) !important; font-weight: 600; }
+.revision-action.is-done, .revision-action:disabled { color: var(--success) !important; opacity: 1; cursor: default; }
 .select-mini { display: inline-flex; align-items: center; gap: 5px; font-size:12px; color: var(--text-2); border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-btn); padding: 5px 9px; }
 .select-mini i { width: 12px; height: 12px; }
 
@@ -1977,12 +1978,24 @@ body { font-size: 14px; }
                 <table class="tbl compact">
                   <thead><tr><th>受影响对象</th><th>变更类型</th><th>影响说明</th><th>责任角色</th><th>建议动作</th></tr></thead>
                   <tbody>
-                    <tr><td>SOP-SMP-004 样本采集</td><td><span class="tag amber">修订</span></td><td>V4 采血点与时间窗调整</td><td>样本管理员</td><td><span class="tag blue">生成修订任务</span></td></tr>
-                    <tr><td>SOP-SMP-007 离心分装</td><td><span class="tag amber">修订</span></td><td>离心时长 10 → 15 min</td><td>实验室技术员</td><td><span class="tag blue">生成修订任务</span></td></tr>
+                    <tr><td>SOP-SMP-004 样本采集</td><td><span class="tag amber">修订</span></td><td>V4 采血点与时间窗调整</td><td>样本管理员</td><td><button class="btn btn-ghost btn-sm table-link revision-action" data-modal="modal-revision-plan">生成修订任务</button></td></tr>
+                    <tr><td>SOP-SMP-007 离心分装</td><td><span class="tag amber">修订</span></td><td>离心时长 10 → 15 min</td><td>实验室技术员</td><td><button class="btn btn-ghost btn-sm table-link revision-action" data-modal="modal-revision-plan">生成修订任务</button></td></tr>
                     <tr><td>FORM-C-012 采集记录</td><td><span class="tag red">重制</span></td><td>新增尿液样本字段</td><td>CRC</td><td><span class="tag blue">同步表单</span></td></tr>
                     <tr><td>培训矩阵 T-03</td><td><span class="tag">复核</span></td><td>新增离心参数培训</td><td>QA</td><td><span class="tag blue">发起复核</span></td></tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div id="revisionPlanResult" class="panel" style="margin-top:10px;display:none;">
+                <div class="panel-h"><div class="panel-t"><i data-lucide="list-checks"></i>修订计划清单</div><span class="tag green">已采纳</span></div>
+                <div class="grid g4" style="gap:8px;margin-bottom:8px;">
+                  <div class="panel flat" style="padding:9px;"><div class="panel-s">计划编号</div><div class="strong">RP-2026-001</div></div>
+                  <div class="panel flat" style="padding:9px;"><div class="panel-s">计划任务</div><div class="strong">6 项</div></div>
+                  <div class="panel flat" style="padding:9px;"><div class="panel-s">责任人</div><div class="strong">质量部 / QA / IT</div></div>
+                  <div class="panel flat" style="padding:9px;"><div class="panel-s">预计生效</div><div class="strong">2026-11-01</div></div>
+                </div>
+                <div class="toolbar" style="margin-bottom:6px;"><span class="tag amber">SOP-SMP-004 修订</span><span class="tag amber">SOP-SMP-007 修订</span><span class="tag">FORM-C-012 重制</span><span class="tag">FORM-P-006 同步</span><span class="tag">培训 T-03 更新</span><span class="tag green">QA 复核</span></div>
+                <div class="tiny muted">计划已采纳并生成任务，责任人已收到通知；方案 V3.0 待 QA 复核后生效。</div>
               </div>
             </div>
 
@@ -4568,6 +4581,35 @@ body { font-size: 14px; }
   </div>
 </div>
 
+<div class="demo-modal" id="modal-revision-plan">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">生成修订计划清单</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:10px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">项目</span><span class="v">CD2026-001</span></div>
+        <div class="info-row"><span class="k">方案变更</span><span class="v">V2.0 → V3.0</span></div>
+        <div class="info-row"><span class="k">计划编号</span><span class="v mono">RP-2026-001</span></div>
+      </div>
+    </div>
+    <div class="tiny muted" style="margin-bottom:6px;">根据变更影响分析，建议生成以下修订/表单/培训/复核任务；请人工检查后确认采纳。</div>
+    <div class="panel flat" style="padding:4px 10px;">
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 修订 SOP-SMP-004 样本采集 <span class="tag amber" style="margin-left:auto;">修订</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 修订 SOP-SMP-007 离心分装 <span class="tag amber" style="margin-left:auto;">修订</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 重制 FORM-C-012 采集记录 <span class="tag red" style="margin-left:auto;">重制</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 同步 FORM-P-006 离心记录表 <span class="tag" style="margin-left:auto;">表单</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 更新培训矩阵 T-03 <span class="tag" style="margin-left:auto;">培训</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;"><input type="checkbox" checked /> QA 复核并批准 V3.0 生效 <span class="tag green" style="margin-left:auto;">复核</span></label>
+    </div>
+    <div class="split-line"></div>
+    <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-2);"><input type="checkbox" id="revisionConfirmCheck" /> 我已人工核对影响范围、责任人与时间安排，确认采纳该修订计划</label>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" id="revisionConfirmBtn" disabled>确认采纳</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 记录表弹窗 ===== -->
 <div class="demo-modal" id="modal-form-fb005">
   <div class="form-dialog xwide">
@@ -5726,6 +5768,28 @@ if (rejectBtn) rejectBtn.addEventListener('click', function(){
   toast('修改申请已驳回，已通知申请人');
   closeModal();
 });
+
+/* ===== 修订计划采纳 ===== */
+(function(){
+  var check = document.getElementById('revisionConfirmCheck');
+  var btn = document.getElementById('revisionConfirmBtn');
+  if (check && btn) {
+    check.addEventListener('change', function(){ btn.disabled = !check.checked; });
+    btn.addEventListener('click', function(){
+      if (!check.checked) { toast('请先勾选人工确认'); return; }
+      var result = document.getElementById('revisionPlanResult');
+      if (result) result.style.display = 'block';
+      document.querySelectorAll('.revision-action').forEach(function(b){
+        b.textContent = '已生成计划';
+        b.disabled = true;
+        b.classList.add('is-done');
+      });
+      closeModal();
+      toast('修订计划已采纳，已更新方案任务并通知责任人');
+      if (window.lucide) lucide.createIcons();
+    });
+  }
+})();
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
