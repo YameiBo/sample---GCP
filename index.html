@@ -1168,6 +1168,14 @@ body.app-mode { padding: 0; }
 .table-scroll.wide15 .tbl { min-width: 1220px; }
 .version-select { border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-full); padding: 6px 10px; font-size:12px; color: var(--foreground); font-family: var(--font-sans); cursor: pointer; }
 .version-select:hover { border-color: var(--primary); }
+.auth-btn { position: relative; }
+.auth-dot { position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9999px; background: var(--destructive); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--background); }
+.auth-emp { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--background); }
+.auth-emp .who { font-size: 12px; font-weight: 600; }
+.auth-emp .meta { font-size: 11px; color: var(--text-3); }
+.auth-assigned { display: flex; flex-wrap: wrap; gap: 4px; min-height: 28px; }
+.auth-chip { display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--border); background: var(--muted); border-radius: var(--radius-full); padding: 2px 8px; font-size: 12px; }
+.auth-chip button { border: none; background: transparent; color: var(--text-3); cursor: pointer; font-size: 13px; padding: 0; line-height: 1; }
 .role-switch { display: flex; align-items: center; gap: 4px; }
 .role-switch i { width: 12px; height: 12px; color: var(--text-3); }
 .role-switcher { border: 1px solid var(--border); background: var(--background); border-radius: var(--radius-full); padding: 4px 8px; font-size:12px; font-family: var(--font-sans); color: var(--text-2); cursor: pointer; }
@@ -1818,7 +1826,7 @@ body { font-size: 14px; }
             </div>
             <div class="toolbar">
               <button class="btn btn-secondary btn-sm" data-export data-export-name="项目清单.csv"><i data-lucide="download" style="width:12px;height:12px;"></i>导出</button>
-              <button class="btn btn-secondary btn-sm role-min-2" data-modal="modal-mp-auth"><i data-lucide="user-cog" style="width:12px;height:12px;"></i>项目授权</button>
+              <button class="btn btn-secondary btn-sm role-min-2 auth-btn" id="projectAuthBtn" data-modal="modal-auth-flow"><i data-lucide="user-cog" style="width:12px;height:12px;"></i>项目授权<span class="auth-dot" id="projectAuthBadge">1</span></button>
               <button class="btn btn-secondary btn-sm role-min-2" data-modal="modal-ctms-sync"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>从 CTMS 同步</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-new-project"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建项目</button>
             </div>
@@ -4830,6 +4838,89 @@ body { font-size: 14px; }
   </div>
 </div>
 
+<div class="demo-modal" id="modal-auth-flow">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">项目授权 · 待授权项目</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:10px;">
+      <div class="toolbar">
+        <span class="tag amber">CTMS 已推送</span>
+        <span class="tag">CD2026-003</span>
+        <span class="grow"></span>
+        <button class="btn btn-secondary btn-sm" id="authSyncBtn"><i data-lucide="refresh-cw" style="width:11px;height:11px;"></i>同步 CTMS 数据</button>
+      </div>
+      <div id="authCtmsEmpty" class="tiny muted" style="margin-top:6px;">尚未同步 CTMS 数据，请先点击「同步 CTMS 数据」。</div>
+      <div id="authCtmsData" style="display:none;margin-top:8px;">
+        <div class="grid g3" style="gap:8px;">
+          <div class="info-row"><span class="k">项目号</span><span class="v mono">CD2026-003</span></div>
+          <div class="info-row"><span class="k">方案号</span><span class="v mono">CD2026-003-V1.0</span></div>
+          <div class="info-row"><span class="k">项目名称</span><span class="v">某双特异性抗体 II 期临床研究</span></div>
+          <div class="info-row"><span class="k">申办者 / 中心</span><span class="v">华康生物 / 中心 01</span></div>
+          <div class="info-row"><span class="k">入组受试者</span><span class="v">S001（已入组 1 例 / 计划 40 例）</span></div>
+          <div class="info-row"><span class="k">CTMS 入组状态</span><span class="v">已入组</span></div>
+          <div class="info-row"><span class="k">PI / CRA / CRC</span><span class="v">陈建国 / 赵磊 / 李敏</span></div>
+          <div class="info-row"><span class="k">访视点</span><span class="v">C1D1、C2D1、C3D1</span></div>
+          <div class="info-row"><span class="k">同步时间</span><span class="v mono">2026-11-06 10:30</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid g2" style="gap:12px;">
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t"><i data-lucide="search"></i>员工搜索与分配</div></div>
+        <div class="form-row-2">
+          <div class="form-group"><label class="form-label">搜索员工</label><input class="form-input" id="authEmployeeSearch" placeholder="姓名 / 工号 / 角色" /></div>
+          <div class="form-group"><label class="form-label">分配角色</label><select class="form-input" id="authRoleSelect"><option>CRC</option><option>PI</option><option>CRA</option><option>样本处理员</option></select></div>
+        </div>
+        <div id="authEmployeeList" style="max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;">
+          <div class="auth-emp" data-name="李敏" data-org="肿瘤科"><div><div class="who">李敏</div><div class="meta">CRC · 肿瘤科 · S-0137</div></div><button class="btn btn-ghost btn-sm table-link" data-assign>分配</button></div>
+          <div class="auth-emp" data-name="周洁" data-org="肿瘤科"><div><div class="who">周洁</div><div class="meta">CRC · 肿瘤科 · S-0142</div></div><button class="btn btn-ghost btn-sm table-link" data-assign>分配</button></div>
+          <div class="auth-emp" data-name="陈建国" data-org="肿瘤科"><div><div class="who">陈建国</div><div class="meta">PI · 肿瘤科 · S-0012</div></div><button class="btn btn-ghost btn-sm table-link" data-assign>分配</button></div>
+          <div class="auth-emp" data-name="王强" data-org="呼吸科"><div><div class="who">王强</div><div class="meta">PI · 呼吸科 · S-0021</div></div><button class="btn btn-ghost btn-sm table-link" data-assign>分配</button></div>
+          <div class="auth-emp" data-name="赵磊" data-org="华康生物"><div><div class="who">赵磊</div><div class="meta">CRA · 华康生物 · C-0088</div></div><button class="btn btn-ghost btn-sm table-link" data-assign>分配</button></div>
+          <div class="auth-emp" data-name="孙倩" data-org="瑞明医药"><div><div class="who">孙倩</div><div class="meta">CRA · 瑞明医药 · C-0095</div></div><button class="btn btn-ghost btn-sm table-link" data-assign>分配</button></div>
+          <div class="auth-emp" data-name="陈晓" data-org="中心实验室"><div><div class="who">陈晓</div><div class="meta">样本处理员 · 中心实验室 · S-0160</div></div><button class="btn btn-ghost btn-sm table-link" data-assign>分配</button></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><div class="panel-t"><i data-lucide="user-check"></i>已分配人员</div><span class="tag blue" id="authAssignedCount">0 人</span></div>
+        <div id="authAssignedList" class="auth-assigned"><span class="tiny muted">尚未分配人员</span></div>
+        <div class="form-group" style="margin-top:9px;"><label class="form-label">授权访视点</label><input class="form-input" id="authVisits" value="C1D1、C2D1、C3D1" /></div>
+        <div class="tiny muted">确认无误后进入信息核对页；保存授权后，CRC 方可在小程序看到该项目。</div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" id="authNextBtn" disabled>确认无误</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-auth-confirm">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">授权信息核对</div>
+    <div class="panel flat" style="padding:10px 14px;margin-bottom:10px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">项目号</span><span class="v mono" id="authConfirmProject">CD2026-003</span></div>
+        <div class="info-row"><span class="k">方案号</span><span class="v mono" id="authConfirmProtocol">CD2026-003-V1.0</span></div>
+        <div class="info-row"><span class="k">项目名称</span><span class="v">某双特异性抗体 II 期临床研究</span></div>
+        <div class="info-row"><span class="k">PI</span><span class="v" id="authConfirmPI">—</span></div>
+        <div class="info-row"><span class="k">CRA</span><span class="v" id="authConfirmCRA">—</span></div>
+        <div class="info-row"><span class="k">CRC</span><span class="v" id="authConfirmCRC">—</span></div>
+        <div class="info-row"><span class="k">授权访视点</span><span class="v" id="authConfirmVisits">C1D1、C2D1、C3D1</span></div>
+        <div class="info-row"><span class="k">入组状态</span><span class="v">已入组 1 例 / 计划 40 例</span></div>
+        <div class="info-row"><span class="k">同步来源</span><span class="v">CTMS · 2026-11-06 10:30</span></div>
+      </div>
+    </div>
+    <div class="panel"><div class="panel-h"><div class="panel-t"><i data-lucide="users"></i>授权人员</div></div><div id="authConfirmList" class="auth-assigned"></div></div>
+    <div class="tiny muted" style="margin-top:8px;">保存后将在项目情况中新增一行，并立即生效；CRC 可登录小程序查看该项目。</div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" id="authBackBtn">返回修改</button>
+      <button class="btn btn-primary btn-sm" id="authSaveBtn">保存授权</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 记录表弹窗 ===== -->
 <div class="demo-modal" id="modal-form-fb005">
   <div class="form-dialog xwide">
@@ -6115,6 +6206,118 @@ document.addEventListener('click', function(e){
     exportVisibleTable(b.getAttribute('data-export-name') || '导出.csv');
   }
 });
+
+/* ===== 项目授权流程 ===== */
+(function(){
+  var authState = { synced: false, assigned: [], saved: false };
+  var authBtn = document.getElementById('projectAuthBtn');
+  var authBadge = document.getElementById('projectAuthBadge');
+  var syncBtn = document.getElementById('authSyncBtn');
+  var nextBtn = document.getElementById('authNextBtn');
+  var assignedList = document.getElementById('authAssignedList');
+  var assignedCount = document.getElementById('authAssignedCount');
+  var employeeList = document.getElementById('authEmployeeList');
+  var employeeSearch = document.getElementById('authEmployeeSearch');
+  var roleSelect = document.getElementById('authRoleSelect');
+  if (!authBtn || !syncBtn || !nextBtn) return;
+
+  function names(role){ return authState.assigned.filter(function(p){ return p.role === role; }).map(function(p){ return p.name; }).join('、') || '—'; }
+  function renderAssigned(){
+    if (!assignedList) return;
+    assignedList.innerHTML = '';
+    if (!authState.assigned.length) {
+      assignedList.innerHTML = '<span class="tiny muted">尚未分配人员</span>';
+    } else {
+      authState.assigned.forEach(function(p, i){
+        var chip = document.createElement('span');
+        chip.className = 'auth-chip';
+        chip.textContent = p.name + ' · ' + p.role;
+        var x = document.createElement('button');
+        x.type = 'button'; x.textContent = '×'; x.setAttribute('data-remove', i);
+        chip.appendChild(x);
+        assignedList.appendChild(chip);
+      });
+    }
+    if (assignedCount) assignedCount.textContent = authState.assigned.length + ' 人';
+    var hasCrc = authState.assigned.some(function(p){ return p.role === 'CRC'; });
+    nextBtn.disabled = !(authState.synced && hasCrc);
+  }
+  function addPerson(name, role){
+    if (authState.assigned.some(function(p){ return p.name === name && p.role === role; })) { toast(name + ' 已在 ' + role + ' 名单中'); return; }
+    authState.assigned.push({ name: name, role: role });
+    renderAssigned();
+  }
+  if (employeeSearch) employeeSearch.addEventListener('input', function(){
+    var q = employeeSearch.value.trim().toLowerCase();
+    document.querySelectorAll('#authEmployeeList .auth-emp').forEach(function(el){
+      el.style.display = (!q || el.textContent.toLowerCase().indexOf(q) > -1) ? '' : 'none';
+    });
+  });
+  if (employeeList) employeeList.addEventListener('click', function(e){
+    var b = e.target.closest('[data-assign]');
+    if (!b) return;
+    var card = b.closest('.auth-emp');
+    addPerson(card.getAttribute('data-name'), roleSelect ? roleSelect.value : 'CRC');
+    toast(card.getAttribute('data-name') + ' 已加入 ' + (roleSelect ? roleSelect.value : 'CRC') + ' 名单');
+  });
+  if (assignedList) assignedList.addEventListener('click', function(e){
+    var b = e.target.closest('[data-remove]');
+    if (!b) return;
+    authState.assigned.splice(Number(b.getAttribute('data-remove')), 1);
+    renderAssigned();
+  });
+  syncBtn.addEventListener('click', function(){
+    if (authState.synced) return;
+    syncBtn.disabled = true;
+    syncBtn.textContent = '同步中…';
+    setTimeout(function(){
+      authState.synced = true;
+      document.getElementById('authCtmsEmpty').style.display = 'none';
+      document.getElementById('authCtmsData').style.display = 'block';
+      if (!authState.assigned.length) {
+        authState.assigned = [{ name:'陈建国', role:'PI' }, { name:'赵磊', role:'CRA' }, { name:'李敏', role:'CRC' }];
+      }
+      renderAssigned();
+      syncBtn.textContent = '已同步';
+      toast('CTMS 数据已同步，请分配/确认人员');
+    }, 700);
+  });
+  nextBtn.addEventListener('click', function(){
+    if (!authState.synced) { toast('请先同步 CTMS 数据'); return; }
+    if (!authState.assigned.some(function(p){ return p.role === 'CRC'; })) { toast('请至少分配一名 CRC'); return; }
+    document.getElementById('authConfirmPI').textContent = names('PI');
+    document.getElementById('authConfirmCRA').textContent = names('CRA');
+    document.getElementById('authConfirmCRC').textContent = names('CRC');
+    document.getElementById('authConfirmVisits').textContent = document.getElementById('authVisits').value || '—';
+    var cl = document.getElementById('authConfirmList');
+    cl.innerHTML = authState.assigned.map(function(p){ return '<span class="auth-chip">' + p.name + ' · ' + p.role + '</span>'; }).join('');
+    closeModal();
+    document.getElementById('modal-auth-confirm').classList.add('open');
+  });
+  document.getElementById('authBackBtn').addEventListener('click', function(){
+    closeModal();
+    document.getElementById('modal-auth-flow').classList.add('open');
+  });
+  document.getElementById('authSaveBtn').addEventListener('click', function(){
+    if (authState.saved) return;
+    authState.saved = true;
+    var pi = names('PI'), cra = names('CRA'), crc = names('CRC');
+    var tbody = document.querySelector('#projectTable tbody');
+    if (tbody) {
+      var tr = document.createElement('tr');
+      tr.setAttribute('data-status', '进行中');
+      tr.setAttribute('data-center', '01');
+      tr.setAttribute('data-year', '2026');
+      tr.innerHTML = '<td class="mono strong">CD2026-003</td><td class="strong">某双特异性抗体 II 期临床研究</td><td class="mono">CD2026-003-V1.0</td><td>' + pi + '</td><td>' + cra + ' / ' + crc + '</td><td class="num">0 / 40</td><td class="num">0</td><td><span class="tag green"><i class="dot green"></i>进行中</span> <span class="tag amber">待入组</span></td><td class="mono">今天</td><td><button class="btn btn-ghost btn-sm table-link" data-toast="已打开 CD2026-003 项目详情">查看</button></td>';
+      tbody.appendChild(tr);
+    }
+    if (authBadge) authBadge.style.display = 'none';
+    closeModal();
+    toast('授权已保存，CRC 可登录小程序查看该项目');
+    if (typeof filterProjects === 'function') filterProjects();
+    if (window.lucide) lucide.createIcons();
+  });
+})();
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
 showSection(initialSection);
