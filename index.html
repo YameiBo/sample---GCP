@@ -3886,7 +3886,7 @@ body { font-size: 14px; }
     <div class="macos-window">
       <div class="macos-body">
         <div class="app-sidebar" data-active="ai-version"></div>
-        <div class="win-chrome-bar" data-crumb="文档智能体 / 版本变更推演"></div>
+        <div class="win-chrome-bar" data-crumb="智能体 / 版本变更推演"></div>
         <div class="app-main">
           <div class="page-head">
             <div>
@@ -3897,7 +3897,8 @@ body { font-size: 14px; }
               <span class="tag">SOP-SMP-007</span>
               <i data-lucide="arrow-right" style="width:12px;height:12px;color:var(--text-3);"></i>
               <span class="tag blue">V3.2 → V3.3</span>
-              <button class="btn btn-primary btn-sm" data-toast="已生成 2 项修订、2 项表单、1 项培训与 1 项复核任务"><i data-lucide="list-plus" style="width:12px;height:12px;"></i>一键生成任务</button>
+              <button class="btn btn-secondary btn-sm" data-toast="已重新计算影响范围：8 份文档、4 个表单、12 人培训"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>重新推演</button>
+              <button class="btn btn-primary btn-sm" data-modal="modal-version-tasks"><i data-lucide="list-plus" style="width:12px;height:12px;"></i>一键生成任务</button>
             </div>
           </div>
 
@@ -4547,6 +4548,26 @@ body { font-size: 14px; }
   </div>
 </div>
 
+<div class="demo-modal" id="modal-version-tasks">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">生成版本变更任务</div>
+    <div class="tiny muted" style="margin-bottom:9px;">根据 SOP-SMP-007 V3.2 → V3.3 推演结果，建议生成以下 6 项任务。</div>
+    <div class="panel flat" style="padding:4px 10px;">
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 修订 SOP-SMP-007 第 5.3/5.4/5.5 条 <span class="tag amber" style="margin-left:auto;">修订</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 同步修订 SOP-SMP-009 分装与标识 <span class="tag amber" style="margin-left:auto;">修订</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 更新 FORM-P-006 离心记录表 <span class="tag" style="margin-left:auto;">表单</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 更新标签模板并测试扫码 <span class="tag" style="margin-left:auto;">表单</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);"><input type="checkbox" checked /> 组织 12 人新版 SOP 培训 <span class="tag" style="margin-left:auto;">培训</span></label>
+      <label style="display:flex;align-items:center;gap:7px;font-size:12px;padding:7px 0;"><input type="checkbox" checked /> QA 复核并批准 V3.3 生效 <span class="tag green" style="margin-left:auto;">复核</span></label>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="已生成 6 项版本变更任务，已通知责任人">生成 6 项任务</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 记录表弹窗 ===== -->
 <div class="demo-modal" id="modal-form-fb005">
   <div class="form-dialog xwide">
@@ -5094,7 +5115,7 @@ var SECTION_MIN_LEVEL = {
   'section-transport': 1, 'section-shipment': 1, 'section-transport-stats': 2,
   'section-process': 1, 'section-process-stats': 2,
   'section-store': 1, 'section-trace': 1, 'section-patho': 1,
-  'section-audit': 2, 'section-ai-search': 1, 'section-ai-compliance': 1, 'section-ai-voice': 1,
+  'section-audit': 2, 'section-ai-search': 1, 'section-ai-compliance': 1, 'section-ai-version': 2, 'section-ai-voice': 1,
   'section-mobile': 1, 'section-settings': 4,
   'section-project-detail': 1, 'section-ai-kb': 1,
   'section-home': 1, 'section-ai-version': 1, 'section-ai-sop': 1
@@ -5130,6 +5151,7 @@ var NAV = [
     { id: 'ai', label: '智能体', icon: 'sparkles', badge: 'AI', children: [
       { id: 'ai-search', label: '项目样本检索', icon: 'search' },
       { id: 'ai-compliance', label: 'SOP 合规校验', icon: 'shield-check' },
+      { id: 'ai-version', label: '版本变更推演', icon: 'git-compare', min: 2 },
       { id: 'ai-voice', label: '语音检索', icon: 'mic' }
     ]}
   ]},
@@ -5145,7 +5167,7 @@ var SECTION_MAP = {
   process: 'section-process', 'process-stats': 'section-process-stats',
   store: 'section-store', trace: 'section-trace', patho: 'section-patho', audit: 'section-audit',
   ai: 'section-ai-search', 'ai-search': 'section-ai-search', 'ai-compliance': 'section-ai-compliance',
-  'ai-voice': 'section-ai-voice', mobile: 'section-mobile', settings: 'section-settings'
+  'ai-version': 'section-ai-version', 'ai-voice': 'section-ai-voice', mobile: 'section-mobile', settings: 'section-settings'
 };
 function buildSidebar(active) {
   var html = '<div style="padding:8px 14px 14px;display:flex;align-items:center;gap:9px;">' +
@@ -5360,7 +5382,6 @@ function showSection(id) {
     'section-project-change': 'section-project-change',
     'section-home': 'section-project',
     'section-ai-kb': 'section-ai-search',
-    'section-ai-version': 'section-ai-search',
     'section-ai-sop': 'section-ai-search'
   };
   var navTarget = ACTIVE_FOR[id] || id;
