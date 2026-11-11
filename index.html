@@ -2211,6 +2211,115 @@ body { font-size: 14px; }
   </div>
 </div>
 
+<!-- ===== 试剂耗材工单管理 ===== -->
+<div id="section-supply" class="proto-stack">
+  <div class="proto-with-prd">
+    <div class="macos-window">
+      <div class="macos-body">
+        <div class="app-sidebar" data-active="supply"></div>
+        <div class="win-chrome-bar" data-crumb="业务管理 / 试剂耗材工单管理"></div>
+        <div class="app-main">
+          <div class="page-head">
+            <div><div class="page-title">试剂耗材工单管理</div><div class="page-sub">样本采集前试剂、耗材、设备的预约、接收、发放与归还</div></div>
+            <div class="toolbar">
+              <button class="btn btn-secondary btn-sm" data-export data-export-name="试剂耗材工单.csv"><i data-lucide="download" style="width:12px;height:12px;"></i>导出</button>
+              <button class="btn btn-primary btn-sm" data-modal="modal-supply-order"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建预约工单</button>
+            </div>
+          </div>
+
+          <div class="kpi-grid" style="margin-bottom:14px;">
+            <div class="kpi"><div class="l"><i data-lucide="clipboard-list"></i>今日工单</div><div class="v">8<small>单</small></div><div class="d">含试剂/耗材/设备</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="package-check"></i>待接收</div><div class="v">3<small>单</small></div><div class="d warn">需核对批次与效期</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="package-open"></i>待发放</div><div class="v">2<small>单</small></div><div class="d">已接收待领用</div></div>
+            <div class="kpi"><div class="l"><i data-lucide="triangle-alert"></i>库存/设备预警</div><div class="v">2<small>项</small></div><div class="d warn">冻存管低库存 · 离心机待归还</div></div>
+          </div>
+
+          <div class="panel" style="padding:10px 16px;margin-bottom:14px;">
+            <div class="panel-h"><div class="panel-t"><i data-lucide="workflow"></i>工单流转节点</div><span class="tag blue">样本采集前</span></div>
+            <div class="steps">
+              <div class="step done"><span class="n">1</span>预约申请</div><div class="step-line done"></div>
+              <div class="step done"><span class="n">2</span>审批</div><div class="step-line done"></div>
+              <div class="step now"><span class="n">3</span>接收</div><div class="step-line"></div>
+              <div class="step"><span class="n">4</span>发放/领用</div><div class="step-line"></div>
+              <div class="step"><span class="n">5</span>使用</div><div class="step-line"></div>
+              <div class="step"><span class="n">6</span>归还/核销</div>
+            </div>
+          </div>
+
+          <div class="grid g21">
+            <div class="panel">
+              <div class="filters">
+                <div class="search-box"><i data-lucide="search"></i><input placeholder="搜索工单号 / 项目 / 物品" data-filter="#supplyTable" /></div>
+                <span class="select-mini"><i data-lucide="filter"></i>全部类型</span>
+                <span class="grow"></span><span class="tiny muted">5 条工单</span>
+              </div>
+              <table class="tbl" id="supplyTable">
+                <thead><tr><th>工单号</th><th>项目</th><th>访视 / 用途</th><th>类型</th><th>物品</th><th class="num">数量</th><th>预约时间</th><th>申请人</th><th>状态</th></tr></thead>
+                <tbody>
+                  <tr class="is-sel"><td class="mono">SP-1106-001</td><td>CD2026-001</td><td>C1D1 采血</td><td><span class="tag blue">试剂</span></td><td>促凝管 5 mL</td><td class="num">20 支</td><td class="mono">11-07 08:00</td><td>李敏</td><td><span class="tag amber">待接收</span></td></tr>
+                  <tr><td class="mono">SP-1106-002</td><td>CD2026-001</td><td>C1D1 PK</td><td><span class="tag">耗材</span></td><td>冻存管 2 mL</td><td class="num">30 支</td><td class="mono">11-07 08:30</td><td>李敏</td><td><span class="tag blue">已接收</span></td></tr>
+                  <tr><td class="mono">SP-1106-003</td><td>CD2026-002</td><td>C2D1 离心</td><td><span class="tag green">设备</span></td><td>高速离心机</td><td class="num">1 台</td><td class="mono">11-07 09:00</td><td>陈晓</td><td><span class="tag amber">待发放</span></td></tr>
+                  <tr><td class="mono">SP-1106-004</td><td>CD2026-001</td><td>V4 尿液</td><td><span class="tag">耗材</span></td><td>无菌尿杯</td><td class="num">10 个</td><td class="mono">11-07 10:00</td><td>赵倩</td><td><span class="tag green">已完成</span></td></tr>
+                  <tr><td class="mono">SP-1105-012</td><td>CD2025-018</td><td>样本处理</td><td><span class="tag blue">试剂</span></td><td>DNA 提取试剂盒</td><td class="num">2 盒</td><td class="mono">11-06 15:00</td><td>陈晓</td><td><span class="tag red">待归还</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="package-check"></i>工单详情</div><span class="tag amber">待接收</span></div>
+              <div class="info-rows" style="margin-bottom:9px;">
+                <div class="info-row"><span class="k">工单号</span><span class="v mono">SP-1106-001</span></div>
+                <div class="info-row"><span class="k">项目 / 访视</span><span class="v">CD2026-001 · C1D1</span></div>
+                <div class="info-row"><span class="k">类型 / 物品</span><span class="v">试剂 · 促凝管 5 mL</span></div>
+                <div class="info-row"><span class="k">规格 / 数量</span><span class="v">100 支/盒 · 20 支</span></div>
+                <div class="info-row"><span class="k">批次 / 效期</span><span class="v mono">LOT-20260912 · 2027-09-11</span></div>
+                <div class="info-row"><span class="k">储存条件</span><span class="v">室温 · 干燥</span></div>
+                <div class="info-row"><span class="k">预约时间</span><span class="v mono">2026-11-07 08:00</span></div>
+                <div class="info-row"><span class="k">申请人</span><span class="v">李敏 · CRC</span></div>
+                <div class="info-row"><span class="k">接收人</span><span class="v">张三 · 样本管理员</span></div>
+                <div class="info-row"><span class="k">当前库存</span><span class="v">120 支 · 安全库存 50</span></div>
+              </div>
+              <div class="panel flat" style="padding:8px;margin-bottom:9px;font-size:12px;color:var(--text-2);line-height:1.6;">
+                接收时需核对物品名称、规格、批次、效期、包装完整性；设备需记录设备编号、状态与预计归还时间。
+              </div>
+              <div style="display:flex;gap:6px;">
+                <button class="btn btn-secondary btn-sm" style="flex:1;" data-toast="已打开发放登记">发放登记</button>
+                <button class="btn btn-primary btn-sm" style="flex:1;" data-toast="已确认接收，库存已更新"><i data-lucide="check" style="width:12px;height:12px;"></i>确认接收</button>
+              </div>
+              <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:6px;" data-toast="已打开归还/核销登记">归还/核销</button>
+            </div>
+          </div>
+
+          <div class="grid g2" style="margin-top:12px;">
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="triangle-alert"></i>试剂耗材库存预警</div><span class="tag amber">2 项</span></div>
+              <table class="tbl compact">
+                <thead><tr><th>物品</th><th class="num">当前库存</th><th class="num">安全库存</th><th>状态</th></tr></thead>
+                <tbody>
+                  <tr><td>冻存管 2 mL</td><td class="num">40 支</td><td class="num">80 支</td><td><span class="tag red">低于安全库存</span></td></tr>
+                  <tr><td>无菌尿杯</td><td class="num">15 个</td><td class="num">30 个</td><td><span class="tag amber">需补货</span></td></tr>
+                  <tr><td>促凝管 5 mL</td><td class="num">120 支</td><td class="num">50 支</td><td><span class="tag green">正常</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t"><i data-lucide="cpu"></i>设备使用状态</div><span class="tag">3 台</span></div>
+              <table class="tbl compact">
+                <thead><tr><th>设备</th><th>状态</th><th>当前使用人</th><th>预计归还</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">DEV-CEN-03</td><td><span class="tag green">使用中</span></td><td>陈晓</td><td class="mono">11-07 12:00</td></tr>
+                  <tr><td class="mono">DEV-CEN-01</td><td><span class="tag blue">空闲</span></td><td>—</td><td>—</td></tr>
+                  <tr><td class="mono">BENCH-02</td><td><span class="tag amber">待归还</span></td><td>李敏</td><td class="mono">11-06 18:00</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 样本采集 ===== -->
 <div id="section-collect" class="proto-stack">
   <div class="proto-with-prd">
@@ -5072,6 +5181,34 @@ body { font-size: 14px; }
   </div>
 </div>
 
+<div class="demo-modal" id="modal-supply-order">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">新建试剂耗材/设备预约工单</div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">项目</label><input class="form-input" value="CD2026-001" /></div>
+      <div class="form-group"><label class="form-label">访视 / 用途</label><input class="form-input" value="C1D1 采血" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">类型</label><select class="form-input"><option>试剂</option><option>耗材</option><option>设备</option></select></div>
+      <div class="form-group"><label class="form-label">物品名称</label><input class="form-input" value="促凝管 5 mL" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">规格 / 数量</label><input class="form-input" value="100 支/盒 · 20 支" /></div>
+      <div class="form-group"><label class="form-label">预约时间</label><input class="form-input" value="2026-11-07 08:00" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">申请人</label><input class="form-input" value="李敏 · CRC" /></div>
+      <div class="form-group"><label class="form-label">设备编号（如设备）</label><input class="form-input" placeholder="DEV-CEN-03" /></div>
+    </div>
+    <div class="form-group"><label class="form-label">备注</label><input class="form-input" placeholder="如批次要求、储存条件、归还时间" /></div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm" data-submit="预约工单已创建，等待审批/接收">创建工单</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 记录表弹窗 ===== -->
 <div class="demo-modal" id="modal-form-fb005">
   <div class="form-dialog xwide">
@@ -5615,7 +5752,7 @@ function roleOptions() {
 }
 var SECTION_MIN_LEVEL = {
   'section-project': 1, 'section-project-stats': 2, 'section-project-change': 2,
-  'section-collect': 1, 'section-collect-stats': 2,
+  'section-supply': 1, 'section-collect': 1, 'section-collect-stats': 2,
   'section-transport': 1, 'section-shipment': 1, 'section-transport-stats': 2,
   'section-process': 1, 'section-process-stats': 2,
   'section-store': 1, 'section-trace': 1, 'section-patho': 1,
@@ -5632,6 +5769,7 @@ var NAV = [
       { id: 'project-stats', label: '项目统计', icon: 'bar-chart-3', min: 2 },
       { id: 'project-change', label: '方案变更', icon: 'git-compare', min: 2 }
     ]},
+    { id: 'supply', label: '试剂耗材工单管理', icon: 'package' },
     { id: 'collect', label: '样本采集', icon: 'test-tube', children: [
       { id: 'collect', label: '采集工单', icon: 'clipboard-list' },
       { id: 'collect-stats', label: '采集统计', icon: 'bar-chart-3', min: 2 }
@@ -5671,7 +5809,7 @@ var NAV = [
 ];
 var SECTION_MAP = {
   project: 'section-project', 'project-stats': 'section-project-stats', 'project-change': 'section-project-change',
-  collect: 'section-collect', 'collect-stats': 'section-collect-stats',
+  supply: 'section-supply', collect: 'section-collect', 'collect-stats': 'section-collect-stats',
   transport: 'section-transport', shipment: 'section-shipment', 'transport-stats': 'section-transport-stats',
   process: 'section-process', 'process-stats': 'section-process-stats',
   store: 'section-store', trace: 'section-trace', patho: 'section-patho', audit: 'section-audit',
