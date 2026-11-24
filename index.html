@@ -194,7 +194,9 @@ body {
 }
 .sidebar-parent .chev { width: 12px; height: 12px; margin-left: 4px; color: var(--text-3); transition: transform .15s; }
 .sidebar-parent.active-parent { color: var(--sidebar-accent-foreground); font-weight: 600; }
-.sidebar-parent.active-parent .chev { transform: rotate(180deg); }
+.sidebar-parent.sub-collapsed .chev { transform: rotate(-90deg); }
+.sidebar-sub.collapsed { display: none; }
+.sidebar-toggle { margin-left: auto; padding: 2px; border: none; background: transparent; color: inherit; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
 .sidebar-sub { display: flex; flex-direction: column; gap: 1px; margin: 1px 0 4px; }
 .sidebar-sub-item { padding: 6px 10px 6px 30px; font-size:12px; color: var(--text-2); }
 .sidebar-sub-item .nav-icon { width: 14px; height: 14px; }
@@ -2406,6 +2408,15 @@ body { font-size: 14px; }
               <button class="btn btn-secondary btn-sm" data-modal="modal-scan"><i data-lucide="scan-line" style="width:12px;height:12px;"></i>扫码登记</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-new-order"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建预约</button>
             </div>
+          </div>
+
+          <div class="panel" id="collectAlertBanner" style="display:flex;align-items:center;gap:10px;padding:9px 14px;margin-bottom:12px;border-left:3px solid var(--warning);">
+            <i data-lucide="triangle-alert" style="width:16px;height:16px;color:var(--warning);flex-shrink:0;"></i>
+            <div style="flex:1;min-width:0;">
+              <div class="panel-t">采集异常提醒 <span class="tag amber" id="collectAlertCount">3 项</span></div>
+              <div class="tiny muted">S009 V2 访视点超窗 · S007 V3 采血量不足 · S008 V2 条码不一致</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" data-modal="modal-collect-alert">查看全部</button>
           </div>
 
           <div class="kpi-grid" style="margin-bottom:12px;">
@@ -5281,24 +5292,141 @@ body { font-size: 14px; }
   </div>
 </div>
 
-<div class="demo-modal" id="modal-supply-action">
-  <div class="form-dialog">
+<div class="demo-modal" id="modal-supply-issue">
+  <div class="form-dialog wide">
     <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
-    <div class="form-dialog-title" id="supplyActionTitle">耗材工单操作</div>
-    <div class="panel flat" style="padding:8px;margin-bottom:9px;">
-      <div class="info-rows">
-        <div class="info-row"><span class="k">工单号</span><span class="v mono" id="supplyActionOrder">SP-1106-001</span></div>
-        <div class="info-row"><span class="k">操作类型</span><span class="v" id="supplyActionType">接收</span></div>
+    <div class="form-dialog-title">发放登记</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:10px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">工单号</span><span class="v mono js-supply-order">SP-1106-001</span></div>
+        <div class="info-row"><span class="k">项目</span><span class="v js-supply-project">CD2026-001</span></div>
+        <div class="info-row"><span class="k">物品</span><span class="v js-supply-item">促凝管 5 mL</span></div>
+        <div class="info-row"><span class="k">规格 / 数量</span><span class="v js-supply-spec">100 支/盒 · 20 支</span></div>
+        <div class="info-row"><span class="k">批次 / 效期</span><span class="v mono js-supply-batch">LOT-20260912 · 2027-09-11</span></div>
+        <div class="info-row"><span class="k">当前库存</span><span class="v js-supply-stock">120 支 · 安全库存 50</span></div>
       </div>
     </div>
     <div class="form-row-2">
-      <div class="form-group"><label class="form-label">操作人</label><input class="form-input" value="张三 · 样本管理员" /></div>
-      <div class="form-group"><label class="form-label">操作时间</label><input class="form-input" value="2026-11-07 08:10" /></div>
+      <div class="form-group"><label class="form-label">领用人</label><input class="form-input" value="李敏 · CRC" /></div>
+      <div class="form-group"><label class="form-label">使用科室 / 用途</label><input class="form-input" value="肿瘤科 · C1D1 采血" /></div>
     </div>
-    <div class="form-group"><label class="form-label">核对备注</label><input class="form-input" placeholder="批次、效期、包装完整性等" /></div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">发放数量</label><input class="form-input" value="20 支" /></div>
+      <div class="form-group"><label class="form-label">发放时间</label><input class="form-input" value="2026-11-07 08:10" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">发放人</label><input class="form-input" value="张三 · 样本管理员" /></div>
+      <div class="form-group"><label class="form-label">备注</label><input class="form-input" placeholder="包装、领用说明等" /></div>
+    </div>
     <div class="form-actions">
       <button class="btn btn-ghost btn-sm" data-close>取消</button>
-      <button class="btn btn-primary btn-sm" id="supplyActionConfirm">确认</button>
+      <button class="btn btn-primary btn-sm supply-action-confirm" data-supply-mode="发放">确认发放</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-supply-receive">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">确认接收</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:10px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">工单号</span><span class="v mono js-supply-order">SP-1106-001</span></div>
+        <div class="info-row"><span class="k">项目</span><span class="v js-supply-project">CD2026-001</span></div>
+        <div class="info-row"><span class="k">物品</span><span class="v js-supply-item">促凝管 5 mL</span></div>
+        <div class="info-row"><span class="k">规格 / 数量</span><span class="v js-supply-spec">100 支/盒 · 20 支</span></div>
+        <div class="info-row"><span class="k">批次 / 效期</span><span class="v mono js-supply-batch">LOT-20260912 · 2027-09-11</span></div>
+        <div class="info-row"><span class="k">当前库存</span><span class="v js-supply-stock">120 支 · 安全库存 50</span></div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">接收人</label><input class="form-input" value="张三 · 样本管理员" /></div>
+      <div class="form-group"><label class="form-label">接收时间</label><input class="form-input" value="2026-11-07 08:10" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">包装完整性</label><input class="form-input" value="完好" /></div>
+      <div class="form-group"><label class="form-label">批次 / 效期核对</label><input class="form-input" value="一致" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">接收数量</label><input class="form-input" value="20 支" /></div>
+      <div class="form-group"><label class="form-label">备注</label><input class="form-input" placeholder="异常说明等" /></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm supply-action-confirm" data-supply-mode="接收">确认接收</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-supply-return">
+  <div class="form-dialog wide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">归还 / 核销</div>
+    <div class="panel flat" style="padding:8px 12px;margin-bottom:10px;">
+      <div class="grid g3" style="gap:8px;">
+        <div class="info-row"><span class="k">工单号</span><span class="v mono js-supply-order">SP-1105-012</span></div>
+        <div class="info-row"><span class="k">项目</span><span class="v js-supply-project">CD2025-018</span></div>
+        <div class="info-row"><span class="k">物品</span><span class="v js-supply-item">DNA 提取试剂盒</span></div>
+        <div class="info-row"><span class="k">规格 / 数量</span><span class="v js-supply-spec">50 次/盒 · 2 盒</span></div>
+        <div class="info-row"><span class="k">批次 / 效期</span><span class="v mono js-supply-batch">LOT-20260601 · 2027-06-01</span></div>
+        <div class="info-row"><span class="k">当前库存</span><span class="v js-supply-stock">8 盒 · 安全库存 5</span></div>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">核销类型</label><select class="form-input"><option>耗材核销</option><option>试剂核销</option><option>设备归还</option></select></div>
+      <div class="form-group"><label class="form-label">归还 / 核销数量</label><input class="form-input" value="2 盒" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">设备 / 物品状态</label><input class="form-input" value="正常" /></div>
+      <div class="form-group"><label class="form-label">归还时间</label><input class="form-input" value="2026-11-07 08:10" /></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">接收人</label><input class="form-input" value="张三 · 样本管理员" /></div>
+      <div class="form-group"><label class="form-label">备注</label><input class="form-input" placeholder="损耗、维护说明等" /></div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-primary btn-sm supply-action-confirm" data-supply-mode="归还">确认归还 / 核销</button>
+    </div>
+  </div>
+</div>
+
+<div class="demo-modal" id="modal-collect-alert">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">采集异常提醒</div>
+    <div class="tiny muted" style="margin-bottom:8px;">系统自动识别访视点异常、样本操作异常与时间逻辑异常；处理后请保留记录。</div>
+    <div id="collectAlertList">
+      <div class="issue" data-alert-card="a1">
+        <div class="ic amber"><i data-lucide="clock"></i></div>
+        <div class="body">
+          <div class="t">S009 V2 访视点超窗 2 小时 <span class="tag amber">访视点异常</span></div>
+          <div class="d">预约时间 08:00，当前 10:00 仍未采集；访视点已超窗，可能影响给药前后时间逻辑。</div>
+          <div class="a">建议：重新预约或记录方案偏离，并通知 PI/CRC 确认后续访视安排。</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="align-self:flex-start;" data-alert-resolve="a1">标记已处理</button>
+      </div>
+      <div class="issue" data-alert-card="a2">
+        <div class="ic red"><i data-lucide="test-tube"></i></div>
+        <div class="body">
+          <div class="t">S007 V3 采血量不足 <span class="tag red">样本操作异常</span></div>
+          <div class="d">方案要求 5 mL，实际登记 4.2 mL；可能影响 PK/ADA 检测样本量。</div>
+          <div class="a">建议：确认是否补采，或记录样本操作异常与方案偏离，由 PI 确认。</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="align-self:flex-start;" data-alert-resolve="a2">标记已处理</button>
+      </div>
+      <div class="issue" style="border-bottom:none;" data-alert-card="a3">
+        <div class="ic red"><i data-lucide="scan-line"></i></div>
+        <div class="body">
+          <div class="t">S008 V2 条码与样本编号不一致 <span class="tag red">样本操作异常</span></div>
+          <div class="d">扫码识别条码与登记样本编号不一致，存在错贴标签风险。</div>
+          <div class="a">建议：重新贴标并双人复核；原标签作废留痕，禁止直接覆盖。</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="align-self:flex-start;" data-alert-resolve="a3">标记已处理</button>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-secondary btn-sm" data-close>关闭</button>
     </div>
   </div>
 </div>
@@ -5929,15 +6057,17 @@ function buildSidebar(active) {
     visibleItems.forEach(function(it) {
       var children = (it.children || []).filter(function(c){ return level >= (c.min || 1); });
       var isParentActive = children.some(function(c){ return c.id === active; });
-      var act = isParentActive ? ' active-parent' : ((it.id === active) ? ' active' : '');
+      var isActiveSelf = (it.id === active);
+      var expanded = isParentActive || isActiveSelf;
+      var act = isParentActive ? ' active-parent' : (isActiveSelf ? ' active' : '');
       var target = SECTION_MAP[it.id] || ('section-' + it.id);
-      var pcls = it.children ? ' sidebar-parent' : '';
+      var pcls = it.children ? (' sidebar-parent' + (expanded ? '' : ' sub-collapsed')) : '';
       html += '<div class="sidebar-item' + pcls + act + '" data-goto="' + target + '">' +
         '<i data-lucide="' + it.icon + '" class="nav-icon"></i>' + it.label +
         (it.badge ? '<span class="si-badge">' + it.badge + '</span>' : '') +
-        (it.children ? '<i data-lucide="chevron-down" class="chev"></i>' : '') + '</div>';
+        (it.children ? '<button type="button" class="sidebar-toggle" aria-label="展开或收起"><i data-lucide="chevron-down" class="chev"></i></button>' : '') + '</div>';
       if (it.children) {
-        html += '<div class="sidebar-sub">';
+        html += '<div class="sidebar-sub' + (expanded ? '' : ' collapsed') + '">';
         children.forEach(function(c){
           var ctarget = SECTION_MAP[c.id] || ('section-' + c.id);
           var cact = (c.id === active) ? ' active' : '';
@@ -5984,6 +6114,19 @@ function toast(msg) {
 document.addEventListener('click', function(e) {
   var t = e.target.closest('[data-toast]');
   if (t) { toast(t.getAttribute('data-toast')); }
+  var tog = e.target.closest('.sidebar-toggle');
+  if (tog) {
+    e.preventDefault();
+    var parent = tog.closest('.sidebar-parent');
+    if (parent) {
+      var sub = parent.nextElementSibling;
+      if (sub && sub.classList.contains('sidebar-sub')) {
+        var collapsed = sub.classList.toggle('collapsed');
+        parent.classList.toggle('sub-collapsed', collapsed);
+      }
+    }
+    return;
+  }
   var g = e.target.closest('[data-goto]');
   if (g) {
     var id = g.getAttribute('data-goto');
@@ -6135,8 +6278,16 @@ function showSection(id) {
                  sb.querySelector('.sidebar-item[data-goto="' + navTarget + '"]');
     if (target) {
       target.classList.add('active');
-      var sub = target.closest('.sidebar-sub');
-      if (sub && sub.previousElementSibling) sub.previousElementSibling.classList.add('active-parent');
+      var sub = target.classList.contains('sidebar-sub-item') ? target.closest('.sidebar-sub') : null;
+      if (!sub && target.nextElementSibling && target.nextElementSibling.classList.contains('sidebar-sub')) sub = target.nextElementSibling;
+      if (sub) {
+        sub.classList.remove('collapsed');
+        if (sub.previousElementSibling) {
+          var parentEl = sub.previousElementSibling;
+          if (parentEl !== target) parentEl.classList.add('active-parent');
+          parentEl.classList.remove('sub-collapsed');
+        }
+      }
     }
   }
   window.scrollTo(0, 0);
@@ -6755,29 +6906,39 @@ document.addEventListener('click', function(e){
     var tr = e.target.closest('tr[data-supply-id]');
     if (tr) renderDetail(tr);
   });
+  var supplyModalMap = { '接收': 'modal-supply-receive', '发放': 'modal-supply-issue', '归还': 'modal-supply-return' };
+  function fillSupplyModal(modal, row){
+    if (!modal || !row) return;
+    var d = row.dataset;
+    function set(cls, v){ modal.querySelectorAll(cls).forEach(function(el){ el.textContent = v || '—'; }); }
+    set('.js-supply-order', d.supplyId);
+    set('.js-supply-project', d.supplyProject);
+    set('.js-supply-item', d.supplyItem);
+    set('.js-supply-spec', d.supplySpec);
+    set('.js-supply-batch', d.supplyBatch);
+    set('.js-supply-stock', d.supplyStock);
+  }
   document.addEventListener('click', function(e){
     var b = e.target.closest('[data-supply-action]');
-    if (!b) return;
-    if (!selectedRow) return;
+    if (!b || !selectedRow) return;
     var mode = b.getAttribute('data-supply-action');
-    var title = document.getElementById('supplyActionTitle');
-    var type = document.getElementById('supplyActionType');
-    var order = document.getElementById('supplyActionOrder');
-    if (title) title.textContent = mode + '确认';
-    if (type) type.textContent = mode;
-    if (order) order.textContent = selectedRow.getAttribute('data-supply-id');
-    document.getElementById('modal-supply-action').classList.add('open');
+    var modal = document.getElementById(supplyModalMap[mode]);
+    if (!modal) return;
+    fillSupplyModal(modal, selectedRow);
+    modal.classList.add('open');
   });
-  var confirm = document.getElementById('supplyActionConfirm');
-  if (confirm) confirm.addEventListener('click', function(){
-    if (!selectedRow) return;
-    var mode = document.getElementById('supplyActionType').textContent;
-    var status = mode === '接收' ? '已接收' : '已完成';
-    selectedRow.setAttribute('data-status', status);
-    selectedRow.cells[8].innerHTML = '<span class="tag ' + tagClass(status) + '">' + status + '</span>';
-    renderDetail(selectedRow);
-    closeModal();
-    toast(mode + '操作已提交，工单状态已更新为' + status);
+  document.querySelectorAll('.supply-action-confirm').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (!selectedRow) return;
+      var mode = btn.getAttribute('data-supply-mode');
+      var status = mode === '接收' ? '已接收' : '已完成';
+      selectedRow.setAttribute('data-status', status);
+      selectedRow.cells[8].innerHTML = '<span class="tag ' + tagClass(status) + '">' + status + '</span>';
+      renderDetail(selectedRow);
+      filterSupply();
+      closeModal();
+      toast(mode === '接收' ? '接收确认已提交，工单状态已更新为已接收' : (mode === '发放' ? '发放登记已提交，工单已完成' : '归还/核销已提交，工单已完成'));
+    });
   });
   var create = document.getElementById('supplyCreateBtn');
   if (create) create.addEventListener('click', function(){
@@ -6811,6 +6972,27 @@ document.addEventListener('click', function(e){
     toast('预约工单 SP-1107-001 已创建，等待审批/接收');
   });
   renderDetail(selectedRow);
+})();
+
+/* ===== 采集异常提醒 ===== */
+(function(){
+  function updateCollectAlerts(){
+    var list = document.getElementById('collectAlertList');
+    if (!list) return;
+    var n = list.querySelectorAll('[data-alert-card]').length;
+    var count = document.getElementById('collectAlertCount');
+    if (count) count.textContent = n + ' 项';
+    var banner = document.getElementById('collectAlertBanner');
+    if (banner) banner.style.display = n ? 'flex' : 'none';
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-alert-resolve]');
+    if (!b) return;
+    var card = document.querySelector('[data-alert-card="' + b.getAttribute('data-alert-resolve') + '"]');
+    if (card) card.remove();
+    updateCollectAlerts();
+    toast('异常已标记处理，已记录处理人/时间');
+  });
 })();
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
