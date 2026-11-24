@@ -1649,6 +1649,9 @@ body { font-size: 14px; }
   font-weight: 700;
 }
 .app-sidebar .sidebar-sub-item.active .nav-icon { color: oklch(0.45 0.16 275); }
+.app-sidebar .sidebar-sub .sidebar-sub { margin: 1px 0 4px; }
+.app-sidebar .sidebar-sub-item--l3 { padding-left: 48px; font-size: 14px; }
+.app-sidebar .sidebar-sub-item--l3 .nav-icon { width: 13px; height: 13px; }
 .app-sidebar .sidebar-parent.active-parent { color: #fff; }
 .app-sidebar .sidebar-parent .chev { color: oklch(0.78 0.03 280); }
 .app-sidebar .sidebar-divider { background: color-mix(in oklch, white 15%, transparent); }
@@ -1660,6 +1663,26 @@ body { font-size: 14px; }
 .app-sidebar .sidebar-item.active .si-badge {
   background: color-mix(in oklch, var(--primary) 14%, transparent);
   color: var(--primary);
+}
+.process-template-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  margin-bottom: 6px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--background);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.process-template-item:hover { border-color: color-mix(in oklch, var(--primary) 40%, var(--border)); }
+.process-template-item.is-sel {
+  border-color: var(--primary);
+  background: color-mix(in oklch, var(--primary) 8%, var(--background));
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--primary) 20%, transparent);
 }
 </style>
 </head>
@@ -2851,7 +2874,7 @@ body { font-size: 14px; }
               <div class="page-sub">处理工单、离心分装与设备数据留痕</div>
             </div>
             <div class="toolbar">
-              <button class="btn btn-secondary btn-sm" data-toast="已打开设备参数模板"><i data-lucide="sliders-horizontal" style="width:12px;height:12px;"></i>参数模板</button>
+              <button class="btn btn-secondary btn-sm" data-modal="modal-process-template"><i data-lucide="sliders-horizontal" style="width:12px;height:12px;"></i>参数模板</button>
               <button class="btn btn-primary btn-sm" data-modal="modal-new-task"><i data-lucide="plus" style="width:12px;height:12px;"></i>新建任务</button>
             </div>
           </div>
@@ -2907,7 +2930,8 @@ body { font-size: 14px; }
               <div class="info-rows" style="margin-bottom:9px;">
                 <div class="info-row"><span class="k">样本编号</span><span class="v mono">CD2026-001-01-S007-V3-SER-01</span></div>
                 <div class="info-row"><span class="k">母管</span><span class="v">血清 5 mL × 1</span></div>
-                <div class="info-row"><span class="k">离心程序</span><span class="v">3000 rpm · 10 min · 4℃</span></div>
+                <div class="info-row"><span class="k">离心程序</span><span class="v" id="processCentrifugeProgram">3000 rpm · 10 min · 4℃</span></div>
+                <div class="info-row"><span class="k">参数模板</span><span class="v"><span class="table-link" id="processTemplateSummary" data-modal="modal-process-template" style="cursor:pointer;">血清离心 V3.0 · TPL-SER-001</span></span></div>
                 <div class="info-row"><span class="k">设备</span><span class="v mono">DEV-CEN-03 · Eppendorf 5810R</span></div>
                 <div class="info-row"><span class="k">操作人</span><span class="v">陈晓 · 实验室技术员</span></div>
                 <div class="info-row"><span class="k">开始时间</span><span class="v mono">2026-10-28 09:05:12</span></div>
@@ -2958,7 +2982,7 @@ body { font-size: 14px; }
             <table class="tbl compact">
               <thead><tr><th>环节</th><th>设备 / 管号</th><th>关键数据</th><th>操作人</th><th>时间</th><th>状态</th></tr></thead>
               <tbody>
-                <tr><td>离心</td><td class="mono">DEV-CEN-03</td><td>3000 rpm · 10 min · 4℃</td><td>陈晓</td><td class="mono">09:05-09:15</td><td><span class="tag green">已采集</span></td></tr>
+                <tr><td>离心</td><td class="mono">DEV-CEN-03</td><td id="processKeyCentrifuge">3000 rpm · 10 min · 4℃</td><td>陈晓</td><td class="mono">09:05-09:15</td><td><span class="tag green">已采集</span></td></tr>
                 <tr><td>分装</td><td class="mono">SER-01-A/B/C</td><td>1.5 mL × 3 管</td><td>陈晓</td><td class="mono">09:18</td><td><span class="tag green">已分装</span></td></tr>
                 <tr><td>拍照</td><td>离心前照片</td><td>2 张</td><td>陈晓</td><td class="mono">09:02</td><td><span class="tag green">已上传</span></td></tr>
                 <tr><td>设备报告</td><td class="mono">DEV-CEN-03</td><td>运行参数、校准状态</td><td>系统</td><td class="mono">09:16</td><td><span class="tag green">已归档</span></td></tr>
@@ -5559,6 +5583,58 @@ body { font-size: 14px; }
   </div>
 </div>
 
+
+<div class="demo-modal" id="modal-process-template">
+  <div class="form-dialog xwide">
+    <button class="modal-close-x" data-close><i data-lucide="x"></i></button>
+    <div class="form-dialog-title">处理参数模板</div>
+    <div class="tiny muted" style="margin:-2px 0 12px;">参数模板统一离心、静置、分装与温度记录规则；应用到当前工单后，关键参数同步写入处理记录与审计日志。</div>
+    <div style="display:grid;grid-template-columns:1.05fr 1fr;gap:12px;">
+      <div>
+        <div class="panel-s" style="margin-bottom:6px;">模板列表</div>
+        <div id="processTemplateList">
+          <button type="button" class="process-template-item is-sel" data-template="serum">
+            <div style="flex:1;min-width:0;text-align:left;"><div class="strong" style="font-size:13px;">血清离心（PK/ADA）</div><div class="tiny muted">3000 rpm · 10 min · 4℃</div></div>
+            <span class="tag green">默认</span>
+          </button>
+          <button type="button" class="process-template-item" data-template="plasma">
+            <div style="flex:1;min-width:0;text-align:left;"><div class="strong" style="font-size:13px;">血浆离心（PK/ADA）</div><div class="tiny muted">3000 rpm · 10 min · 4℃</div></div>
+            <span class="tag blue">血浆</span>
+          </button>
+          <button type="button" class="process-template-item" data-template="urine">
+            <div style="flex:1;min-width:0;text-align:left;"><div class="strong" style="font-size:13px;">尿液分装</div><div class="tiny muted">2000 rpm · 5 min · 4℃</div></div>
+            <span class="tag amber">分装</span>
+          </button>
+          <button type="button" class="process-template-item" data-template="whole">
+            <div style="flex:1;min-width:0;text-align:left;"><div class="strong" style="font-size:13px;">全血静置</div><div class="tiny muted">室温静置 30 min · 不离心</div></div>
+            <span class="tag">静置</span>
+          </button>
+        </div>
+        <div class="sect-note" style="margin-top:8px;"><i data-lucide="info"></i>模板变更需经方案负责人审批；已运行工单仅允许调整后续步骤参数。</div>
+      </div>
+      <div class="panel flat" style="padding:10px 12px;align-self:start;">
+        <div class="panel-h" style="margin-bottom:8px;"><div class="panel-t"><i data-lucide="sliders-horizontal"></i>模板详情</div><span class="tag blue" id="processTemplateCode">TPL-SER-001</span></div>
+        <div class="info-rows">
+          <div class="info-row"><span class="k">模板名称</span><span class="v" id="processTemplateName">血清离心（PK/ADA）</span></div>
+          <div class="info-row"><span class="k">适用样本</span><span class="v" id="processTemplateSample">血液 · 血清</span></div>
+          <div class="info-row"><span class="k">静置条件</span><span class="v" id="processTemplateRest">采血后室温静置 30 min</span></div>
+          <div class="info-row"><span class="k">离心程序</span><span class="v mono" id="processTemplateProgram">3000 rpm · 10 min · 4℃</span></div>
+          <div class="info-row"><span class="k">适用设备</span><span class="v" id="processTemplateDevice">DEV-CEN-03 · Eppendorf 5810R</span></div>
+          <div class="info-row"><span class="k">分装规则</span><span class="v" id="processTemplateSplit">1.5 mL × 3 管（PK / ADA / 备份）</span></div>
+          <div class="info-row"><span class="k">温度记录</span><span class="v" id="processTemplateTemp">离心后 2–8℃ 暂存，2 h 内入库</span></div>
+          <div class="info-row"><span class="k">版本 / 生效</span><span class="v" id="processTemplateVersion">V3.0 · 2026-10-01 生效</span></div>
+          <div class="info-row"><span class="k">适用说明</span><span class="v" id="processTemplateNote">当前项目 CD2026-001 默认模板</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost btn-sm" data-close>取消</button>
+      <button class="btn btn-secondary btn-sm" data-toast="已进入参数模板编辑（Demo）"><i data-lucide="pencil" style="width:12px;height:12px;"></i>编辑模板</button>
+      <button class="btn btn-primary btn-sm" id="processTemplateApply">应用到当前工单</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===== 记录表弹窗 ===== -->
 <div class="demo-modal" id="modal-form-fb005">
   <div class="form-dialog xwide">
@@ -6145,14 +6221,16 @@ var NAV = [
   { group: '质量与合规', items: [
     { id: 'audit', label: '日志管理', icon: 'scroll-text', min: 2 }
   ]},
-  { group: '智能体', items: [
-    { id: 'ai-search', label: '项目样本检索', icon: 'search' },
-    { id: 'ai-kb', label: '知识库', icon: 'database', min: 2 },
-    { id: 'ai-graph', label: '知识图谱', icon: 'network', min: 2 },
-    { id: 'ai-sop', label: 'SOP 智能体解析', icon: 'file-search', min: 2 },
-    { id: 'ai-compliance', label: 'SOP 合规校验', icon: 'shield-check', children: [
-      { id: 'ai-version', label: '版本变更推演', icon: 'git-compare', min: 2 },
-      { id: 'ai-inspect', label: '缺陷巡检', icon: 'scan-search', min: 2 }
+  { group: '智能能力', items: [
+    { id: 'ai', label: '智能体', icon: 'sparkles', badge: 'AI', children: [
+      { id: 'ai-search', label: '项目样本检索', icon: 'search' },
+      { id: 'ai-kb', label: '知识库', icon: 'database', min: 2 },
+      { id: 'ai-graph', label: '知识图谱', icon: 'network', min: 2 },
+      { id: 'ai-sop', label: 'SOP 智能体解析', icon: 'file-search', min: 2 },
+      { id: 'ai-compliance', label: 'SOP 合规校验', icon: 'shield-check', children: [
+        { id: 'ai-version', label: '版本变更推演', icon: 'git-compare', min: 2 },
+        { id: 'ai-inspect', label: '缺陷巡检', icon: 'scan-search', min: 2 }
+      ]}
     ]}
   ]},
   { group: '应用与设置', items: [
@@ -6169,6 +6247,41 @@ var SECTION_MAP = {
   ai: 'section-ai-search', 'ai-search': 'section-ai-search', 'ai-kb': 'section-ai-kb', 'ai-compliance': 'section-ai-compliance',
   'ai-graph': 'section-ai-graph', 'ai-inspect': 'section-ai-inspect', 'ai-version': 'section-ai-version', 'ai-sop': 'section-ai-sop', 'ai-voice': 'section-ai-voice', mobile: 'section-mobile', settings: 'section-settings'
 };
+function sidebarItemVisible(it, level) {
+  var selfVisible = level >= (it.min || 1);
+  if (it.children && it.children.length) {
+    return selfVisible || it.children.some(function(c){ return sidebarItemVisible(c, level); });
+  }
+  return selfVisible;
+}
+function sidebarBranchActive(it, active) {
+  if (it.id === active) return true;
+  return (it.children || []).some(function(c){ return sidebarBranchActive(c, active); });
+}
+function renderSidebarItem(it, depth, active, level) {
+  var children = (it.children || []).filter(function(c){ return sidebarItemVisible(c, level); });
+  var hasChildren = children.length > 0;
+  var selfActive = it.id === active;
+  var childActive = hasChildren && children.some(function(c){ return sidebarBranchActive(c, active); });
+  var expanded = selfActive || childActive;
+  var act = childActive ? ' active-parent' : (selfActive ? ' active' : '');
+  var target = SECTION_MAP[it.id] || ('section-' + it.id);
+  var cls = 'sidebar-item';
+  if (depth > 1) cls += ' sidebar-sub-item';
+  if (depth >= 3) cls += ' sidebar-sub-item--l3';
+  if (hasChildren) cls += ' sidebar-parent' + (expanded ? '' : ' sub-collapsed');
+  var html = '<div class="' + cls + act + '" data-goto="' + target + '">' +
+    '<i data-lucide="' + it.icon + '" class="nav-icon"></i>' + it.label +
+    (it.badge ? '<span class="si-badge">' + it.badge + '</span>' : '') +
+    (hasChildren ? '<button type="button" class="sidebar-toggle" aria-label="展开或收起"><i data-lucide="chevron-down" class="chev"></i></button>' : '') +
+    '</div>';
+  if (hasChildren) {
+    html += '<div class="sidebar-sub' + (expanded ? '' : ' collapsed') + '">';
+    children.forEach(function(c){ html += renderSidebarItem(c, depth + 1, active, level); });
+    html += '</div>';
+  }
+  return html;
+}
 function buildSidebar(active) {
   var html = '<div style="padding:8px 14px 14px;display:flex;align-items:center;gap:9px;">' +
     '<div style="width:30px;height:30px;border-radius:9px;background:oklch(0.95 0.02 280);display:flex;align-items:center;justify-content:center;">' +
@@ -6176,35 +6289,10 @@ function buildSidebar(active) {
     '<span style="font-size:17px;font-weight:700;letter-spacing:-0.02em;color:oklch(0.97 0.01 280);">样本库与GCP工作站</span></div>';
   var level = roleLevel();
   NAV.forEach(function(g) {
-    var visibleItems = g.items.filter(function(it){
-      if (it.children) return it.children.some(function(c){ return level >= (c.min || 1); });
-      return level >= (it.min || 1);
-    });
+    var visibleItems = g.items.filter(function(it){ return sidebarItemVisible(it, level); });
     if (!visibleItems.length) return;
     html += '<div class="sidebar-section-header" style="padding:9px 12px 6px;">' + g.group + '</div>';
-    visibleItems.forEach(function(it) {
-      var children = (it.children || []).filter(function(c){ return level >= (c.min || 1); });
-      var isParentActive = children.some(function(c){ return c.id === active; });
-      var isActiveSelf = (it.id === active);
-      var expanded = isParentActive || isActiveSelf;
-      var act = isParentActive ? ' active-parent' : (isActiveSelf ? ' active' : '');
-      var target = SECTION_MAP[it.id] || ('section-' + it.id);
-      var pcls = it.children ? (' sidebar-parent' + (expanded ? '' : ' sub-collapsed')) : '';
-      html += '<div class="sidebar-item' + pcls + act + '" data-goto="' + target + '">' +
-        '<i data-lucide="' + it.icon + '" class="nav-icon"></i>' + it.label +
-        (it.badge ? '<span class="si-badge">' + it.badge + '</span>' : '') +
-        (it.children ? '<button type="button" class="sidebar-toggle" aria-label="展开或收起"><i data-lucide="chevron-down" class="chev"></i></button>' : '') + '</div>';
-      if (it.children) {
-        html += '<div class="sidebar-sub' + (expanded ? '' : ' collapsed') + '">';
-        children.forEach(function(c){
-          var ctarget = SECTION_MAP[c.id] || ('section-' + c.id);
-          var cact = (c.id === active) ? ' active' : '';
-          html += '<div class="sidebar-item sidebar-sub-item' + cact + '" data-goto="' + ctarget + '">' +
-            '<i data-lucide="' + c.icon + '" class="nav-icon"></i>' + c.label + '</div>';
-        });
-        html += '</div>';
-      }
-    });
+    visibleItems.forEach(function(it) { html += renderSidebarItem(it, 1, active, level); });
   });
   html += '<div style="flex:1"></div><div class="sidebar-divider"></div>' +
     '<div class="sidebar-item"><i data-lucide="shield-check" class="nav-icon"></i>合规中心<span class="si-badge" style="background:var(--success-muted);color:var(--success)">OK</span></div>' +
@@ -6406,14 +6494,21 @@ function showSection(id) {
                  sb.querySelector('.sidebar-item[data-goto="' + navTarget + '"]');
     if (target) {
       target.classList.add('active');
+      if (target.nextElementSibling && target.nextElementSibling.classList.contains('sidebar-sub')) {
+        target.nextElementSibling.classList.remove('collapsed');
+        target.classList.remove('sub-collapsed');
+      }
       var sub = target.classList.contains('sidebar-sub-item') ? target.closest('.sidebar-sub') : null;
       if (!sub && target.nextElementSibling && target.nextElementSibling.classList.contains('sidebar-sub')) sub = target.nextElementSibling;
-      if (sub) {
+      while (sub) {
         sub.classList.remove('collapsed');
-        if (sub.previousElementSibling) {
-          var parentEl = sub.previousElementSibling;
+        var parentEl = sub.previousElementSibling;
+        if (parentEl) {
           if (parentEl !== target) parentEl.classList.add('active-parent');
           parentEl.classList.remove('sub-collapsed');
+          sub = parentEl.closest('.sidebar-sub');
+        } else {
+          sub = null;
         }
       }
     }
@@ -7247,6 +7342,59 @@ document.addEventListener('click', function(e){
       document.getElementById('modal-process-attachment').classList.add('open');
     }
   });
+})();
+
+
+/* ===== 处理参数模板 ===== */
+(function(){
+  var list = document.getElementById('processTemplateList');
+  if (!list) return;
+  var templates = {
+    serum: { name:'血清离心（PK/ADA）', code:'TPL-SER-001', sample:'血液 · 血清', rest:'采血后室温静置 30 min', program:'3000 rpm · 10 min · 4℃', device:'DEV-CEN-03 · Eppendorf 5810R', split:'1.5 mL × 3 管（PK / ADA / 备份）', temp:'离心后 2–8℃ 暂存，2 h 内入库', version:'V3.0 · 2026-10-01 生效', note:'当前项目 CD2026-001 默认模板' },
+    plasma: { name:'血浆离心（PK/ADA）', code:'TPL-PLA-002', sample:'血液 · 血浆', rest:'采血后室温静置 10 min', program:'3000 rpm · 10 min · 4℃', device:'DEV-CEN-01 · Eppendorf 5810R', split:'1.5 mL × 2 管（PK / ADA）', temp:'离心后 2–8℃ 暂存，1 h 内入库', version:'V2.1 · 2026-09-15 生效', note:'适用于 EDTA 抗凝血浆' },
+    urine: { name:'尿液分装', code:'TPL-URI-003', sample:'尿液', rest:'采集后立即 4℃ 暂存', program:'2000 rpm · 5 min · 4℃', device:'BENCH-01 · 生物安全柜', split:'10 mL × 2 管（常规 / 备份）', temp:'全程 2–8℃', version:'V1.4 · 2026-08-20 生效', note:'避免反复冻融' },
+    whole: { name:'全血静置', code:'TPL-WBL-004', sample:'血液 · 全血', rest:'室温静置 30 min，禁止剧烈震荡', program:'不离心', device:'BENCH-02 · 样本前处理台', split:'按检测项目分装 1 mL × 2 管', temp:'室温 15–25℃', version:'V1.2 · 2026-07-01 生效', note:'适用于全血 DNA/RNA 提取' }
+  };
+  var selectedKey = 'serum';
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+  function renderTemplate(key) {
+    var t = templates[key];
+    if (!t) return;
+    selectedKey = key;
+    list.querySelectorAll('[data-template]').forEach(function(el){
+      el.classList.toggle('is-sel', el.getAttribute('data-template') === key);
+    });
+    setText('processTemplateCode', t.code);
+    setText('processTemplateName', t.name);
+    setText('processTemplateSample', t.sample);
+    setText('processTemplateRest', t.rest);
+    setText('processTemplateProgram', t.program);
+    setText('processTemplateDevice', t.device);
+    setText('processTemplateSplit', t.split);
+    setText('processTemplateTemp', t.temp);
+    setText('processTemplateVersion', t.version);
+    setText('processTemplateNote', t.note);
+  }
+  list.addEventListener('click', function(e){
+    var item = e.target.closest('[data-template]');
+    if (!item) return;
+    renderTemplate(item.getAttribute('data-template'));
+  });
+  var applyBtn = document.getElementById('processTemplateApply');
+  if (applyBtn) {
+    applyBtn.addEventListener('click', function(){
+      var t = templates[selectedKey];
+      setText('processCentrifugeProgram', t.program);
+      setText('processKeyCentrifuge', t.program);
+      setText('processTemplateSummary', t.name + ' ' + t.version.split(' · ')[0] + ' · ' + t.code);
+      closeModal();
+      toast('已应用参数模板：' + t.name + '，当前工单关键数据已同步');
+    });
+  }
+  renderTemplate('serum');
 })();
 
 var initialSection = location.hash && document.getElementById(location.hash.replace('#','')) ? location.hash.replace('#','') : 'section-login';
